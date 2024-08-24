@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -9,14 +7,13 @@ import javax.swing.*;
 public final class AdminPage extends JFrame{
 
     private final CardLayout cardLayout;
-    private final JPanel mainPanel;
 
     public AdminPage() {
         cardLayout = new CardLayout();
         setLayout(cardLayout);
 
-        mainPanel = mainPanel();
-        add(mainPanel, "Main Panel");
+        mainPanel();
+        add(mainPanel(), "Main Panel");
 
         add(HospitalPanel(), "Hospital Panel");
         add(createHospitalPanel(), "Create Hospital");
@@ -48,7 +45,7 @@ public final class AdminPage extends JFrame{
             }
         });
     }
-    
+
     //Reusable code
     public JLabel createtitle(JPanel PanelName, String titleName){
         JLabel label = new JLabel(titleName);
@@ -121,7 +118,6 @@ public final class AdminPage extends JFrame{
                     delbutton.addActionListener(e2 -> {
                         try {file.DELETE_DATA(filename,search,PanelName);} catch (IOException e1) {
                             System.out.println("Error in deleting data.");
-                            e1.printStackTrace();
                         }
                         cardLayout.show(AdminPage.this.getContentPane(),previousPanel);
                     });
@@ -152,19 +148,13 @@ public final class AdminPage extends JFrame{
             displaydata1.setBounds(50, 250 + i*70, 150, 50);
             displaydata1.setFont(new Font("Agency FB", Font.BOLD, 30));
             editpage.add(displaydata1);
-            if (i == 0){
-                JLabel displaydata2 = new JLabel(data[i]);
-                displaydata2.setBounds(300, 250 + i*70, 150, 50);
-                displaydata2.setFont(new Font("Agency FB", Font.BOLD, 30));
-                editpage.add(displaydata2);
-            }else{
-                TextField displaydata2 = new TextField(data[i]);
-                displaydata2.setBounds(300, 250 + i*70, 300, 40);
-                displaydata2.setFont(new Font("Agency FB", Font.BOLD, 25));
-                editpage.add(displaydata2);
-                allTextField[i]= displaydata2;
+            
+            TextField displaydata2 = new TextField(data[i]);
+            displaydata2.setBounds(300, 250 + i*70, 300, 40);
+            displaydata2.setFont(new Font("Agency FB", Font.BOLD, 25));
+            editpage.add(displaydata2);
+            allTextField[i]= displaydata2;
             }
-        }
 
         JButton savebutton = new JButton("Save");
         savebutton.setFont(new Font("Agency FB", Font.BOLD, 30));
@@ -175,21 +165,33 @@ public final class AdminPage extends JFrame{
             newdata[0] = data[0];
             for (int i = 1; i<data.length; i++){
                 newdata[i] = allTextField[i].getText();
+                if (allTextField[i]!= null){
+                    newdata[i]= allTextField[i].getText();
             }
             boolean actiondone = file.EDIT_DATA(filename, newdata);
             if (actiondone){
                 JOptionPane.showMessageDialog(PanelName, "Data updated successfully", "Search Result", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Clear all TextField contents
+                for (TextField textField : allTextField) {
+                    if (textField != null) {
+                        textField.setText("");
+                    }
+                }
+
                 cardLayout.show(AdminPage.this.getContentPane(),previousPanel);
+                }
             }
         });
         add(editpage, "Edit Panel");
         cardLayout.show(AdminPage.this.getContentPane(),"Edit Panel");
     }
 
-
+    
     //Starts here
     private JPanel mainPanel(){
         JPanel main = new JPanel(null);
+        file.checkMissingFiles(main, cardLayout, getContentPane());
 
         JLabel title = new JLabel("Welcome to the admin page. Choose any file you like");
         title.setFont(new Font("Agency FB", Font.BOLD,30));
@@ -239,7 +241,7 @@ public final class AdminPage extends JFrame{
 
         createtitle(createhospital,"New Hospital Form");
         backbutton(createhospital, "Hospital Panel");
-
+        
         JLabel hname = new JLabel("Name:");
         hname.setBounds(100, 150, 80, 30);
         createhospital.add(hname);
@@ -275,6 +277,12 @@ public final class AdminPage extends JFrame{
             if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()){
                 file.ADD_DATA("hospitals.txt",input1, input2, input3);
                 JOptionPane.showMessageDialog(createhospital, "Hospital data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Clear all TextField contents
+                t1.setText("");
+                t2.setText("");
+                t3.setText("");
+
                 cardLayout.show(AdminPage.this.getContentPane(),"Main Panel");
             } else {
                 JOptionPane.showMessageDialog(createhospital, "Please ensure that all details are written.", "Input Error Message", JOptionPane.WARNING_MESSAGE);
@@ -338,7 +346,7 @@ public final class AdminPage extends JFrame{
 
         TextField t3 = new TextField(null,30); 
         t3.setBounds(200, 250, 400, 30);
-        createsupplier.add(t2);
+        createsupplier.add(t3);
 
         JButton button = new JButton("Submit");
         button.setFont(new Font("Agency FB", Font.BOLD, 20));
@@ -348,9 +356,15 @@ public final class AdminPage extends JFrame{
             String input1 = t1.getText();
             String input2 = t2.getText();
             String input3 = t3.getText();
-            if (!input1.isEmpty() && !input2.isEmpty()){
+            if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()){
                 file.ADD_DATA("suppliers.txt",input1, input2, input3);
                 JOptionPane.showMessageDialog(createsupplier, "Supplier data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Clear all TextField contents
+                t1.setText("");
+                t2.setText("");
+                t3.setText("");
+
                 cardLayout.show(AdminPage.this.getContentPane(),"Main Panel");
             } else {
                 JOptionPane.showMessageDialog(createsupplier, "Please ensure that all details are written.", "Input Error Message", JOptionPane.WARNING_MESSAGE);
@@ -429,6 +443,12 @@ public final class AdminPage extends JFrame{
             if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()){
                 file.ADD_DATA("users.txt",input1, input2, input3);
                 JOptionPane.showMessageDialog(createUser, "User data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Clear all TextField contents
+                t1.setText("");
+                t2.setText("");
+                t3.select(0);
+
                 cardLayout.show(AdminPage.this.getContentPane(),"Main Panel");
             } else {
                 JOptionPane.showMessageDialog(createUser, "Please ensure that all details are written.", "Input Error Message", JOptionPane.WARNING_MESSAGE);
@@ -442,7 +462,7 @@ public final class AdminPage extends JFrame{
         searchpanel(searchuser,"users.txt","User Search","User Panel");
         return searchuser;
     }
-
+    
     private JPanel ppePanel(){
         JPanel ppePanel = new JPanel(null);
 
@@ -491,12 +511,18 @@ public final class AdminPage extends JFrame{
         createppe.add(scode);
 
         Choice t3 = new Choice(); 
-        List<String> allID = file.GET_ALL_ID("suppliers.txt");
+        createppe.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                List<String> allID = file.GET_ALL_ID("suppliers.txt");
+                for (String id:allID){
+                    t3.add(id);
+                }
+            }
+        });
         t3.setBounds(200, 250, 400, 30);
-        for (String id:allID){
-            t3.add(id);
-        }
         createppe.add(t3);
+        
 
         Label pquantity = new Label("Quantity:    100");
         pquantity.setBounds(100, 300, 80, 30);
@@ -514,6 +540,12 @@ public final class AdminPage extends JFrame{
             if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()){
                 file.ADD_DATA("ppe.txt",input1, input2, input3, input4);
                 JOptionPane.showMessageDialog(createppe, "PPE item data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+                
+                //Clear all TextField contents
+                t1.setText("");
+                t2.setText("");
+                t3.select(0);
+
                 cardLayout.show(AdminPage.this.getContentPane(),"Main Panel");
             } else {
                 JOptionPane.showMessageDialog(createppe, "Please ensure that all details are written.", "Input Error Message", JOptionPane.WARNING_MESSAGE);
@@ -527,6 +559,7 @@ public final class AdminPage extends JFrame{
         searchpanel(searchppe,"ppe.txt","Ppe Item Search","ppe Panel");
         return searchppe;
     }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new AdminPage());

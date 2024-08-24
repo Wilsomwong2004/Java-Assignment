@@ -1,49 +1,117 @@
+import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 import javax.swing.*;
 
-public class file {
-    private final DefaultListModel<String> supplierListModel;
-    private JList<String> supplierList;
-
+public class file{
     public static final Scanner inputScanner = new Scanner(System.in);
     static String[] user = {"User ID ","Name ","Password ","User Type "};
     static String[] ppe = {"Item Code ","Item Name","Supplier Code","Quantity in stock "};
     static String[] supplier = {"Supplier Code ","Name ","Address ","Phone Number "};
     static String[] hospital = {"Hospital Code ","Name ","Address ","Phone Number "};
 
-    public file() {
-        supplierListModel = new DefaultListModel<>();
-        supplierList = new JList<>(supplierListModel);
-        loadSuppliers();  // Initial load of suppliers
-    }
-    
+    static void checkMissingFiles(JPanel PanelName, CardLayout cardLayout, Container contentPane){
+        String[] allfiles = {"suppliers.txt","hospitals.txt","ppe.txt"};
+        for (String eachfile : allfiles){
+            File testfile = new File(eachfile);
+            if (!testfile.exists()){
+                createFile(eachfile);
+                switch (eachfile) {
+                    case "suppliers.txt" -> {
+                        for (int i = 0; i<= 2; i++){
+                            JOptionPane.showMessageDialog(PanelName, "Number of suppliers left:" + (3-i), "Message", JOptionPane.INFORMATION_MESSAGE);
+                            cardLayout.show(contentPane,"Create Supplier");
+                        }
+                    }
+                    case "hospitals.txt" -> {
+                        for (int i = 0; i<= 2; i++){
+                            JOptionPane.showMessageDialog(PanelName, "Number of hospital left:" + (3-i), "Message", JOptionPane.INFORMATION_MESSAGE);
+                            cardLayout.show(contentPane,"Create Hospital");
+                        }
+                    }
+                    case "ppe.txt" -> {
+                        JPanel editpage= new JPanel(null);
+                        List<String> lines = new ArrayList<>(); 
+                        String[] itemCode = {"HC","FS","MS","GL","GW","SC"};
+                        String[] itemName = {"Head Cover","Face Shield","Mask","Gloves","Gown","Shoe Covers"};  
+                        for (int i=0; i< ppe.length; i++){
+                            JLabel displaydata1 = new JLabel(ppe[i] + ":");
+                            displaydata1.setBounds(50, 250 + i*70, 150, 50);
+                            displaydata1.setFont(new Font("Agency FB", Font.BOLD, 30));
+                            editpage.add(displaydata1);
+                            if (i == 2){
+                                TextField displaydata2 = new TextField();
+                                displaydata2.setBounds(300, 250 + i*70, 300, 40);
+                                displaydata2.setFont(new Font("Agency FB", Font.BOLD, 25));
+                                editpage.add(displaydata2);
+                            } else if (i == 0){
+                                JLabel displaydata2 = new JLabel(item);
+                                displaydata2.setBounds(300, 250 + i*70, 300, 40);
+                                displaydata2.setFont(new Font("Agency FB", Font.BOLD, 30));
+                                editpage.add(displaydata1);
+                            }
+                            try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename,true))) {
+                                for (int i=0; i <itemCode.length; i++) {
+                                    lines.add(itemCode[i]+"<>"+itemName[i]+"<>-------<>"+100);
+                                    myWriter.write(lines.get(i));
+                                    myWriter.newLine();
+                                }
+                            } catch (IOException e) {
+                                System.err.println("An error occurred while writing to the file.");
+                                e.printStackTrace();
+                        }
 
-    static void createFile(String filename){
+                        JButton savebutton = new JButton("Submit");
+                        savebutton.setFont(new Font("Agency FB", Font.BOLD, 30));
+                        savebutton.setBounds(230, 650, 140, 40);
+                        editpage.add(savebutton);
+                        savebutton.addActionListener(e -> {
+                            String[] newdata = new String[data.length];
+                            newdata[0] = data[0];
+                            for (int i = 1; i<data.length; i++){
+                                newdata[i] = allTextField[i].getText();
+                                if (allTextField[i]!= null){
+                                    newdata[i]= allTextField[i].getText();
+                            }
+                            boolean actiondone = file.EDIT_DATA(filename, newdata);
+                            if (actiondone){
+                                JOptionPane.showMessageDialog(PanelName, "Data updated successfully", "Search Result", JOptionPane.INFORMATION_MESSAGE);
+                                
+                                // Clear all TextField contents
+                                for (TextField textField : allTextField) {
+                                    if (textField != null) {
+                                        textField.setText("");
+                                    }
+                                }
+
+                                cardLayout.show(AdminPage.this.getContentPane(),previousPanel);
+                                }
+                            }
+                        });
+                        add(editpage, "Edit Panel");
+                        cardLayout.show(AdminPage.this.getContentPane(),"Edit Panel");
+                    }
+                    }
+                    default -> {
+                    }
+                }
+            }
+        }
+        cardLayout.show(contentPane,"Main Panel");
+    }
+
+    static String createFile(String filename){
         try {
             File newFile = new File(filename);
             if (newFile.createNewFile()){
                 System.out.println(newFile.getName()+" doesn't exist. A new one is created");
-                if (filename.equals("ppe.txt")){
-                    List<String> lines = new ArrayList<>(); 
-                    String[] itemCode = {"HC","FS","MS","GL","GW","SC"};
-                    String[] itemName = {"Head Cover","Face Shield","Mask","Gloves","Gown","Shoe Covers"};
-                    try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename,true))) {
-                        for (int i=0; i <itemCode.length; i++) {
-                            lines.add(itemCode[i]+"<>"+itemName[i]+"<>-------<>"+100);
-                            myWriter.write(lines.get(i));
-                            myWriter.newLine();
-                        }
-                    } catch (IOException e) {
-                        System.err.println("An error occurred while writing to the file.");
-                        e.printStackTrace();
-                    }
-                }
             } 
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occured.");
             e.printStackTrace();
         }
+        return filename;
     }
 
     static String generateNewID(String filename) throws IOException {
@@ -86,9 +154,10 @@ public class file {
             createFile(filename);
         }
 
-        try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename,true))) {
-            String newID = "";
+        try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename, true))) {
+            String newID;
             List<String> lines = new ArrayList<>();
+
             switch (filename) {
                 case "suppliers.txt" -> {
                     newID = "S-" + generateNewID(filename);
@@ -102,44 +171,32 @@ public class file {
                     newID = "Staff-" + generateNewID(filename);
                     lines.add(newID);
                 }
+                default -> {
+                    System.err.println("Unknown filename type.");
+                    return;
+                }
             }
+
+            // Add the provided data, ensuring it is trimmed
             for (String i : data) {
+                if (i == null || i.trim().isEmpty()) {
+                    System.err.println("Invalid data provided. Skipping empty data.");
+                    continue;  // Skip invalid data
+                }
                 lines.add(i.trim());
             }
-            myWriter.write(String.join("<>",lines));
+
+            // Write the assembled line to the file
+            myWriter.write(String.join("<>", lines));
             myWriter.newLine();
+
         } catch (IOException e) {
             System.err.println("An error occurred while writing to the file.");
             e.printStackTrace();
         }
-
-        List<String> suppliers = loadSuppliers();  // Reload suppliers from the file
-        updateSupplierListUI(suppliers);  // Update the JList with the new data
     }
 
-    private static List<String> loadSuppliers() {
-        List<String> suppliers = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("suppliers.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                suppliers.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return suppliers;
-    }
-
-    private static void updateSupplierListUI(List<String> suppliers) {
-        DefaultListModel<String> model = new DefaultListModel<>();
-        for (String supplier : suppliers) {
-            model.addElement(supplier);
-        }
-        // Assuming you have a JList to update:
-        // supplierList.setModel(model);
-    }
-
-    public static String SEARCH_DATA(String filename, String search) {
+    public static String SEARCH_DATA (String filename,String search){
         File file = new File(filename);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))){
             String line;
@@ -248,14 +305,6 @@ public class file {
             System.out.println("Error. File isn't deleted.");
         }
     }
-
-    public static void main(String[] args) throws IOException {
-        // Ensure "ppe.txt" is created before any operations
-        file.createFile("ppe.txt");
-        
-        // Example of adding data
-        file.ADD_DATA("suppliers.txt", "Supplier Name", "Supplier Address", "Supplier Phone");
-        // You can add more examples here to test other methods
-    }
-    
 }
+
+
