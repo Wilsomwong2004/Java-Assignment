@@ -10,7 +10,7 @@ public class PPE_inventory_management_system  {
         JFrame frame = new JFrame("PPE Inventory Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 300);
-
+        
         // Create panel for user ID and password
         JPanel panel = new JPanel(new GridLayout(3, 2));
         JLabel userLabel = new JLabel("User ID:");

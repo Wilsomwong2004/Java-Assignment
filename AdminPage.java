@@ -12,7 +12,6 @@ public final class AdminPage extends JFrame{
         cardLayout = new CardLayout();
         setLayout(cardLayout);
 
-        mainPanel();
         add(mainPanel(), "Main Panel");
 
         add(HospitalPanel(), "Hospital Panel");
@@ -47,6 +46,21 @@ public final class AdminPage extends JFrame{
     }
 
     //Reusable code
+    public static JLabel addLabel(JPanel panel, String text, int x, int y) {
+        JLabel label = new JLabel(text);
+        label.setBounds(x, y, 150, 30);
+        label.setFont(new Font("Agency FB", Font.BOLD, 20));
+        panel.add(label);
+        return label;
+    }
+    
+    public static TextField addTextField(JPanel panel, int x, int y) {
+        TextField textField = new TextField(30);
+        textField.setBounds(x, y, 400, 30);
+        panel.add(textField);
+        return textField;
+    }
+
     public JLabel createtitle(JPanel PanelName, String titleName){
         JLabel label = new JLabel(titleName);
         label.setFont(new Font("Agency FB", Font.BOLD,50));
@@ -99,8 +113,8 @@ public final class AdminPage extends JFrame{
         button.addActionListener(e -> {
             String search = t1.getText();
             if (!search.isEmpty()){
-                String searchresult = file.SEARCH_DATA(filename,search);
-                String[] data1 = file.dataFormat(filename);
+                String searchresult = filefunction.SEARCH_DATA(filename,search);
+                String[] data1 = filefunction.dataFormat(filename);
                 if (searchresult != null){
                     String[] data2 = searchresult.split("<>");
                     for (int i=0; i< data2.length; i++){
@@ -116,7 +130,7 @@ public final class AdminPage extends JFrame{
                     PanelName.add(delbutton);
                     PanelName.add(editbutton);
                     delbutton.addActionListener(e2 -> {
-                        try {file.DELETE_DATA(filename,search,PanelName);} catch (IOException e1) {
+                        try {filefunction.DELETE_DATA(filename,search,PanelName);} catch (IOException e1) {
                             System.out.println("Error in deleting data.");
                         }
                         cardLayout.show(AdminPage.this.getContentPane(),previousPanel);
@@ -168,7 +182,7 @@ public final class AdminPage extends JFrame{
                 if (allTextField[i]!= null){
                     newdata[i]= allTextField[i].getText();
             }
-            boolean actiondone = file.EDIT_DATA(filename, newdata);
+            boolean actiondone = filefunction.EDIT_DATA(filename, newdata);
             if (actiondone){
                 JOptionPane.showMessageDialog(PanelName, "Data updated successfully", "Search Result", JOptionPane.INFORMATION_MESSAGE);
                 
@@ -189,9 +203,9 @@ public final class AdminPage extends JFrame{
 
     
     //Starts here
-    private JPanel mainPanel(){
+    public JPanel mainPanel(){
         JPanel main = new JPanel(null);
-        file.checkMissingFiles(main, cardLayout, getContentPane());
+        filefunction.checkMissingFiles(main,cardLayout, AdminPage.this.getContentPane());
 
         JLabel title = new JLabel("Welcome to the admin page. Choose any file you like");
         title.setFont(new Font("Agency FB", Font.BOLD,30));
@@ -242,29 +256,14 @@ public final class AdminPage extends JFrame{
         createtitle(createhospital,"New Hospital Form");
         backbutton(createhospital, "Hospital Panel");
         
-        JLabel hname = new JLabel("Name:");
-        hname.setBounds(100, 150, 80, 30);
-        createhospital.add(hname);
+        addLabel(createhospital, "Name:", 100, 150);
+        TextField t1 = addTextField(createhospital, 200,150);
 
-        TextField t1 = new TextField(null,30); 
-        t1.setBounds(180, 150, 400, 30);
-        createhospital.add(t1);
+        addLabel(createhospital, "Address:", 100, 200);
+        TextField t2 = addTextField(createhospital, 200,200);
 
-        Label haddress = new Label("Address:");
-        haddress.setBounds(100, 200, 80, 30);
-        createhospital.add(haddress);
-
-        TextField t2 = new TextField(null,30); 
-        t2.setBounds(180, 200, 400, 30);
-        createhospital.add(t2);
-
-        Label hphonenum = new Label("Phone Number:");
-        hphonenum.setBounds(100, 250, 80, 30);
-        createhospital.add(hphonenum);
-
-        TextField t3 = new TextField(null,30); 
-        t3.setBounds(180, 250, 400, 30);
-        createhospital.add(t3);
+        addLabel(createhospital, "Phone Number", 100, 250);
+        TextField t3 = addTextField(createhospital, 200,250);
 
         JButton button = new JButton("Submit");
         button.setFont(new Font("Agency FB", Font.BOLD, 20));
@@ -275,7 +274,7 @@ public final class AdminPage extends JFrame{
             String input2 = t2.getText();
             String input3 = t3.getText();
             if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()){
-                file.ADD_DATA("hospitals.txt",input1, input2, input3);
+                filefunction.ADD_DATA("hospitals.txt",input1, input2, input3);
                 JOptionPane.showMessageDialog(createhospital, "Hospital data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
                 
                 // Clear all TextField contents
@@ -318,35 +317,20 @@ public final class AdminPage extends JFrame{
         return SupplierPanel;
     }
 
-    private JPanel createSupplierPanel(){
+    public JPanel createSupplierPanel(){
         JPanel createsupplier= new JPanel(null);
 
         createtitle(createsupplier,"New Supplier Form");
         backbutton(createsupplier, "Supplier Panel");
 
-        JLabel sname = new JLabel("Name:");
-        sname.setBounds(100, 150, 80, 30);
-        createsupplier.add(sname);
+        addLabel(createsupplier, "Name:", 100, 150);
+        TextField t1 = addTextField(createsupplier, 200,150);
 
-        TextField t1 = new TextField(null,30); 
-        t1.setBounds(200, 150, 400, 30);
-        createsupplier.add(t1);
+        addLabel(createsupplier, "Address:", 100, 200);
+        TextField t2 = addTextField(createsupplier, 200,200);
 
-        Label saddress = new Label("Address:");
-        saddress.setBounds(100, 200, 80, 30);
-        createsupplier.add(saddress);
-
-        TextField t2 = new TextField(null,30); 
-        t2.setBounds(200, 200, 400, 30);
-        createsupplier.add(t2);
-
-        Label sphonenum = new Label("Phone Number:");
-        sphonenum.setBounds(100, 250, 80, 30);
-        createsupplier.add(sphonenum);
-
-        TextField t3 = new TextField(null,30); 
-        t3.setBounds(200, 250, 400, 30);
-        createsupplier.add(t3);
+        addLabel(createsupplier, "Phone Number:", 100, 250);
+        TextField t3 = addTextField(createsupplier, 200,250);
 
         JButton button = new JButton("Submit");
         button.setFont(new Font("Agency FB", Font.BOLD, 20));
@@ -357,7 +341,7 @@ public final class AdminPage extends JFrame{
             String input2 = t2.getText();
             String input3 = t3.getText();
             if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()){
-                file.ADD_DATA("suppliers.txt",input1, input2, input3);
+                filefunction.ADD_DATA("suppliers.txt",input1, input2, input3);
                 JOptionPane.showMessageDialog(createsupplier, "Supplier data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
                 
                 // Clear all TextField contents
@@ -400,27 +384,17 @@ public final class AdminPage extends JFrame{
         return UserPanel;
     }
     
-    private JPanel createUserPanel(){
+    public JPanel createUserPanel(){
         JPanel createUser= new JPanel(null);
 
         createtitle(createUser,"New User Form");
         backbutton(createUser, "User Panel");
 
-        JLabel uname = new JLabel("Name:");
-        uname.setBounds(100, 150, 80, 30);
-        createUser.add(uname);
+        addLabel(createUser, "Name:", 100, 150);
+        TextField t1 = addTextField(createUser, 200,150);
 
-        TextField t1 = new TextField(null,30); 
-        t1.setBounds(200, 150, 400, 30);
-        createUser.add(t1);
-
-        Label upassword = new Label("Password:");
-        upassword.setBounds(100, 200, 80, 30);
-        createUser.add(upassword);
-
-        TextField t2 = new TextField(null,30); 
-        t2.setBounds(200, 200, 400, 30);
-        createUser.add(t2);
+        addLabel(createUser, "Password:", 100, 200);
+        TextField t2 = addTextField(createUser, 200,200);
 
         Label uusertype = new Label("User Type:");
         uusertype.setBounds(100, 250, 80, 30);
@@ -441,7 +415,7 @@ public final class AdminPage extends JFrame{
             String input2 = t2.getText();
             String input3 = t3.getSelectedItem();
             if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()){
-                file.ADD_DATA("users.txt",input1, input2, input3);
+                filefunction.ADD_DATA("users.txt",input1, input2, input3);
                 JOptionPane.showMessageDialog(createUser, "User data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
                 
                 // Clear all TextField contents
@@ -484,42 +458,25 @@ public final class AdminPage extends JFrame{
         return ppePanel;
     }
 
-    private JPanel createppePanel(){
+    public JPanel createppePanel(){
         JPanel createppe= new JPanel(null);
 
         createtitle(createppe,"New PPE Item Form");
         backbutton(createppe, "ppe Panel");
+        
+        addLabel(createppe, "Item Code:", 100, 150);
+        TextField t1 = addTextField(createppe, 200,150);
 
-        JLabel pcode = new JLabel("Item Code:");
-        pcode.setBounds(100, 150, 80, 30);
-        createppe.add(pcode);
+        addLabel(createppe, "Item Name:", 100, 200);
+        TextField t2 = addTextField(createppe, 200,200);
 
-        TextField t1 = new TextField(null,30); 
-        t1.setBounds(200, 150, 400, 30);
-        createppe.add(t1);
-
-        Label pname = new Label("Item Name:");
-        pname.setBounds(100, 200, 80, 30);
-        createppe.add(pname);
-
-        TextField t2 = new TextField(null,30); 
-        t2.setBounds(200, 200, 400, 30);
-        createppe.add(t2);
-
-        Label scode = new Label("Supplier Code:");
-        scode.setBounds(100, 250, 80, 30);
-        createppe.add(scode);
+        addLabel(createppe, "Supplier Code:", 100, 250);
 
         Choice t3 = new Choice(); 
-        createppe.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentShown(ComponentEvent e) {
-                List<String> allID = file.GET_ALL_ID("suppliers.txt");
-                for (String id:allID){
-                    t3.add(id);
-                }
-            }
-        });
+        List<String> allID = (List<String>) filefunction.GET_ALL_ID("suppliers.txt");
+        for (String id:allID){
+            t3.add(id);
+        }
         t3.setBounds(200, 250, 400, 30);
         createppe.add(t3);
         
@@ -538,7 +495,7 @@ public final class AdminPage extends JFrame{
             String input3 = t3.getSelectedItem();
             String input4 = "100";
             if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()){
-                file.ADD_DATA("ppe.txt",input1, input2, input3, input4);
+                filefunction.ADD_DATA("ppe.txt",input1, input2, input3, input4);
                 JOptionPane.showMessageDialog(createppe, "PPE item data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
                 
                 //Clear all TextField contents
