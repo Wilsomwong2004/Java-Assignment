@@ -1,0 +1,6 @@
+HC<>Head Cover<>-------<>100
+FS<>Face Shield<>-------<>100
+MS<>Mask<>-------<>100
+GL<>Gloves<>-------<>100
+GW<>Gown<>-------<>100
+SC<>Shoe Covers<>-------<>100

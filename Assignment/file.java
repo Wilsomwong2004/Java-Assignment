@@ -7,30 +7,29 @@ public class file {
     private JList<String> supplierList;
 
     public static final Scanner inputScanner = new Scanner(System.in);
-    static String[] user = {"User ID ","Name ","Password ","User Type "};
-    static String[] ppe = {"Item Code ","Item Name","Supplier Code","Quantity in stock "};
-    static String[] supplier = {"Supplier Code ","Name ","Address ","Phone Number "};
-    static String[] hospital = {"Hospital Code ","Name ","Address ","Phone Number "};
+    static String[] user = { "User ID ", "Name ", "Password ", "User Type " };
+    static String[] ppe = { "Item Code ", "Item Name", "Supplier Code", "Quantity in stock " };
+    static String[] supplier = { "Supplier Code ", "Name ", "Address ", "Phone Number " };
+    static String[] hospital = { "Hospital Code ", "Name ", "Address ", "Phone Number " };
 
     public file() {
         supplierListModel = new DefaultListModel<>();
         supplierList = new JList<>(supplierListModel);
-        loadSuppliers();  // Initial load of suppliers
+        loadSuppliers(); // Initial load of suppliers
     }
-    
 
-    static void createFile(String filename){
+    static void createFile(String filename) {
         try {
             File newFile = new File(filename);
-            if (newFile.createNewFile()){
-                System.out.println(newFile.getName()+" doesn't exist. A new one is created");
-                if (filename.equals("ppe.txt")){
-                    List<String> lines = new ArrayList<>(); 
-                    String[] itemCode = {"HC","FS","MS","GL","GW","SC"};
-                    String[] itemName = {"Head Cover","Face Shield","Mask","Gloves","Gown","Shoe Covers"};
-                    try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename,true))) {
-                        for (int i=0; i <itemCode.length; i++) {
-                            lines.add(itemCode[i]+"<>"+itemName[i]+"<>-------<>"+100);
+            if (newFile.createNewFile()) {
+                System.out.println(newFile.getName() + " doesn't exist. A new one is created");
+                if (filename.equals("ppe.txt")) {
+                    List<String> lines = new ArrayList<>();
+                    String[] itemCode = { "HC", "FS", "MS", "GL", "GW", "SC" };
+                    String[] itemName = { "Head Cover", "Face Shield", "Mask", "Gloves", "Gown", "Shoe Covers" };
+                    try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename, true))) {
+                        for (int i = 0; i < itemCode.length; i++) {
+                            lines.add(itemCode[i] + "<>" + itemName[i] + "<>-------<>" + 100);
                             myWriter.write(lines.get(i));
                             myWriter.newLine();
                         }
@@ -39,7 +38,7 @@ public class file {
                         e.printStackTrace();
                     }
                 }
-            } 
+            }
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -65,7 +64,7 @@ public class file {
         }
         int newIDNum = Integer.parseInt(lastID) + 1;
         return String.format("%05d", newIDNum);
-    }  
+    }
 
     public static String[] dataFormat(String filename) {
         String[] label = null;
@@ -78,7 +77,6 @@ public class file {
         }
         return label;
     }
-    
 
     static void ADD_DATA(String filename, String... data) {
         File file = new File(filename);
@@ -86,7 +84,7 @@ public class file {
             createFile(filename);
         }
 
-        try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename,true))) {
+        try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename, true))) {
             String newID = "";
             List<String> lines = new ArrayList<>();
             switch (filename) {
@@ -106,15 +104,15 @@ public class file {
             for (String i : data) {
                 lines.add(i.trim());
             }
-            myWriter.write(String.join("<>",lines));
+            myWriter.write(String.join("<>", lines));
             myWriter.newLine();
         } catch (IOException e) {
             System.err.println("An error occurred while writing to the file.");
             e.printStackTrace();
         }
 
-        List<String> suppliers = loadSuppliers();  // Reload suppliers from the file
-        updateSupplierListUI(suppliers);  // Update the JList with the new data
+        List<String> suppliers = loadSuppliers(); // Reload suppliers from the file
+        updateSupplierListUI(suppliers); // Update the JList with the new data
     }
 
     private static List<String> loadSuppliers() {
@@ -141,37 +139,37 @@ public class file {
 
     public static String SEARCH_DATA(String filename, String search) {
         File file = new File(filename);
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            while ((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 String[] data = line.split("<>");
-                if (search.equals(data[0])){
+                if (search.equals(data[0])) {
                     return line;
                 }
             }
             System.out.println("Results not found. Please try again.");
             return null;
-        } catch (IOException e){
+        } catch (IOException e) {
             System.err.println("An error occurred while searching.");
             e.printStackTrace();
             return null;
         }
     }
 
-    public static List<String> GET_ALL_ID(String filename){
+    public static List<String> GET_ALL_ID(String filename) {
         List<String> ids = new ArrayList<>();
         File file = new File(filename);
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            while ((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 String[] data = line.split("<>");
-                if (!data[0].isEmpty()){
+                if (!data[0].isEmpty()) {
                     ids.add(data[0]);
-                } else{
+                } else {
                     System.out.println("No IDs found.");
                 }
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             System.err.println("An error occurred while searching.");
             e.printStackTrace();
         }
@@ -182,7 +180,7 @@ public class file {
         List<String> lines = new ArrayList<>();
         File file = new File(filename);
         boolean done = false;
-    
+
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -191,13 +189,13 @@ public class file {
                     line = String.join("<>", newData);
                     done = true;
                 }
-                lines.add(line); //add all lines into array list
+                lines.add(line); // add all lines into array list
             }
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-    
+
         // Overwrite the file with the modified content
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (String l : lines) {
@@ -216,28 +214,34 @@ public class file {
         File tempFile = new File("temp.txt");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
 
             String line;
-            boolean deleted = false; //to validate results
+            boolean deleted = false; // to validate results
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split("<>");
                 if (search.equals(data[0])) {
-                    int response = JOptionPane.showConfirmDialog(panelName, "Are you sure you want to delete this?", "Confirmation Message", JOptionPane.YES_NO_OPTION);
-                    if (response == JOptionPane.YES_OPTION){
+                    int response = JOptionPane.showConfirmDialog(panelName, "Are you sure you want to delete this?",
+                            "Confirmation Message", JOptionPane.YES_NO_OPTION);
+                    if (response == JOptionPane.YES_OPTION) {
                         deleted = true;
                         continue;
-                    } else{
-                        JOptionPane.showConfirmDialog(panelName, "Cancellation of deletion completed.", "Cancellation Message", JOptionPane.PLAIN_MESSAGE);
+                    } else {
+                        JOptionPane.showConfirmDialog(panelName, "Cancellation of deletion completed.",
+                                "Cancellation Message", JOptionPane.PLAIN_MESSAGE);
                     }
                 }
                 // line is rewritten if no results or if user doesn't confirm deletion
                 writer.write(line + System.lineSeparator());
             }
 
-            if (!deleted) {System.out.println("Results not found");}
+            if (!deleted) {
+                System.out.println("Results not found");
+            }
 
-        } catch (IOException e) {e.printStackTrace();}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Delete the original file and replace it with the temp file
         if (inputFile.delete()) {
@@ -252,10 +256,10 @@ public class file {
     public static void main(String[] args) throws IOException {
         // Ensure "ppe.txt" is created before any operations
         file.createFile("ppe.txt");
-        
+
         // Example of adding data
         file.ADD_DATA("suppliers.txt", "Supplier Name", "Supplier Address", "Supplier Phone");
         // You can add more examples here to test other methods
     }
-    
+
 }
