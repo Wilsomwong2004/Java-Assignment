@@ -1,2 +1,3 @@
-admin:password
-Wilsom,Wilsomwong,20040727,wilsomwong040727@gmail.com,Male,Admin
+
+A-00001,wilsomwong,12345678,wilsomwong040727@gmail.com,Male,Admin
+S-00001,12345,2231234234,wilsomwong040727@gmail.com,Male,Staff

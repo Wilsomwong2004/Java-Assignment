@@ -1,6 +1,7 @@
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -28,7 +29,9 @@ public class SignupSystem extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-
+    
+    private static final String USERS_FILE = "users.txt";
+    
     public SignupSystem() {
         initComponents();
         getContentPane().setBackground(Color.white);
@@ -196,28 +199,57 @@ public class SignupSystem extends javax.swing.JFrame {
             return;
         }
 
-        String userId = jTextField2.getText();
+        String role = jRadioButton3.isSelected() ? "Admin" : "Staff";
+        String userId = generateUserId(role);
+
         String username = jTextField1.getText();
         String password = new String(jPasswordField1.getPassword());
         String email = jTextField3.getText();
         String gender = jRadioButton1.isSelected() ? "Male" : "Female";
-        String role = jRadioButton3.isSelected() ? "Admin" : "Staff";
 
         try {
-            File file = new File("users.txt");
-            FileWriter fw = new FileWriter(file, true);
+            FileWriter fw = new FileWriter(USERS_FILE, true);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(String.format("%s,%s,%s,%s,%s,%s\n", userId, username, password, email, gender, role));
             bw.close();
 
-            JOptionPane.showMessageDialog(this, "Sign up successful!");
-            // Go to main page
-            // MainPage mainPage = new MainPage();
-            // mainPage.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Sign up successful! Your UserID is: " + userId);
+            LoginSystem loginSystem = new LoginSystem();
+            loginSystem.setVisible(true);
             this.dispose();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error writing to file: " + ex.getMessage());
         }
+    }
+
+    private String generateUserId(String role) {
+        String prefix = role.equals("Admin") ? "A-" : "S-";
+        int lastNumber = getLastUserNumber(role);
+        int newNumber = lastNumber + 1;
+        return String.format("%s%05d", prefix, newNumber);
+    }
+
+    private int getLastUserNumber(String role) {
+        int lastNumber = 0;
+        String prefix = role.equals("Admin") ? "A-" : "S-";
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(USERS_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 0 && parts[0].startsWith(prefix)) {
+                    int currentNumber = Integer.parseInt(parts[0].substring(2));
+                    if (currentNumber > lastNumber) {
+                        lastNumber = currentNumber;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            // If file doesn't exist or can't be read, lastNumber will remain 0
+            e.printStackTrace();
+        }
+        
+        return lastNumber;
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,7 +259,7 @@ public class SignupSystem extends javax.swing.JFrame {
     }
 
     private boolean validateInputs() {
-        if (jTextField2.getText().isEmpty() || jTextField1.getText().isEmpty() ||
+        if (jTextField1.getText().isEmpty() ||
             jPasswordField1.getPassword().length == 0 || jTextField3.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "All fields are required.");
             return false;
