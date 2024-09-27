@@ -1,14 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class ForgetPasswordForm extends JFrame {
     private LoginSystem loginSystem;
@@ -21,6 +14,7 @@ public class ForgetPasswordForm extends JFrame {
     private JLabel messageLabel;
     private String verificationCode;
     private boolean codeVerified = false;
+    private JPanel panel;
 
     public ForgetPasswordForm(LoginSystem loginSystem, String username, String email) {
         this.loginSystem = loginSystem;
@@ -36,7 +30,7 @@ public class ForgetPasswordForm extends JFrame {
         setSize(300, 200);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         verificationCodeField = new JTextField(20);
@@ -74,10 +68,12 @@ public class ForgetPasswordForm extends JFrame {
         if (verificationCodeField.getText().equals(verificationCode)) {
             codeVerified = true;
             messageLabel.setText("Enter new password");
-            panel.remove(verificationCodeField);
+            panel.removeAll();
+            panel.add(messageLabel);
             panel.add(newPasswordField);
             panel.add(new JLabel("Confirm new password"));
             panel.add(confirmPasswordField);
+            panel.add(submitButton);
             panel.revalidate();
             panel.repaint();
         } else {
