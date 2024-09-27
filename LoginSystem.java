@@ -46,34 +46,47 @@ public class LoginSystem extends javax.swing.JFrame {
 
     private void loadUsers() {
         File file = new File(USER_FILE);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                // Add a default user
-                try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
-                    writer.println("admin:password");
+        boolean fileExists = file.exists();
+
+        if (!fileExists || file.length() == 0) {
+            // Add default admin account
+            users.put("admin", "0000");
+            saveUsers();
+        } else {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length >= 3) {
+                        users.put(parts[1], parts[2]);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error creating user file", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error reading user file", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(":");
-                if (parts.length == 2) {
-                    users.put(parts[0], parts[1]);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error reading user file", "Error", JOptionPane.ERROR_MESSAGE);
+        // Always ensure the default admin account exists
+        if (!users.containsKey("admin")) {
+            users.put("admin", "0000");
+            saveUsers();
         }
     }
 
-private void setupPlaceholders() {
+    private void saveUsers() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(USER_FILE))) {
+            for (Map.Entry<String, String> entry : users.entrySet()) {
+                writer.println("A-00000," + entry.getKey() + "," + entry.getValue() + ",admin@example.com,Not Specified,Admin");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error saving user file", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    private void setupPlaceholders() {
         jTextField2.setText("Username");
         jTextField2.setForeground(Color.GRAY);
         jTextField2.addFocusListener(new FocusAdapter() {
@@ -255,6 +268,9 @@ private void setupPlaceholders() {
     }
     
     private void attemptLogin() {
+        currentUsername = jTextField2.getText();
+        currentPassword = new String(jPasswordField1.getPassword());
+
         if (users.containsKey(currentUsername) && users.get(currentUsername).equals(currentPassword)) {
             JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
             // Here you can open the main application window
