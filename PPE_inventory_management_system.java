@@ -42,7 +42,7 @@ public class PPE_inventory_management_system  {
                 // Check if input matches valid credentials
                 if (userID.equals(validUserID) && password.equals(validPassword)) {
                     resultLabel.setText("Login successful!");
-                    AdminPage.main(args);
+                    AdminPageoutdated.main(args);
                 } else {
                     resultLabel.setText("Invalid user ID or password.");
                 }

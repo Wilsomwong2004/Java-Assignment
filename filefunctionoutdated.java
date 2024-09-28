@@ -1,16 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author songj
- */
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Choice;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.TextField;
@@ -25,85 +14,46 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
 
-public class filefunction extends JFrame{
-    private final CardLayout cardLayout;
-    private final JPanel contentPane;
-    public filefunction(Runnable onCompletion) {
-        cardLayout = new CardLayout();
-        contentPane = new JPanel(cardLayout);  
+public class filefunctionoutdated{
+    static String[] user = {"User ID ","Name ","Password ","User Type "};
+    static String[] ppe = {"Item Code ","Item Name","Supplier Code","Quantity in stock "};
+    static String[] supplier = {"Supplier Code ","Name ","Address ","Phone Number "};
+    static String[] hospital = {"Hospital Code ","Name ","Address ","Phone Number "};
 
-        setTitle("File Management System");
-        setSize(600, 440);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-
-        // Add content pane which contains different panels
-        add(contentPane, BorderLayout.CENTER);
-
-        // Initialize panels
-        checkMissingFiles(contentPane, cardLayout,onCompletion);
-
-        setVisible(true);
-    }
-
-    //reusable code
-    public static JLabel addLabel(JPanel panel, String text, int x, int y) {
-        JLabel label = new JLabel(text);
-        label.setBounds(x, y, 100, 30);
-        label.setFont(new Font("Agency FB", Font.BOLD, 20));
-        panel.add(label);
-        return label;
-    }
-    
-    public static TextField addTextField(JPanel panel, int x, int y) {
-        TextField textField = new TextField(30);
-        textField.setBounds(x, y, 300, 30);
-        panel.add(textField);
-        return textField;
-    }
-
-    public static void clearTextFields(TextField... textFields) {
-        for (TextField textField : textFields) {
-            textField.setText("");
-        }
-    } 
-
-    //CHECK ALL MISSING FILES
-    public static void checkMissingFiles(JPanel contentPane, CardLayout cardLayout, Runnable onCompletion) {
+    public static void checkMissingFiles(JPanel PanelName, CardLayout cardLayout, Container contentPane) {
         String[] allfiles = {"suppliers.txt", "hospitals.txt", "ppe.txt"};
-    
-        // Define the actions to take based on missing files
-        Runnable checkPPE = () -> {
-            if (!new File(allfiles[2]).exists()) {
-                initialiseppePanel(cardLayout, contentPane, allfiles[2], () -> showProceedToAdminPanel(cardLayout, contentPane, onCompletion));
-            } else {
-                showProceedToAdminPanel(cardLayout, contentPane, onCompletion);
-            }
-        };
-    
-        Runnable checkHospital = () -> {
-            if (!new File(allfiles[1]).exists()) {
-                initialiseHospitalPanel(cardLayout, contentPane, allfiles[1], checkPPE);
-            } else {
-                checkPPE.run();
-            }
-        };
-    
-        // Check suppliers first, then hospitals, and finally PPE
+        
         if (!new File(allfiles[0]).exists()) {
-            initialiseSupplierPanel(cardLayout, contentPane, allfiles[0], checkHospital);
-        } else {
-            checkHospital.run();
+            initialiseSupplierPanel(cardLayout, contentPane, allfiles[0], () -> {
+                if (!new File(allfiles[1]).exists()) {
+                    initialiseHospitalPanel(cardLayout, contentPane, allfiles[1],() -> {
+                        if (!new File(allfiles[2]).exists()){
+                            initialiseppePanel(cardLayout, contentPane, allfiles[2],() -> {
+                                cardLayout.show(contentPane, "Main Panel");
+                            });
+                        }
+                    });
+                }
+            });
+        } else if (!new File(allfiles[1]).exists()) {
+            initialiseHospitalPanel(cardLayout, contentPane, allfiles[1],() -> {
+                if (!new File(allfiles[2]).exists()){
+                    initialiseppePanel(cardLayout, contentPane, allfiles[2],() -> {
+                        cardLayout.show(contentPane, "Main Panel");
+                    });
+                }
+            });
+        } else if (!new File(allfiles[2]).exists()){
+            initialiseppePanel(cardLayout, contentPane, allfiles[2],() -> {
+                cardLayout.show(contentPane, "Main Panel");
+            });
         }
     }
+
 
     private static void initialiseSupplierPanel(CardLayout cardLayout, Container contentPane, String filename, Runnable onComplete) {
         createFile(filename);
@@ -112,45 +62,29 @@ public class filefunction extends JFrame{
         for (int i = 0; i < 3; i++) {
             JPanel panel = new JPanel(null);
     
-            JPanel headerPanel = new JPanel();
-            headerPanel.setBounds(0, 0, 600, 80);
-            headerPanel.setBackground(new java.awt.Color(54, 57, 63)); 
-            panel.add(headerPanel);
-
-            JLabel label = new JLabel("New Supplier", SwingConstants.CENTER);
-            label.setFont(new Font("Agency FB", Font.BOLD, 36));
-            label.setForeground(new java.awt.Color(255, 255, 255)); // White text
-            headerPanel.setLayout(new BorderLayout());
-            headerPanel.add(label, BorderLayout.CENTER);
-
-            // Name label and text field
-            addLabel(panel, "Name:", 50, 100);
-            TextField t1 = addTextField(panel, 150, 100);
-
-            // Address label and text field (larger field for multiline input)
-            addLabel(panel, "Address:", 50, 150);
-            TextField t2 = new TextField();
-            t2.setBounds(150, 150, 300, 50); // Larger text area
-            t2.setBackground(new java.awt.Color(255, 255, 255));
-            t2.setForeground(new java.awt.Color(0, 0, 0));
-            panel.add(t2);
-
-            // Phone Number label and text field
-            addLabel(panel, "Phone Number:", 50, 230);
-            TextField t3 = addTextField(panel, 150, 230);
-
-            // Submit button styled like the image
+            JLabel label = new JLabel("New Supplier");
+            label.setFont(new Font("Agency FB", Font.BOLD, 50));
+            label.setBounds(190, 0, 600, 100);
+            panel.add(label);
+    
+            AdminPageoutdated.addLabel(panel, "Name:", 100, 150);
+            TextField t1 = AdminPageoutdated.addTextField(panel, 200, 150);
+            
+            AdminPageoutdated.addLabel(panel, "Address:", 100, 200);
+            TextField t2 = AdminPageoutdated.addTextField(panel, 200, 200);
+            
+            AdminPageoutdated.addLabel(panel, "Phone Number:", 100, 250);
+            TextField t3 = AdminPageoutdated.addTextField(panel, 200, 250);
+            
             JButton button = new JButton("Submit");
             button.setFont(new Font("Agency FB", Font.BOLD, 20));
-            button.setBackground(new java.awt.Color(54, 57, 63)); // Gray color
-            button.setForeground(new java.awt.Color(255, 255, 255)); // White text
-            button.setBounds(225, 300, 150, 40); // Centered button
+            button.setBounds(200, 500, 150, 80);
             panel.add(button);
             
             int index = i;
             button.addActionListener(e -> {
                 if (!t1.getText().isEmpty() && !t2.getText().isEmpty() && !t3.getText().isEmpty()) {
-                    filefunction.ADD_DATA("suppliers.txt",null, t1.getText(), t2.getText(), t3.getText());
+                    filefunctionoutdated.ADD_DATA("suppliers.txt", t1.getText(), t2.getText(), t3.getText());
                     clearTextFields(t1, t2, t3);
                     submissionCount[0]++;
                     if (submissionCount[0] < 3) {
@@ -177,41 +111,29 @@ public class filefunction extends JFrame{
         for (int i = 0; i < 3; i++) {
             JPanel panel = new JPanel(null);
     
-            JPanel headerPanel = new JPanel();
-            headerPanel.setBounds(0, 0, 600, 80);
-            headerPanel.setBackground(new java.awt.Color(54, 57, 63)); // Dark background
-            panel.add(headerPanel);
-
-            JLabel label = new JLabel("New Hospital", SwingConstants.CENTER);
-            label.setFont(new Font("Agency FB", Font.BOLD, 36));
-            label.setForeground(new java.awt.Color(255, 255, 255)); // White text
-            headerPanel.setLayout(new BorderLayout());
-            headerPanel.add(label, BorderLayout.CENTER);
-
-            addLabel(panel, "Name:", 50, 100);
-            TextField t1 = addTextField(panel, 150, 100);
-
-            addLabel(panel, "Address:", 50, 150);
-            TextField t2 = new TextField();
-            t2.setBounds(150, 150, 300, 50); // Larger text area
-            t2.setBackground(new java.awt.Color(255, 255, 255));
-            t2.setForeground(new java.awt.Color(0, 0, 0));
-            panel.add(t2);
-
-            addLabel(panel, "Phone Number:", 50, 230);
-            TextField t3 = addTextField(panel, 150, 230);
-
+            JLabel label = new JLabel("New Hospital");
+            label.setFont(new Font("Agency FB", Font.BOLD, 50));
+            label.setBounds(190, 0, 600, 100);
+            panel.add(label);
+    
+            AdminPageoutdated.addLabel(panel, "Name:", 100, 150);
+            TextField t1 = AdminPageoutdated.addTextField(panel, 200, 150);
+            
+            AdminPageoutdated.addLabel(panel, "Address:", 100, 200);
+            TextField t2 = AdminPageoutdated.addTextField(panel, 200, 200);
+            
+            AdminPageoutdated.addLabel(panel, "Phone Number:", 100, 250);
+            TextField t3 = AdminPageoutdated.addTextField(panel, 200, 250);
+            
             JButton button = new JButton("Submit");
             button.setFont(new Font("Agency FB", Font.BOLD, 20));
-            button.setBackground(new java.awt.Color(54, 57, 63)); 
-            button.setForeground(new java.awt.Color(255, 255, 255));
-            button.setBounds(225, 300, 150, 40);
+            button.setBounds(200, 500, 150, 80);
             panel.add(button);
     
             int index = i;
             button.addActionListener(e -> {
                 if (!t1.getText().isEmpty() && !t2.getText().isEmpty() && !t3.getText().isEmpty()) {
-                    ADD_DATA("hospitals.txt",null, t1.getText(), t2.getText(), t3.getText());
+                    ADD_DATA("hospitals.txt", t1.getText(), t2.getText(), t3.getText());
                     clearTextFields(t1, t2, t3);
                     submissionCount[0]++;
                     if (submissionCount[0] < 3) {
@@ -231,7 +153,14 @@ public class filefunction extends JFrame{
     
         cardLayout.show(contentPane, "Initialise Hospital0");
     }
-   
+    
+    
+    public static void clearTextFields(TextField... textFields) {
+        for (TextField textField : textFields) {
+            textField.setText("");
+        }
+    } 
+
     public static void initialiseppePanel(CardLayout cardLayout,Container contentPane,String filename, Runnable onComplete){
         createFile(filename);
         String[] itemCode = {"HC","FS","MS","GL","GW","SC"};
@@ -241,54 +170,31 @@ public class filefunction extends JFrame{
         for (int i = 0; i < 6; i++) {
             JPanel panel = new JPanel(null);
 
-            JPanel headerPanel = new JPanel();
-            headerPanel.setBounds(0, 0, 600, 80);
-            headerPanel.setBackground(new java.awt.Color(54, 57, 63));
-            panel.add(headerPanel);
+            JLabel label = new JLabel("New PPE Item");
+            label.setFont(new Font("Agency FB", Font.BOLD, 50));
+            label.setBounds(190, 0, 600, 100);
+            panel.add(label);
 
-            JLabel label = new JLabel("New PPE Item", SwingConstants.CENTER);
-            label.setFont(new Font("Agency FB", Font.BOLD, 36));
-            label.setForeground(new java.awt.Color(255, 255, 255)); // White text
-            headerPanel.setLayout(new BorderLayout());
-            headerPanel.add(label, BorderLayout.CENTER);
+            AdminPageoutdated.addLabel(panel, "Item Code:", 100, 150);
+            AdminPageoutdated.addLabel(panel, itemCode[i], 250, 150);
 
-            // Item Code label and value
-            addLabel(panel, "Item Code:", 50, 100);
-            JLabel codeLabel = new JLabel(itemCode[i]);
-            codeLabel.setBounds(150, 100, 300, 30);
-            codeLabel.setFont(new Font("Agency FB", Font.BOLD, 20));
-            panel.add(codeLabel);
+            AdminPageoutdated.addLabel(panel, "Item Name:", 100, 200);
+            AdminPageoutdated.addLabel(panel, itemName[i], 250, 200);
 
-            // Item Name label and value
-            addLabel(panel, "Item Name:", 50, 150);
-            JLabel nameLabel = new JLabel(itemName[i]);
-            nameLabel.setBounds(150, 150, 300, 30);
-            nameLabel.setFont(new Font("Agency FB", Font.BOLD, 20));
-            panel.add(nameLabel);
-
-            // Supplier Code label and choice dropdown
-            addLabel(panel, "Supplier Code:", 50, 200);
+            AdminPageoutdated.addLabel(panel, "Supplier Code:", 100, 250);
             Choice t3 = new Choice();
             List<String> allID = GET_ALL_ID("suppliers.txt");
-            for (String id : allID) {
+            for (String id:allID){
                 t3.add(id);
             }
-            t3.setBounds(150, 200, 300, 30);
+            t3.setBounds(250, 250, 400, 30);
             panel.add(t3);
 
-            // Quantity (fixed value)
-            addLabel(panel, "Quantity:", 50, 250);
-            JLabel quantityLabel = new JLabel("100");
-            quantityLabel.setBounds(150, 250, 300, 30);
-            quantityLabel.setFont(new Font("Agency FB", Font.BOLD, 20));
-            panel.add(quantityLabel);
-
-            // Submit button styled like the image
+            AdminPageoutdated.addLabel(panel, "Quantity:         100", 100, 300);
+            
             JButton button = new JButton("Submit");
             button.setFont(new Font("Agency FB", Font.BOLD, 20));
-            button.setBackground(new java.awt.Color(54, 57, 63));
-            button.setForeground(new java.awt.Color(255, 255, 255));
-            button.setBounds(225, 350, 150, 40); // Centered button
+            button.setBounds(200, 500, 150, 80);
             panel.add(button);
     
             int index = i;
@@ -298,7 +204,7 @@ public class filefunction extends JFrame{
                 String input3 = t3.getSelectedItem();
                 String input4 = "100";
                 if (!input3.isEmpty()) {
-                    ADD_DATA("ppe.txt",null, input1, input2, input3, input4);
+                    ADD_DATA("ppe.txt", input1, input2, input3, input4);
                     t3.select(0);
                     submissionCount[0]++;
                     if (submissionCount[0] < 6) {
@@ -316,25 +222,7 @@ public class filefunction extends JFrame{
         }
         cardLayout.show(contentPane, "Initialise Item0");
     }
-    
-    public static void showProceedToAdminPanel(CardLayout cardLayout, JPanel contentPane, Runnable onCompletion) {
-        JPanel proceedPanel = new JPanel();
-        proceedPanel.setLayout(new BorderLayout());
 
-        JButton proceedButton = new JButton("WELCOME TO ADMIN PAGE! Click to proceed");
-        proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
-        proceedButton.addActionListener(e -> {
-            if (onCompletion != null) {
-                onCompletion.run();  // Open AdminPage
-                ((JFrame) SwingUtilities.getWindowAncestor(contentPane)).dispose();  // Close filefunction window
-            }
-        });
-        proceedPanel.add(proceedButton, BorderLayout.CENTER);
-
-        contentPane.add(proceedPanel, "ProceedPanel");
-        cardLayout.show(contentPane, "ProceedPanel");
-    }
-    
     public static String createFile(String filename){
         try {
             File newFile = new File(filename);
@@ -348,17 +236,6 @@ public class filefunction extends JFrame{
         return filename;
     }
 
-    //FILES FUNCTION
-    public static void loadDataFromFile(String filename, DefaultTableModel tableModel)throws Exception {
-        BufferedReader br = new BufferedReader(new FileReader(filename));
-        String rec;
-        while((rec= br.readLine()) != null){
-            String [] record = rec.trim().split("<>");
-            tableModel.addRow(record);
-        }
-        br.close();
-    }
-    
     public static String generateNewID(String filename) throws IOException {
         String lastID = "00000";
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -380,27 +257,19 @@ public class filefunction extends JFrame{
         return String.format("%05d", newIDNum);
     }  
 
-    public static List<String> GET_ALL_ID(String filename){
-        List<String> ids = new ArrayList<>();
-        File file = new File(filename);
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
-            String line;
-            while ((line = reader.readLine()) != null){
-                String[] data = line.split("<>");
-                if (!data[0].isEmpty()){
-                    ids.add(data[0].trim());
-                } else{
-                    System.out.println("No IDs found.");
-                }
-            }
-        } catch (IOException e){
-            System.err.println("An error occurred while searching.");
-            e.printStackTrace();
+    public static String[] dataFormat(String filename) {
+        String[] label = null;
+        switch (filename) {
+            case "users.txt" -> label = user;
+            case "ppe.txt" -> label = ppe;
+            case "suppliers.txt" -> label = supplier;
+            case "hospitals.txt" -> label = hospital;
+            default -> System.out.println("Invalid file type.");
         }
-        return ids;
+        return label;
     }
-
-    public static void ADD_DATA(String filename , DefaultTableModel tableModel, String... data) {
+    
+    public static void ADD_DATA(String filename, String... data) {
         File file = new File(filename);
         if (!file.exists()) {
             createFile(filename);
@@ -436,10 +305,6 @@ public class filefunction extends JFrame{
             // Write the assembled line to the file
             myWriter.write(String.join("<>", lines));
             myWriter.newLine();
-            
-            if (tableModel != null) {
-                tableModel.addRow(lines.toArray(String[]::new));
-            }
 
         } catch (IOException e) {
             System.err.println("An error occurred while writing to the file.");
@@ -447,7 +312,7 @@ public class filefunction extends JFrame{
         }
     }
 
-    public static String SEARCH_DATA (String filename,String search, Component parentComponent){
+    public static String SEARCH_DATA (String filename,String search){
         File file = new File(filename);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))){
             String line;
@@ -457,13 +322,33 @@ public class filefunction extends JFrame{
                     return line;
                 }
             }
-            JOptionPane.showMessageDialog(parentComponent,"Results not found. Please try again.", "Error", JOptionPane.WARNING_MESSAGE);
+            System.out.println("Results not found. Please try again.");
             return null;
         } catch (IOException e){
             System.err.println("An error occurred while searching.");
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static List<String> GET_ALL_ID(String filename){
+        List<String> ids = new ArrayList<>();
+        File file = new File(filename);
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+            String line;
+            while ((line = reader.readLine()) != null){
+                String[] data = line.split("<>");
+                if (!data[0].isEmpty()){
+                    ids.add(data[0].trim());
+                } else{
+                    System.out.println("No IDs found.");
+                }
+            }
+        } catch (IOException e){
+            System.err.println("An error occurred while searching.");
+            e.printStackTrace();
+        }
+        return ids;
     }
 
     public static boolean EDIT_DATA(String filename, String[] newData) {
@@ -499,7 +384,7 @@ public class filefunction extends JFrame{
         return done;
     }
 
-    public static void DELETE_DATA(String filename, String search,Component parentComponent){
+    public static void DELETE_DATA(String filename, String search, JPanel panelName) throws IOException {
         File inputFile = new File(filename);
         File tempFile = new File("temp.txt");
 
@@ -511,21 +396,20 @@ public class filefunction extends JFrame{
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split("<>");
                 if (search.equals(data[0])) {
-                    int response = JOptionPane.showConfirmDialog(parentComponent, "Are you sure you want to delete this?", "Confirmation Message", JOptionPane.YES_NO_OPTION);
+                    int response = JOptionPane.showConfirmDialog(panelName, "Are you sure you want to delete this?", "Confirmation Message", JOptionPane.YES_NO_OPTION);
                     if (response == JOptionPane.YES_OPTION){
                         deleted = true;
                         continue;
                     } else{
-                        JOptionPane.showConfirmDialog(parentComponent, "Cancellation of deletion completed.", "Cancellation Message", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showConfirmDialog(panelName, "Cancellation of deletion completed.", "Cancellation Message", JOptionPane.PLAIN_MESSAGE);
                     }
                 }
                 // line is rewritten if no results or if user doesn't confirm deletion
                 writer.write(line + System.lineSeparator());
             }
 
-            if (!deleted) {
-                System.out.println("Results not found");
-            }
+            if (!deleted) {System.out.println("Results not found");}
+
         } catch (IOException e) {e.printStackTrace();}
 
         // Delete the original file and replace it with the temp file
@@ -538,4 +422,7 @@ public class filefunction extends JFrame{
         }
     }
 }
+
+
+
 
