@@ -252,6 +252,21 @@ public class SignupSystem extends javax.swing.JFrame {
         return lastNumber;
     }
 
+    private boolean usernameExists(String username) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(USERS_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 1 && parts[1].equals(username)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         LoginSystem loginSystem = new LoginSystem();
         loginSystem.setVisible(true);
@@ -264,27 +279,32 @@ public class SignupSystem extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "All fields are required.");
             return false;
         }
-
+    
+        if (usernameExists(jTextField1.getText())) {
+            JOptionPane.showMessageDialog(this, "This account name already exists. Please try another name.");
+            return false;
+        }
+    
         if (!isValidEmail(jTextField3.getText())) {
             JOptionPane.showMessageDialog(this, "Invalid email format.");
             return false;
         }
-
+    
         if (!jRadioButton1.isSelected() && !jRadioButton2.isSelected()) {
             JOptionPane.showMessageDialog(this, "Please select a gender.");
             return false;
         }
-
+    
         if (!jRadioButton3.isSelected() && !jRadioButton4.isSelected()) {
             JOptionPane.showMessageDialog(this, "Please select a role.");
             return false;
         }
-
+    
         if (!checkbox1.getState()) {
             JOptionPane.showMessageDialog(this, "Please agree to our terms & conditions, or else you can't get the service from us.");
             return false;
         }
-
+    
         return true;
     }
 

@@ -1012,16 +1012,16 @@ public class AdminPage extends javax.swing.JFrame {
         saveUserBtn.setVisible(false);
         addUserBtn.setVisible(true);
         
-        supplierScrollTable.setVisible(false);  
-        hospitalScrollTable.setVisible(false); 
-        userScrollTable.setVisible(true);      
+        supplierScrollTable.setVisible(false);
+        hospitalScrollTable.setVisible(false);
+        userScrollTable.setVisible(true);
         ppeItemScrollTable.setVisible(false);
         
         DefaultTableModel model3 = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
                //all cells false
-               return false;
+                return false;
             }
         };
         String[] ColHeadings = {"User ID", "Name", "Password", "Type of user"};
