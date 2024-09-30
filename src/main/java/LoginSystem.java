@@ -331,9 +331,8 @@ public class LoginSystem extends javax.swing.JFrame {
 
         if (users.containsKey(currentUsername) && users.get(currentUsername).equals(currentPassword)) {
             JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            // Here you can open the main application window
-            // MainApplication mainApp = new MainApplication();
-            // mainApp.setVisible(true);
+            AdminPage page = new AdminPage();
+            page.setVisible(true);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
@@ -341,8 +340,14 @@ public class LoginSystem extends javax.swing.JFrame {
     }
 
     public void updateUserPassword(String username, String newPassword) {
+        // Update the in-memory users map
+        if (users.containsKey(username)) {
+            users.put(username, newPassword);
+        }
+
+        // Update the file
         List<String> updatedLines = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(USER_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -357,7 +362,7 @@ public class LoginSystem extends javax.swing.JFrame {
             e.printStackTrace();
         }
         
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("users.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE))) {
             for (String line : updatedLines) {
                 writer.write(line);
                 writer.newLine();
@@ -365,6 +370,9 @@ public class LoginSystem extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Reload users to ensure consistency
+        loadUsers();
     }
 
     public void showLoginSystem() {

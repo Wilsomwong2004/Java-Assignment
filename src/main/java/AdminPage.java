@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -236,6 +235,11 @@ public class AdminPage extends javax.swing.JFrame {
             logoutBtn.setIcon(logoutIcon);
         }
         logoutBtn.setText("Log Out");
+        logoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutBtnMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1152,6 +1156,14 @@ public class AdminPage extends javax.swing.JFrame {
         ppeitemForm.setVisible(false);
         label.setText("TRANSACTION MENU");
     }//GEN-LAST:event_transactionBtnActionPerformed
+
+    private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
+        int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (logout == JOptionPane.YES_OPTION) {
+            this.dispose();
+            new LoginSystem().setVisible(true);
+        }
+    }//GEN-LAST:event_logoutBtnMouseClicked
 
     //ADD NEW DATA
     private void addPPEBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPPEBtnActionPerformed
