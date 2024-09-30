@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -199,11 +198,15 @@ public class LoginSystem extends javax.swing.JFrame {
         });
 
         //jLabel2.setIcon(new ImageIcon(getClass().getResource("src/main/resources/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg")));
-        URL loginImageURL = getClass().getResource("/resources/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg");
-        if (loginImageURL != null) {
-            jLabel2.setIcon(new ImageIcon(loginImageURL));
-        } else {
-            System.err.println("Resource not found: /resources/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg");
+        //URL loginImageURL = getClass().getResource("/resources/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg");
+        //if (loginImageURL != null) {
+        //    jLabel2.setIcon(new ImageIcon(loginImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /resources/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg");
+        //}
+        ImageIcon loginIcon = ResourceLoader.loadIcon("/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg");
+        if (loginIcon != null) {
+            jLabel2.setIcon(loginIcon);
         }
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N

@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author songj
  */
+
 public class AdminPage extends javax.swing.JFrame {
 
     public AdminPage() {
@@ -123,12 +123,16 @@ public class AdminPage extends javax.swing.JFrame {
 
         hospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         //hospitalBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/hospital.png"))); // NOI18N
-        URL hospitalImageURL = getClass().getResource("./resources/pic/hospital.png");
-        System.out.println("Hospital image URL: " + hospitalImageURL);
-        if (hospitalImageURL != null) {
-            hospitalBtn.setIcon(new ImageIcon(hospitalImageURL));
-        } else {
-            System.err.println("Resource not found: /pic/hospital.png");
+        //URL hospitalImageURL = getClass().getResource("./resources/pic/hospital.png");
+        //System.out.println("Hospital image URL: " + hospitalImageURL);
+        //if (hospitalImageURL != null) {
+        //    hospitalBtn.setIcon(new ImageIcon(hospitalImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/hospital.png");
+        //}
+        ImageIcon hospitalIcon = ResourceLoader.loadIcon("/pic/hospital.png");
+        if (hospitalIcon != null) {
+            hospitalBtn.setIcon(hospitalIcon);
         }
         hospitalBtn.setText("Hospital");
         hospitalBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -139,12 +143,17 @@ public class AdminPage extends javax.swing.JFrame {
 
         supplierBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         //supplierBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/supplier.png"))); // NOI18N
-        URL supplierImageURL = getClass().getResource("/pic/supplier.png");
-        if (supplierImageURL != null) {
-            supplierBtn.setIcon(new ImageIcon(supplierImageURL));
-        } else {
-            System.err.println("Resource not found: /pic/supplier.png");
+        //URL supplierImageURL = getClass().getResource("/pic/supplier.png");
+        //if (supplierImageURL != null) {
+        //    supplierBtn.setIcon(new ImageIcon(supplierImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/supplier.png");
+        //}
+        ImageIcon supplierIcon = ResourceLoader.loadIcon("/pic/supplier.png");
+        if (supplierIcon != null) {
+            supplierBtn.setIcon(supplierIcon);
         }
+
         supplierBtn.setText("Supplier");
         supplierBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,11 +163,15 @@ public class AdminPage extends javax.swing.JFrame {
 
         userBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         //userBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/user.png"))); // NOI18N
-        URL userImageURL = getClass().getResource("/pic/user.png");
-        if (userImageURL != null) {
-            userBtn.setIcon(new ImageIcon(userImageURL));
-        } else {
-            System.err.println("Resource not found: /pic/user.png");
+        //URL userImageURL = getClass().getResource("/pic/user.png");
+        //if (userImageURL != null) {
+        //    userBtn.setIcon(new ImageIcon(userImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/user.png");
+        //}
+        ImageIcon userIcon = ResourceLoader.loadIcon("/pic/user.png");
+        if (userIcon != null) {
+            userBtn.setIcon(userIcon);
         }
         userBtn.setText("User");
         userBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -169,11 +182,15 @@ public class AdminPage extends javax.swing.JFrame {
 
         ppeBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         //ppeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/ppe item.png"))); // NOI18N
-        URL ppeImageURL = getClass().getResource("/pic/ppe item.png");
-        if (ppeImageURL != null) {
-            ppeBtn.setIcon(new ImageIcon(ppeImageURL));
-        } else {
-            System.err.println("Resource not found: /pic/ppe item.png");
+        //URL ppeImageURL = getClass().getResource("/pic/ppe item.png");
+        //if (ppeImageURL != null) {
+        //    ppeBtn.setIcon(new ImageIcon(ppeImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/ppe item.png");
+        //}
+        ImageIcon ppeIcon = ResourceLoader.loadIcon("/pic/ppe item.png");
+        if (ppeIcon != null) {
+            ppeBtn.setIcon(ppeIcon);
         }
         ppeBtn.setText("PPE item");
         ppeBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -184,11 +201,15 @@ public class AdminPage extends javax.swing.JFrame {
 
         transactionBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         //transactionBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/transaction.png"))); // NOI18N
-        URL transactionImageURL = getClass().getResource("/pic/transaction.png");
-        if (transactionImageURL != null) {
-            transactionBtn.setIcon(new ImageIcon(transactionImageURL));
-        } else {
-            System.err.println("Resource not found: /pic/transaction.png");
+        //URL transactionImageURL = getClass().getResource("/pic/transaction.png");
+        //if (transactionImageURL != null) {
+        //    transactionBtn.setIcon(new ImageIcon(transactionImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/transaction.png");
+        //}
+        ImageIcon transactionIcon = ResourceLoader.loadIcon("/pic/transaction.png");
+        if (transactionIcon != null) {
+            transactionBtn.setIcon(transactionIcon);
         }
         transactionBtn.setText("Transaction");
         transactionBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -203,12 +224,16 @@ public class AdminPage extends javax.swing.JFrame {
 
         logoutBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
-        //logoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/log out.png"))); // NOI18N
-        URL logoutImageURL = getClass().getResource("/pic/log out.png");
-        if (logoutImageURL != null) {
-            logoutBtn.setIcon(new ImageIcon(logoutImageURL));
-        } else {
-            System.err.println("Resource not found: /pic/log out.png");
+        ////logoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/log out.png"))); // NOI18N
+        //URL logoutImageURL = getClass().getResource("/pic/log out.png");
+        //if (logoutImageURL != null) {
+        //    logoutBtn.setIcon(new ImageIcon(logoutImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/log out.png");
+        //}
+        ImageIcon logoutIcon = ResourceLoader.loadIcon("/pic/log out.png");
+        if (logoutIcon != null) {
+            logoutBtn.setIcon(logoutIcon);
         }
         logoutBtn.setText("Log Out");
 
