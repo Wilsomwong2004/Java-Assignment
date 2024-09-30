@@ -197,7 +197,7 @@ public class LoginSystem extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setIcon(new ImageIcon(getClass().getResource("pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg")));
+        //jLabel2.setIcon(new ImageIcon(getClass().getResource("src/main/resources/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg")));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel3.setText("Forget Password? ");

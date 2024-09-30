@@ -123,7 +123,7 @@ public class AdminPage extends javax.swing.JFrame {
 
         hospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         //hospitalBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/hospital.png"))); // NOI18N
-        URL hospitalImageURL = getClass().getResource("/pic/hospital.png");
+        URL hospitalImageURL = getClass().getResource("./resources/pic/hospital.png");
         System.out.println("Hospital image URL: " + hospitalImageURL);
         if (hospitalImageURL != null) {
             hospitalBtn.setIcon(new ImageIcon(hospitalImageURL));
