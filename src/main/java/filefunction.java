@@ -588,4 +588,31 @@ public class filefunction extends JFrame{
             System.out.println("Error. File isn't deleted.");
         }
     }
+
+    public static void REMOVE_DATA(String fileName, String idToRemove) {
+        File inputFile = new File(fileName);
+        File tempFile = new File("temp_" + fileName);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("<>");
+                if (parts.length > 0 && !parts[0].equals(idToRemove)) {
+                    writer.write(line + System.lineSeparator());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (inputFile.delete()) {
+            if (!tempFile.renameTo(inputFile)) {
+                System.err.println("Could not rename temp file");
+            }
+        } else {
+            System.err.println("Could not delete original file");
+        }
+    }
 }

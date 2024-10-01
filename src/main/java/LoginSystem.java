@@ -2,15 +2,12 @@ import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -51,21 +48,23 @@ public class LoginSystem extends javax.swing.JFrame {
 
     private void loadUsers() {
         File file = new File(USER_FILE);
-        boolean fileExists = file.exists();
-
-        if (!fileExists || file.length() == 0) {
-            // Add default admin account
+        if (!file.exists() || file.length() == 0) {
+            // Add default admin account if file doesn't exist or is empty
             users.put("admin", "0000");
             userEmails.put("admin", "admin@example.com");
-            saveUsers();
+            filefunction.ADD_DATA(USER_FILE, null, "Admin-00000", "admin", "0000", "admin@example.com", "Not Specified", "Admin");
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(",");
-                    if (parts.length >= 4) {
-                        users.put(parts[1], parts[2]);
-                        userEmails.put(parts[1], parts[3]);
+                    String[] parts = line.split("<>");
+                    if (parts.length >= 6) {
+                        String userId = parts[0];
+                        String username = parts[1];
+                        String password = parts[2];
+                        String email = parts[3];
+                        users.put(username, password);
+                        userEmails.put(username, email);
                     }
                 }
             } catch (IOException e) {
@@ -78,7 +77,7 @@ public class LoginSystem extends javax.swing.JFrame {
         if (!users.containsKey("admin")) {
             users.put("admin", "0000");
             userEmails.put("admin", "admin@example.com");
-            saveUsers();
+            filefunction.ADD_DATA(USER_FILE, null, "Admin-00000", "admin", "0000", "admin@example.com", "Not Specified", "Admin");
         }
     }
     
@@ -340,39 +339,39 @@ public class LoginSystem extends javax.swing.JFrame {
     }
 
     public void updateUserPassword(String username, String newPassword) {
-        // Update the in-memory users map
         if (users.containsKey(username)) {
             users.put(username, newPassword);
-        }
 
-        // Update the file
-        List<String> updatedLines = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(USER_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 3 && parts[1].equals(username)) {
-                    // Update password, keep other details the same
-                    parts[2] = newPassword;
-                    line = String.join(",", parts);
+            // Update the file
+            String userId = null;
+            String email = null;
+            String gender = null;
+            String role = null;
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(USER_FILE))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split("<>");
+                    if (parts.length >= 6 && parts[1].equals(username)) {
+                        userId = parts[0];
+                        email = parts[3];
+                        gender = parts[4];
+                        role = parts[5];
+                        break;
+                    }
                 }
-                updatedLines.add(line);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE))) {
-            for (String line : updatedLines) {
-                writer.write(line);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        // Reload users to ensure consistency
-        loadUsers();
+            if (userId != null) {
+                filefunction.REMOVE_DATA(USER_FILE, userId);
+                filefunction.ADD_DATA(USER_FILE, null, userId, username, newPassword, email, gender, role);
+            }
+
+            // Reload users to ensure consistency
+            loadUsers();
+        }
     }
 
     public void showLoginSystem() {

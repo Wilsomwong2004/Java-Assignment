@@ -92,10 +92,15 @@ public class ForgetPasswordForm extends JFrame {
         String newPassword = new String(newPasswordField.getPassword());
         String confirmPassword = new String(confirmPasswordField.getPassword());
         if (newPassword.equals(confirmPassword)) {
-            loginSystem.updateUserPassword(username, newPassword);
-            JOptionPane.showMessageDialog(this, "Password reset successfully");
-            this.dispose();
-            loginSystem.showLoginSystem();
+            try {
+                loginSystem.updateUserPassword(username, newPassword);
+                JOptionPane.showMessageDialog(this, "Password reset successfully");
+                this.dispose();
+                loginSystem.showLoginSystem();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error resetting password: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
         }
