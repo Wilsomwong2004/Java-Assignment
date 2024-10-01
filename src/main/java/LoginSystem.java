@@ -86,7 +86,7 @@ public class LoginSystem extends javax.swing.JFrame {
         try (PrintWriter writer = new PrintWriter(new FileWriter(USER_FILE))) {
             for (Map.Entry<String, String> entry : users.entrySet()) {
                 String email = userEmails.getOrDefault(entry.getKey(), "unknown@example.com");
-                writer.println("A-00000," + entry.getKey() + "," + entry.getValue() + "," + email + ",Not Specified,Admin");
+                writer.println("Admin-00000," + entry.getKey() + "," + entry.getValue() + "," + email + ",Not Specified,Admin");
             }
         } catch (IOException e) {
             e.printStackTrace();

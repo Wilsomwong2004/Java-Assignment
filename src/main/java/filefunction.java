@@ -21,8 +21,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -365,10 +368,13 @@ public class filefunction extends JFrame{
             while ((currentLine = reader.readLine()) != null) {
                 String[] data = currentLine.split("<>");
                 if (data.length > 0) {
-                    String longLastID = data[0];
-                    String[] idParts = longLastID.split("-");
+                    String fullID = data[0];
+                    String[] idParts = fullID.split("-");
                     if (idParts.length > 1) {
-                        lastID = idParts[1];
+                        String numericPart = idParts[1];
+                        if (numericPart.matches("\\d+")) {  // Ensure it's numeric
+                            lastID = numericPart;
+                        }
                     }
                 }
             }
@@ -377,7 +383,54 @@ public class filefunction extends JFrame{
         }
         int newIDNum = Integer.parseInt(lastID) + 1;
         return String.format("%05d", newIDNum);
-    }  
+    }
+
+    private static boolean entryExists(String filename, String id) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("<>");
+                if (parts.length > 0 && parts[0].equals(id)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static void removeDuplicateEntries(String filename) {
+        File inputFile = new File(filename);
+        File tempFile = new File("temp_" + filename);
+        Set<String> seenIds = new HashSet<>();
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+    
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("<>");
+                if (parts.length > 0) {
+                    String id = parts[0];
+                    if (!seenIds.contains(id)) {
+                        writer.write(line);
+                        writer.newLine();
+                        seenIds.add(id);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+        // Replace the original file with the de-duplicated file
+        if (!inputFile.delete()) {
+            System.out.println("Could not delete the original file");
+            return;
+        }
+        if (!tempFile.renameTo(inputFile)) {
+            System.out.println("Could not rename temp file");
+        }
+    }
 
     public static List<String> GET_ALL_ID(String filename){
         List<String> ids = new ArrayList<>();
@@ -405,31 +458,30 @@ public class filefunction extends JFrame{
             createFile(filename);
         }
 
+        removeDuplicateEntries(filename);
+
         try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename, true))) {
-            String newID;
             List<String> lines = new ArrayList<>();
 
-            switch (filename) {
-                case "suppliers.txt" -> {
-                    newID = "S-" + generateNewID(filename);
-                    lines.add(newID);
+            if (filename.equals("users.txt")) {
+                // For users.txt, the ID is already provided as the first data element
+                if (entryExists(filename, data[0])) {
+                    System.out.println("User already exists. Skipping duplicate.");
+                    return;
                 }
-                case "hospitals.txt" -> {
-                    newID = "H-" + generateNewID(filename);
-                    lines.add(newID);
+                lines.addAll(Arrays.asList(data));
+            } else {
+                String newID = "";
+                switch (filename) {
+                    case "suppliers.txt" -> newID = "S-" + generateNewID(filename);
+                    case "hospitals.txt" -> newID = "H-" + generateNewID(filename);
+                    default -> {
+                        // For other files, generate ID as before
+                        newID = generateNewID(filename);
+                    }
                 }
-                case "users.txt" -> {
-                    newID = "Staff-" + generateNewID(filename);
-                    lines.add(newID);
-                }
-            }
-
-            for (String i : data) {
-                if (i == null || i.trim().isEmpty()) {
-                    System.err.println("Invalid data provided. Skipping empty data.");
-                    continue;  // Skip invalid data
-                }
-                lines.add(i.trim());
+                lines.add(newID);
+                lines.addAll(Arrays.asList(data));
             }
 
             // Write the assembled line to the file

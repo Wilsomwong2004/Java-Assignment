@@ -1,9 +1,8 @@
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
@@ -198,71 +197,71 @@ public class SignupSystem extends javax.swing.JFrame {
         if (!validateInputs()) {
             return;
         }
-
+    
         String role = jRadioButton3.isSelected() ? "Admin" : "Staff";
         String userId = generateUserId(role);
-
+    
         String username = jTextField1.getText();
         String password = new String(jPasswordField1.getPassword());
         String email = jTextField3.getText();
         String gender = jRadioButton1.isSelected() ? "Male" : "Female";
-
-        try {
-            FileWriter fw = new FileWriter(USERS_FILE, true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(String.format("%s,%s,%s,%s,%s,%s\n", userId, username, password, email, gender, role));
-            bw.close();
-
-            JOptionPane.showMessageDialog(this, "Sign up successful! Your UserID is: " + userId);
-            LoginSystem loginSystem = new LoginSystem();
-            loginSystem.setVisible(true);
-            this.dispose();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error writing to file: " + ex.getMessage());
-        }
+    
+        filefunction.ADD_DATA(USERS_FILE, null, userId, username, password, email, gender, role);
+    
+        JOptionPane.showMessageDialog(this, "Sign up successful! Your UserID is: " + userId);
+        LoginSystem loginSystem = new LoginSystem();
+        loginSystem.setVisible(true);
+        this.dispose();
     }
 
     private String generateUserId(String role) {
-        String prefix = role.equals("Admin") ? "A-" : "S-";
-        int lastNumber = getLastUserNumber(role);
-        int newNumber = lastNumber + 1;
-        return String.format("%s%05d", prefix, newNumber);
+        String prefix = role.equals("Admin") ? "Admin-" : "Staff-";
+        try {
+            String newNumber = filefunction.generateNewID(USERS_FILE);
+            return String.format("%s%s", prefix, newNumber);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return prefix + "00001"; // Fallback if there's an error
+        }
     }
 
     private int getLastUserNumber(String role) {
         int lastNumber = 0;
-        String prefix = role.equals("Admin") ? "A-" : "S-";
-        
+        String prefix = role.equals("Admin") ? "Admin-" : "Staff-";
+    
         try (BufferedReader reader = new BufferedReader(new FileReader(USERS_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length > 0 && parts[0].startsWith(prefix)) {
-                    int currentNumber = Integer.parseInt(parts[0].substring(2));
-                    if (currentNumber > lastNumber) {
-                        lastNumber = currentNumber;
+                    String numberPart = parts[0].substring(prefix.length());
+                    try {
+                        int currentNumber = Integer.parseInt(numberPart);
+                        if (currentNumber > lastNumber) {
+                            lastNumber = currentNumber;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.err.println("Skipping invalid user ID: " + parts[0]);
                     }
                 }
             }
         } catch (IOException e) {
-            // If file doesn't exist or can't be read, lastNumber will remain 0
             e.printStackTrace();
         }
-        
+    
         return lastNumber;
     }
 
     private boolean usernameExists(String username) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(USERS_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
+        List<String> allIds = filefunction.GET_ALL_ID(USERS_FILE);
+        for (String id : allIds) {
+            String userData = filefunction.SEARCH_DATA(USERS_FILE, id, this);
+            if (userData != null) {
+                String[] parts = userData.split("<>");
                 if (parts.length > 1 && parts[1].equals(username)) {
                     return true;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return false;
     }
