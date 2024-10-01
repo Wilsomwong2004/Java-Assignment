@@ -2,16 +2,19 @@ import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 
 public class LoginSystem extends javax.swing.JFrame {
 
@@ -194,7 +197,17 @@ public class LoginSystem extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setIcon(new ImageIcon(getClass().getResource("pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg")));
+        //jLabel2.setIcon(new ImageIcon(getClass().getResource("src/main/resources/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg")));
+        //URL loginImageURL = getClass().getResource("/resources/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg");
+        //if (loginImageURL != null) {
+        //    jLabel2.setIcon(new ImageIcon(loginImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /resources/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg");
+        //}
+        ImageIcon loginIcon = ResourceLoader.loadIcon("/pic/inventory-icon-for-your-website-mobile-presentation-and-logo-design-free-vector.jpg");
+        if (loginIcon != null) {
+            jLabel2.setIcon(loginIcon);
+        }
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel3.setText("Forget Password? ");
@@ -318,9 +331,8 @@ public class LoginSystem extends javax.swing.JFrame {
 
         if (users.containsKey(currentUsername) && users.get(currentUsername).equals(currentPassword)) {
             JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            // Here you can open the main application window
-            // MainApplication mainApp = new MainApplication();
-            // mainApp.setVisible(true);
+            AdminPage page = new AdminPage();
+            page.setVisible(true);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
@@ -328,8 +340,39 @@ public class LoginSystem extends javax.swing.JFrame {
     }
 
     public void updateUserPassword(String username, String newPassword) {
-        users.put(username, newPassword);
-        saveUsers();
+        // Update the in-memory users map
+        if (users.containsKey(username)) {
+            users.put(username, newPassword);
+        }
+
+        // Update the file
+        List<String> updatedLines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(USER_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 3 && parts[1].equals(username)) {
+                    // Update password, keep other details the same
+                    parts[2] = newPassword;
+                    line = String.join(",", parts);
+                }
+                updatedLines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE))) {
+            for (String line : updatedLines) {
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Reload users to ensure consistency
+        loadUsers();
     }
 
     public void showLoginSystem() {
