@@ -1496,7 +1496,6 @@ public class AdminPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editBtnActionPerformed
 
-
     /**
      * @param args the command line arguments
      */
