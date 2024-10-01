@@ -25,7 +25,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+<<<<<<< HEAD
 import java.util.Set;
+=======
+<<<<<<< HEAD:filefunction.java
+
+>>>>>>> 7eefb8e57a4322e5455e6c7bdf08cba08731f113
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +47,24 @@ public class filefunction extends JFrame{
         cardLayout = new CardLayout();
         contentPane = new JPanel(cardLayout);  
 
+=======
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+
+public class filefunction extends JFrame{
+    private final CardLayout cardLayout;
+    private final JPanel contentPane;
+    public filefunction(Runnable onCompletion) {
+        cardLayout = new CardLayout();
+        contentPane = new JPanel(cardLayout);  
+
+>>>>>>> c665d0dab5c977d4f925c13c8a17e4ed42cffbb5:src/main/java/filefunction.java
         setTitle("File Management System");
         setSize(600, 440);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -589,3 +612,7 @@ public class filefunction extends JFrame{
         }
     }
 }
+<<<<<<< HEAD:filefunction.java
+
+=======
+>>>>>>> c665d0dab5c977d4f925c13c8a17e4ed42cffbb5:src/main/java/filefunction.java
