@@ -26,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -615,5 +614,13 @@ public class filefunction extends JFrame{
         } else {
             System.err.println("Could not delete original file");
         }
+    }
+
+    public static boolean isFileExists(String string) {
+        if (string == null) {
+            return false;
+        }
+        File file = new File(string);
+        return file.exists();
     }
 }

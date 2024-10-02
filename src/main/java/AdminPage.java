@@ -1324,7 +1324,11 @@ public class AdminPage extends javax.swing.JFrame {
         transactionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         try {
-            filefunction.loadDataFromFile("transactions.txt",model5);
+            if (filefunction.isFileExists("transactions.txt")) {
+                filefunction.loadDataFromFile("transactions.txt",model5);
+            } else {
+                filefunction.createFile("transactions.txt");
+            }
         } catch (Exception ex) {
             Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
