@@ -25,7 +25,6 @@ public class LoginSystem extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private String currentUsername = "";
     private String currentPassword = "";
-    private JButton showPasswordButton;
     
     public LoginSystem() {
         initComponents();

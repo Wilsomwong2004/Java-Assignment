@@ -712,6 +712,7 @@ public class AdminPage extends javax.swing.JFrame {
 
             jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
             jLabel2.setText("Transaction ID:");
+            
 
             jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
             jLabel3.setText("Item Code:");
