@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -134,7 +135,18 @@ public class AdminPage extends javax.swing.JFrame {
         jPanel1.setAlignmentY(0);
 
         hospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        hospitalBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hospital.png"))); // NOI18N
+        //hospitalBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/hospital.png"))); // NOI18N
+        //URL hospitalImageURL = getClass().getResource("./resources/pic/hospital.png");
+        //System.out.println("Hospital image URL: " + hospitalImageURL);
+        //if (hospitalImageURL != null) {
+        //    hospitalBtn.setIcon(new ImageIcon(hospitalImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/hospital.png");
+        //}
+        ImageIcon hospitalIcon = ResourceLoader.loadIcon("/pic/hospital.png");
+        if (hospitalIcon != null) {
+            hospitalBtn.setIcon(hospitalIcon);
+        }
         hospitalBtn.setText("Hospital");
         hospitalBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +155,18 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         supplierBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        supplierBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supplier.png"))); // NOI18N
+        //supplierBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/supplier.png"))); // NOI18N
+        //URL supplierImageURL = getClass().getResource("/pic/supplier.png");
+        //if (supplierImageURL != null) {
+        //    supplierBtn.setIcon(new ImageIcon(supplierImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/supplier.png");
+        //}
+        ImageIcon supplierIcon = ResourceLoader.loadIcon("/pic/supplier.png");
+        if (supplierIcon != null) {
+            supplierBtn.setIcon(supplierIcon);
+        }
+
         supplierBtn.setText("Supplier");
         supplierBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,7 +175,17 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         userBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        userBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user.png"))); // NOI18N
+        //userBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/user.png"))); // NOI18N
+        //URL userImageURL = getClass().getResource("/pic/user.png");
+        //if (userImageURL != null) {
+        //    userBtn.setIcon(new ImageIcon(userImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/user.png");
+        //}
+        ImageIcon userIcon = ResourceLoader.loadIcon("/pic/user.png");
+        if (userIcon != null) {
+            userBtn.setIcon(userIcon);
+        }
         userBtn.setText("User");
         userBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,7 +194,17 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         ppeBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        ppeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ppe item.png"))); // NOI18N
+        //ppeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/ppe item.png"))); // NOI18N
+        //URL ppeImageURL = getClass().getResource("/pic/ppe item.png");
+        //if (ppeImageURL != null) {
+        //    ppeBtn.setIcon(new ImageIcon(ppeImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/ppe item.png");
+        //}
+        ImageIcon ppeIcon = ResourceLoader.loadIcon("/pic/ppe item.png");
+        if (ppeIcon != null) {
+            ppeBtn.setIcon(ppeIcon);
+        }
         ppeBtn.setText("PPE item");
         ppeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,7 +213,17 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         transactionBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        transactionBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/transaction.png"))); // NOI18N
+        //transactionBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/transaction.png"))); // NOI18N
+        //URL transactionImageURL = getClass().getResource("/pic/transaction.png");
+        //if (transactionImageURL != null) {
+        //    transactionBtn.setIcon(new ImageIcon(transactionImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/transaction.png");
+        //}
+        ImageIcon transactionIcon = ResourceLoader.loadIcon("/pic/transaction.png");
+        if (transactionIcon != null) {
+            transactionBtn.setIcon(transactionIcon);
+        }
         transactionBtn.setText("Transaction");
         transactionBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,8 +237,23 @@ public class AdminPage extends javax.swing.JFrame {
 
         logoutBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
-        logoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/log out.png"))); // NOI18N
+        ////logoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/log out.png"))); // NOI18N
+        //URL logoutImageURL = getClass().getResource("/pic/log out.png");
+        //if (logoutImageURL != null) {
+        //    logoutBtn.setIcon(new ImageIcon(logoutImageURL));
+        //} else {
+        //    System.err.println("Resource not found: /pic/log out.png");
+        //}
+        ImageIcon logoutIcon = ResourceLoader.loadIcon("/pic/log out.png");
+        if (logoutIcon != null) {
+            logoutBtn.setIcon(logoutIcon);
+        }
         logoutBtn.setText("Log Out");
+        logoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutBtnMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -375,7 +443,6 @@ public class AdminPage extends javax.swing.JFrame {
         //    for (String id : allID) {
         //        t3.add(id);
         //    });
-        
 
             t4.setText("100");
 
@@ -1241,7 +1308,34 @@ public class AdminPage extends javax.swing.JFrame {
         userScrollTable.setVisible(false);      
         ppeItemScrollTable.setVisible(false);
         transactionScrollTable.setVisible(true);
+
+        DefaultTableModel model5 = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells false
+               return false;
+            }
+        };
+        String[] ColHeadings = {"Transaction ID", "Transaction Date", "Supplier ID", "Hospital ID", "Item ID", "Quantity", "Price"};
+        model5.setColumnIdentifiers(ColHeadings);
+        transactionTable.setModel(model5);
+        model5.setRowCount(0);
+        transactionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        try {
+            filefunction.loadDataFromFile("transactions.txt",model5);
+        } catch (Exception ex) {
+            Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_transactionBtnActionPerformed
+
+    private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
+        int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (logout == JOptionPane.YES_OPTION) {
+            this.dispose();
+            new LoginSystem().setVisible(true);
+        }
+    }//GEN-LAST:event_logoutBtnMouseClicked
 
     //ADD NEW DATA
     private void addPPEBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPPEBtnActionPerformed
@@ -1327,7 +1421,23 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_addSupplierBtnActionPerformed
 
     private void addTransBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTransBtnActionPerformed
-        // TODO add your handling code here:
+        //DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
+        //String input1 = tt1.getText();
+        //String input2 = tt2.getText();
+        //String input3 = (String) tt3.getSelectedItem();
+        //String input4 = (String) tt4.getSelectedItem();
+        //String input5 = (String) tt5.getSelectedItem();
+        //String input6 = (String) tt6.getSelectedItem();
+        //String input7 = tt7.getText();
+        //if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()&& !input4.isEmpty()&& !input5.isEmpty()&& !input6.isEmpty()&& !input7.isEmpty()) {
+        //    filefunction.ADD_DATA("transactions.txt",model, input1, input2, input3,input4,input5,input6,input7);
+        //    JOptionPane.showMessageDialog(this, "Transaction data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+        //
+        //    // Clear all TextField contents
+        //    tt1.setText("");
+        //    tt2.setText("");
+        //    tt7.setText("");
+        //}
     }//GEN-LAST:event_addTransBtnActionPerformed
 
     //SAVE CHANGES
@@ -1484,7 +1594,45 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_savePPEBtnActionPerformed
 
     private void saveTransBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveTransBtnActionPerformed
-        // TODO add your handling code here:
+        //addTransBtn.setVisible(true);
+        //saveTransBtn.setVisible(false);
+        //
+        //DefaultTableModel model = (DefaultTableModel)transactionTable.getModel();
+        //int sRow = transactionTable.getSelectedRow();
+        //model.setValueAt(tt1.getText(),sRow,0);
+        //model.setValueAt(tt2.getText(),sRow,1);
+        //model.setValueAt(tt3.getSelectedItem(),sRow,2);
+        //model.setValueAt(tt4.getSelectedItem(),sRow,3);
+        //model.setValueAt(tt5.getSelectedItem(),sRow,4);
+        //model.setValueAt(tt6.getSelectedItem(),sRow,5);
+        //model.setValueAt(tt7.getText(),sRow,6);
+        //
+        //// Prepare data for file update
+        //String[] newData = new String[7];
+        //newData[0] = tt1.getText();
+        //newData[1] = tt2.getText();
+        //newData[2] = (String)tt3.getSelectedItem();
+        //newData[3] = (String)tt4.getSelectedItem();
+        //newData[4] = (String)tt5.getSelectedItem();
+        //newData[5] = (String)tt6.getSelectedItem();
+        //newData[6] = tt7.getText();
+        //
+        //// Call file update method
+        //boolean actionDone = filefunction.EDIT_DATA("transactions.txt", newData);
+        //
+        //if (actionDone) {
+        //    JOptionPane.showMessageDialog(rootPane, "Transaction Data updated successfully", "Update Result", JOptionPane.INFORMATION_MESSAGE);
+        //    
+        //    tt1.setText("");
+        //    tt2.setText("");
+        //    tt3.setSelectedItem(0);
+        //    tt4.setSelectedItem(0);
+        //    tt5.setSelectedItem(0);
+        //    tt6.setSelectedItem(0);
+        //    tt7.setText("");
+        //} else {
+        //    JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
+        //}
     }//GEN-LAST:event_saveTransBtnActionPerformed
 
     //EDIT, SEARCH AND DELETE
@@ -1662,9 +1810,6 @@ public class AdminPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editBtnActionPerformed
 
-    
-
-    
 
 
     /**
