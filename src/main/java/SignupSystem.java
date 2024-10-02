@@ -257,7 +257,7 @@ public class SignupSystem extends javax.swing.JFrame {
         for (String id : allIds) {
             String userData = filefunction.SEARCH_DATA(USERS_FILE, id, this);
             if (userData != null) {
-                String[] parts = userData.split("<>");
+                String[] parts = userData.split("|");
                 if (parts.length > 1 && parts[1].equals(username)) {
                     return true;
                 }

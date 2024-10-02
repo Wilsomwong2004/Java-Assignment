@@ -328,6 +328,7 @@ public class filefunction extends JFrame{
         proceedButton.addActionListener(e -> {
             if (onCompletion != null) {
                 onCompletion.run();  // Open AdminPage
+                AdminPage.
                 ((JFrame) SwingUtilities.getWindowAncestor(contentPane)).dispose();  // Close filefunction window
             }
         });
@@ -355,7 +356,7 @@ public class filefunction extends JFrame{
         BufferedReader br = new BufferedReader(new FileReader(filename));
         String rec;
         while((rec= br.readLine()) != null){
-            String [] record = rec.trim().split("<>");
+            String [] record = rec.trim().split("|");
             tableModel.addRow(record);
         }
         br.close();
@@ -366,7 +367,7 @@ public class filefunction extends JFrame{
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String currentLine;
             while ((currentLine = reader.readLine()) != null) {
-                String[] data = currentLine.split("<>");
+                String[] data = currentLine.split("|");
                 if (data.length > 0) {
                     String fullID = data[0];
                     String[] idParts = fullID.split("-");
@@ -389,7 +390,7 @@ public class filefunction extends JFrame{
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("<>");
+                String[] parts = line.split("|");
                 if (parts.length > 0 && parts[0].equals(id)) {
                     return true;
                 }
@@ -408,7 +409,7 @@ public class filefunction extends JFrame{
     
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("<>");
+                String[] parts = line.split("|");
                 if (parts.length > 0) {
                     String id = parts[0];
                     if (!seenIds.contains(id)) {
@@ -438,7 +439,7 @@ public class filefunction extends JFrame{
         try (BufferedReader reader = new BufferedReader(new FileReader(file))){
             String line;
             while ((line = reader.readLine()) != null){
-                String[] data = line.split("<>");
+                String[] data = line.split("|");
                 if (!data[0].isEmpty()){
                     ids.add(data[0].trim());
                 } else{
@@ -485,7 +486,7 @@ public class filefunction extends JFrame{
             }
 
             // Write the assembled line to the file
-            myWriter.write(String.join("<>", lines));
+            myWriter.write(String.join("|", lines));
             myWriter.newLine();
             
             if (tableModel != null) {
@@ -503,7 +504,7 @@ public class filefunction extends JFrame{
         try (BufferedReader reader = new BufferedReader(new FileReader(file))){
             String line;
             while ((line = reader.readLine()) != null){
-                String[] data = line.split("<>");
+                String[] data = line.split("|");
                 if (search.equals(data[0])){
                     return line;
                 }
@@ -525,9 +526,9 @@ public class filefunction extends JFrame{
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] existingData = line.split("<>");
+                String[] existingData = line.split("|");
                 if (existingData[0].equals(newData[0])) {
-                    line = String.join("<>", newData);
+                    line = String.join("|", newData);
                     done = true;
                 }
                 lines.add(line); //add all lines into array list
@@ -560,7 +561,7 @@ public class filefunction extends JFrame{
             String line;
             boolean deleted = false; //to validate results
             while ((line = reader.readLine()) != null) {
-                String[] data = line.split("<>");
+                String[] data = line.split("|");
                 if (search.equals(data[0])) {
                     int response = JOptionPane.showConfirmDialog(parentComponent, "Are you sure you want to delete this?", "Confirmation Message", JOptionPane.YES_NO_OPTION);
                     if (response == JOptionPane.YES_OPTION){
@@ -598,7 +599,7 @@ public class filefunction extends JFrame{
 
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("<>");
+                String[] parts = line.split("|");
                 if (parts.length > 0 && !parts[0].equals(idToRemove)) {
                     writer.write(line + System.lineSeparator());
                 }
