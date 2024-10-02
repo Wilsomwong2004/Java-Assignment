@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -16,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author songj
  */
-
 public class AdminPage extends javax.swing.JFrame {
 
     public AdminPage() {
@@ -44,34 +42,6 @@ public class AdminPage extends javax.swing.JFrame {
         label = new javax.swing.JLabel();
         longlines = new javax.swing.JLabel();
         form = new javax.swing.JLayeredPane();
-        transactionForm = new javax.swing.JLayeredPane();
-        jLabel30 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        userForm = new javax.swing.JLayeredPane();
-        userFormTitle = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        ut1 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        ut2 = new javax.swing.JTextField();
-        saveUserBtn = new javax.swing.JButton();
-        addUserBtn = new javax.swing.JButton();
-        ut3 = new javax.swing.JComboBox<>();
-        newUserID = new javax.swing.JLabel();
-        ppeitemForm = new javax.swing.JLayeredPane();
-        ppeItemFormTitle = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        t2 = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        t1 = new javax.swing.JTextField();
-        t3 = new javax.swing.JComboBox<>();
-        t4 = new javax.swing.JLabel();
-        addPPEBtn = new javax.swing.JButton();
-        savePPEBtn = new javax.swing.JButton();
         hospitalForm = new javax.swing.JLayeredPane();
         jLabel21 = new javax.swing.JLabel();
         hospitalFormTitle = new javax.swing.JLabel();
@@ -85,6 +55,48 @@ public class AdminPage extends javax.swing.JFrame {
         newHospitalID = new javax.swing.JLabel();
         addHospitalBtn = new javax.swing.JButton();
         saveHospitalBtn = new javax.swing.JButton();
+        ppeitemForm = new javax.swing.JLayeredPane();
+        ppeItemFormTitle = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        t2 = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        t1 = new javax.swing.JTextField();
+        t3 = new javax.swing.JComboBox<>();
+        t4 = new javax.swing.JLabel();
+        addPPEBtn = new javax.swing.JButton();
+        savePPEBtn = new javax.swing.JButton();
+        userForm = new javax.swing.JLayeredPane();
+        userFormTitle = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        ut1 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        ut2 = new javax.swing.JTextField();
+        saveUserBtn = new javax.swing.JButton();
+        addUserBtn = new javax.swing.JButton();
+        ut5 = new javax.swing.JComboBox<>();
+        newUserID = new javax.swing.JLabel();
+        ut3 = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        ut4 = new javax.swing.JComboBox<>();
+        jLabel25 = new javax.swing.JLabel();
+        transactionForm = new javax.swing.JLayeredPane();
+        jLabel30 = new javax.swing.JLabel();
+        saveTransBtn = new javax.swing.JButton();
+        addTransBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        newTransactionID = new javax.swing.JLabel();
+        tt4 = new javax.swing.JTextField();
+        tt3 = new javax.swing.JComboBox<>();
+        tt1 = new javax.swing.JComboBox<>();
+        tt2 = new javax.swing.JComboBox<>();
         supplierForm = new javax.swing.JLayeredPane();
         supplierFormTitle = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -122,18 +134,7 @@ public class AdminPage extends javax.swing.JFrame {
         jPanel1.setAlignmentY(0);
 
         hospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        //hospitalBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/hospital.png"))); // NOI18N
-        //URL hospitalImageURL = getClass().getResource("./resources/pic/hospital.png");
-        //System.out.println("Hospital image URL: " + hospitalImageURL);
-        //if (hospitalImageURL != null) {
-        //    hospitalBtn.setIcon(new ImageIcon(hospitalImageURL));
-        //} else {
-        //    System.err.println("Resource not found: /pic/hospital.png");
-        //}
-        ImageIcon hospitalIcon = ResourceLoader.loadIcon("/pic/hospital.png");
-        if (hospitalIcon != null) {
-            hospitalBtn.setIcon(hospitalIcon);
-        }
+        hospitalBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hospital.png"))); // NOI18N
         hospitalBtn.setText("Hospital");
         hospitalBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,18 +143,7 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         supplierBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        //supplierBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/supplier.png"))); // NOI18N
-        //URL supplierImageURL = getClass().getResource("/pic/supplier.png");
-        //if (supplierImageURL != null) {
-        //    supplierBtn.setIcon(new ImageIcon(supplierImageURL));
-        //} else {
-        //    System.err.println("Resource not found: /pic/supplier.png");
-        //}
-        ImageIcon supplierIcon = ResourceLoader.loadIcon("/pic/supplier.png");
-        if (supplierIcon != null) {
-            supplierBtn.setIcon(supplierIcon);
-        }
-
+        supplierBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supplier.png"))); // NOI18N
         supplierBtn.setText("Supplier");
         supplierBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,17 +152,7 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         userBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        //userBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/user.png"))); // NOI18N
-        //URL userImageURL = getClass().getResource("/pic/user.png");
-        //if (userImageURL != null) {
-        //    userBtn.setIcon(new ImageIcon(userImageURL));
-        //} else {
-        //    System.err.println("Resource not found: /pic/user.png");
-        //}
-        ImageIcon userIcon = ResourceLoader.loadIcon("/pic/user.png");
-        if (userIcon != null) {
-            userBtn.setIcon(userIcon);
-        }
+        userBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user.png"))); // NOI18N
         userBtn.setText("User");
         userBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,17 +161,7 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         ppeBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        //ppeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/ppe item.png"))); // NOI18N
-        //URL ppeImageURL = getClass().getResource("/pic/ppe item.png");
-        //if (ppeImageURL != null) {
-        //    ppeBtn.setIcon(new ImageIcon(ppeImageURL));
-        //} else {
-        //    System.err.println("Resource not found: /pic/ppe item.png");
-        //}
-        ImageIcon ppeIcon = ResourceLoader.loadIcon("/pic/ppe item.png");
-        if (ppeIcon != null) {
-            ppeBtn.setIcon(ppeIcon);
-        }
+        ppeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ppe item.png"))); // NOI18N
         ppeBtn.setText("PPE item");
         ppeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,17 +170,7 @@ public class AdminPage extends javax.swing.JFrame {
         });
 
         transactionBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        //transactionBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/transaction.png"))); // NOI18N
-        //URL transactionImageURL = getClass().getResource("/pic/transaction.png");
-        //if (transactionImageURL != null) {
-        //    transactionBtn.setIcon(new ImageIcon(transactionImageURL));
-        //} else {
-        //    System.err.println("Resource not found: /pic/transaction.png");
-        //}
-        ImageIcon transactionIcon = ResourceLoader.loadIcon("/pic/transaction.png");
-        if (transactionIcon != null) {
-            transactionBtn.setIcon(transactionIcon);
-        }
+        transactionBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/transaction.png"))); // NOI18N
         transactionBtn.setText("Transaction");
         transactionBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,23 +184,8 @@ public class AdminPage extends javax.swing.JFrame {
 
         logoutBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
-        ////logoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/log out.png"))); // NOI18N
-        //URL logoutImageURL = getClass().getResource("/pic/log out.png");
-        //if (logoutImageURL != null) {
-        //    logoutBtn.setIcon(new ImageIcon(logoutImageURL));
-        //} else {
-        //    System.err.println("Resource not found: /pic/log out.png");
-        //}
-        ImageIcon logoutIcon = ResourceLoader.loadIcon("/pic/log out.png");
-        if (logoutIcon != null) {
-            logoutBtn.setIcon(logoutIcon);
-        }
+        logoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/log out.png"))); // NOI18N
         logoutBtn.setText("Log Out");
-        logoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutBtnMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -295,162 +240,118 @@ public class AdminPage extends javax.swing.JFrame {
 
         form.setLayout(new java.awt.CardLayout());
 
-        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel30.setText("New Transaction Form");
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel21.setText("Hospital ID:");
 
-        jButton7.setBackground(new java.awt.Color(51, 51, 51));
-        jButton7.setText("Save Changes");
+        hospitalFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        hospitalFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        hospitalFormTitle.setText("New Hospital Form");
 
-        jButton5.setBackground(new java.awt.Color(51, 51, 51));
-        jButton5.setText("Add New");
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel22.setText("Name:");
 
-        transactionForm.setLayer(jLabel30, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        transactionForm.setLayer(jButton7, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        transactionForm.setLayer(jButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel23.setText("Address:");
 
-        javax.swing.GroupLayout transactionFormLayout = new javax.swing.GroupLayout(transactionForm);
-        transactionForm.setLayout(transactionFormLayout);
-        transactionFormLayout.setHorizontalGroup(
-            transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(transactionFormLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(transactionFormLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(transactionFormLayout.createSequentialGroup()
-                        .addGap(203, 203, 203)
-                        .addComponent(jButton7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton5)))
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
-        transactionFormLayout.setVerticalGroup(
-            transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(transactionFormLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(194, 194, 194)
-                .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton7))
-                .addContainerGap(63, Short.MAX_VALUE))
-        );
+        ht2.setColumns(20);
+        ht2.setRows(5);
+        jScrollPane6.setViewportView(ht2);
 
-        form.add(transactionForm, "card2");
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel24.setText("Phone Number:");
 
-        userFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        userFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        userFormTitle.setText("New User Form");
+        newHospitalID.setText("Code here");
 
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel16.setText("User ID:");
-
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel17.setText("Name:");
-
-        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel18.setText("Password:");
-
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel19.setText("Type of User:");
-
-        saveUserBtn.setBackground(new java.awt.Color(51, 51, 51));
-        saveUserBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        saveUserBtn.setForeground(new java.awt.Color(255, 255, 255));
-        saveUserBtn.setText("Save Changes");
-        saveUserBtn.addActionListener(new java.awt.event.ActionListener() {
+        addHospitalBtn.setBackground(new java.awt.Color(51, 51, 51));
+        addHospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        addHospitalBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addHospitalBtn.setText("Add New");
+        addHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveUserBtnActionPerformed(evt);
+                addHospitalBtnActionPerformed(evt);
             }
         });
 
-        addUserBtn.setBackground(new java.awt.Color(51, 51, 51));
-        addUserBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        addUserBtn.setForeground(new java.awt.Color(255, 255, 255));
-        addUserBtn.setText("Add New");
-        addUserBtn.addActionListener(new java.awt.event.ActionListener() {
+        saveHospitalBtn.setBackground(new java.awt.Color(51, 51, 51));
+        saveHospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        saveHospitalBtn.setForeground(new java.awt.Color(255, 255, 255));
+        saveHospitalBtn.setText("Save Changes");
+        saveHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addUserBtnActionPerformed(evt);
+                saveHospitalBtnActionPerformed(evt);
             }
         });
 
-        ut3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Staff" }));
+        hospitalForm.setLayer(jLabel21, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(hospitalFormTitle, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(ht1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(jLabel22, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(jLabel23, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(jScrollPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(ht3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(jLabel24, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(newHospitalID, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(addHospitalBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        hospitalForm.setLayer(saveHospitalBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        newUserID.setText("Code here");
-
-        userForm.setLayer(userFormTitle, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(jLabel16, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(ut1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(jLabel17, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(jLabel18, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(jLabel19, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(ut2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(saveUserBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(addUserBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(ut3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        userForm.setLayer(newUserID, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout userFormLayout = new javax.swing.GroupLayout(userForm);
-        userForm.setLayout(userFormLayout);
-        userFormLayout.setHorizontalGroup(
-            userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userFormLayout.createSequentialGroup()
-                .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(saveUserBtn)
-                    .addComponent(addUserBtn)
-                    .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(userFormLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(ut2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ut1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(newUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(userFormLayout.createSequentialGroup()
-                            .addGap(19, 19, 19)
-                            .addComponent(userFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(userFormLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ut3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(57, Short.MAX_VALUE))
+        javax.swing.GroupLayout hospitalFormLayout = new javax.swing.GroupLayout(hospitalForm);
+        hospitalForm.setLayout(hospitalFormLayout);
+        hospitalFormLayout.setHorizontalGroup(
+            hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(hospitalFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(hospitalFormTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(hospitalFormLayout.createSequentialGroup()
+                        .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ht3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(newHospitalID, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                            .addComponent(ht1))
+                        .addGap(0, 57, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, hospitalFormLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(saveHospitalBtn)
+                            .addComponent(addHospitalBtn))
+                        .addGap(24, 24, 24)))
+                .addContainerGap())
         );
-        userFormLayout.setVerticalGroup(
-            userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userFormLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(userFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(newUserID))
+        hospitalFormLayout.setVerticalGroup(
+            hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(hospitalFormLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(hospitalFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(newHospitalID))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ut1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ht1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22))
                 .addGap(18, 18, 18)
-                .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(ut2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(ut3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(addUserBtn)
+                .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ht3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel24))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(saveUserBtn)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addComponent(addHospitalBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saveHospitalBtn)
+                .addContainerGap(115, Short.MAX_VALUE))
         );
 
-        form.add(userForm, "card2");
+        form.add(hospitalForm, "card4");
 
         ppeItemFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         ppeItemFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -468,6 +369,13 @@ public class AdminPage extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel29.setText("Quantity In Stock:");
 
+        //t3.setSelectedItem(t3.removeAll();
+        //    Choice t3 = new Choice();
+        //    List<String> allID = filefunction.GET_ALL_ID("suppliers.txt");
+        //    for (String id : allID) {
+        //        t3.add(id);
+        //    });
+        
 
             t4.setText("100");
 
@@ -559,122 +467,281 @@ public class AdminPage extends javax.swing.JFrame {
                     .addComponent(addPPEBtn)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(savePPEBtn)
-                    .addContainerGap(107, Short.MAX_VALUE))
+                    .addContainerGap(182, Short.MAX_VALUE))
             );
 
             form.add(ppeitemForm, "card4");
 
-            jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel21.setText("Hospital ID:");
+            userFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+            userFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            userFormTitle.setText("New User Form");
 
-            hospitalFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-            hospitalFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            hospitalFormTitle.setText("New Hospital Form");
+            jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel16.setText("User ID:");
 
-            jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel22.setText("Name:");
+            jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel17.setText("Username:");
 
-            jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel23.setText("Address:");
+            jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel18.setText("Password:");
 
-            ht2.setColumns(20);
-            ht2.setRows(5);
-            jScrollPane6.setViewportView(ht2);
+            jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel19.setText("Email Address:");
 
-            jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel24.setText("Phone Number:");
-
-            newHospitalID.setText("Code here");
-
-            addHospitalBtn.setBackground(new java.awt.Color(51, 51, 51));
-            addHospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            addHospitalBtn.setForeground(new java.awt.Color(255, 255, 255));
-            addHospitalBtn.setText("Add New");
-            addHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
+            saveUserBtn.setBackground(new java.awt.Color(51, 51, 51));
+            saveUserBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            saveUserBtn.setForeground(new java.awt.Color(255, 255, 255));
+            saveUserBtn.setText("Save Changes");
+            saveUserBtn.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    addHospitalBtnActionPerformed(evt);
+                    saveUserBtnActionPerformed(evt);
                 }
             });
 
-            saveHospitalBtn.setBackground(new java.awt.Color(51, 51, 51));
-            saveHospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            saveHospitalBtn.setForeground(new java.awt.Color(255, 255, 255));
-            saveHospitalBtn.setText("Save Changes");
-            saveHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
+            addUserBtn.setBackground(new java.awt.Color(51, 51, 51));
+            addUserBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            addUserBtn.setForeground(new java.awt.Color(255, 255, 255));
+            addUserBtn.setText("Add New");
+            addUserBtn.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    saveHospitalBtnActionPerformed(evt);
+                    addUserBtnActionPerformed(evt);
                 }
             });
 
-            hospitalForm.setLayer(jLabel21, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(hospitalFormTitle, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(ht1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(jLabel22, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(jLabel23, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(jScrollPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(ht3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(jLabel24, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(newHospitalID, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(addHospitalBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            hospitalForm.setLayer(saveHospitalBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ut5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Staff" }));
 
-            javax.swing.GroupLayout hospitalFormLayout = new javax.swing.GroupLayout(hospitalForm);
-            hospitalForm.setLayout(hospitalFormLayout);
-            hospitalFormLayout.setHorizontalGroup(
-                hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(hospitalFormLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(hospitalFormTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(hospitalFormLayout.createSequentialGroup()
-                            .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel24))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                            .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(ht3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(newHospitalID, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                                .addComponent(ht1))
-                            .addGap(0, 59, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, hospitalFormLayout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(addHospitalBtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(saveHospitalBtn, javax.swing.GroupLayout.Alignment.TRAILING))))
-                    .addContainerGap())
+            newUserID.setText("Code here");
+
+            jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel20.setText("Type of User:");
+
+            ut4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male" }));
+
+            jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel25.setText("Gender:");
+
+            userForm.setLayer(userFormTitle, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(jLabel16, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(ut1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(jLabel17, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(jLabel18, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(jLabel19, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(ut2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(saveUserBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(addUserBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(ut5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(newUserID, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(ut3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(jLabel20, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(ut4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            userForm.setLayer(jLabel25, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            javax.swing.GroupLayout userFormLayout = new javax.swing.GroupLayout(userForm);
+            userForm.setLayout(userFormLayout);
+            userFormLayout.setHorizontalGroup(
+                userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(userFormLayout.createSequentialGroup()
+                    .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(userFormLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ut2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ut1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(newUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(userFormLayout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(userFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(userFormLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ut3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(userFormLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ut4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(userFormLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ut5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(userFormLayout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(saveUserBtn)))
+                    .addContainerGap(57, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userFormLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(addUserBtn)
+                    .addGap(70, 70, 70))
             );
-            hospitalFormLayout.setVerticalGroup(
-                hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(hospitalFormLayout.createSequentialGroup()
-                    .addGap(7, 7, 7)
-                    .addComponent(hospitalFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel21)
-                        .addComponent(newHospitalID))
+            userFormLayout.setVerticalGroup(
+                userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(userFormLayout.createSequentialGroup()
+                    .addGap(19, 19, 19)
+                    .addComponent(userFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(12, 12, 12)
+                    .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel16)
+                        .addComponent(newUserID))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(ht1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel22))
+                    .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ut1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGap(18, 18, 18)
-                    .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel23)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(21, 21, 21)
-                    .addGroup(hospitalFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(ht3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel24))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(addHospitalBtn)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(saveHospitalBtn)
-                    .addContainerGap(40, Short.MAX_VALUE))
+                    .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel18)
+                        .addComponent(ut2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel19)
+                        .addComponent(ut3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ut4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel25))
+                    .addGap(15, 15, 15)
+                    .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel20)
+                        .addComponent(ut5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(22, 22, 22)
+                    .addComponent(addUserBtn)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(saveUserBtn)
+                    .addContainerGap(77, Short.MAX_VALUE))
             );
 
-            form.add(hospitalForm, "card4");
+            form.add(userForm, "card2");
+
+            jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+            jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            jLabel30.setText("New Transaction Form");
+
+            saveTransBtn.setBackground(new java.awt.Color(51, 51, 51));
+            saveTransBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            saveTransBtn.setForeground(new java.awt.Color(255, 255, 255));
+            saveTransBtn.setText("Save Changes");
+            saveTransBtn.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    saveTransBtnActionPerformed(evt);
+                }
+            });
+
+            addTransBtn.setBackground(new java.awt.Color(51, 51, 51));
+            addTransBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            addTransBtn.setForeground(new java.awt.Color(255, 255, 255));
+            addTransBtn.setText("Add New");
+            addTransBtn.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    addTransBtnActionPerformed(evt);
+                }
+            });
+
+            jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel2.setText("Transaction ID:");
+
+            jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel3.setText("Item Code:");
+
+            jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel4.setText("Process:");
+
+            jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel5.setText("Hospital / Supplier Code:");
+
+            jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel6.setText("Quantity:");
+
+            newTransactionID.setText("Code here");
+
+            tt2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Distribute", "Receive" }));
+
+            transactionForm.setLayer(jLabel30, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(saveTransBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(addTransBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(newTransactionID, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(tt4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(tt3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(tt1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(tt2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            javax.swing.GroupLayout transactionFormLayout = new javax.swing.GroupLayout(transactionForm);
+            transactionForm.setLayout(transactionFormLayout);
+            transactionFormLayout.setHorizontalGroup(
+                transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(transactionFormLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(saveTransBtn)
+                        .addComponent(addTransBtn)
+                        .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(transactionFormLayout.createSequentialGroup()
+                                .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(transactionFormLayout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(newTransactionID, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tt1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(tt2, 0, 136, Short.MAX_VALUE)))
+                                    .addGroup(transactionFormLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(tt4))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, transactionFormLayout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(tt3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(68, Short.MAX_VALUE))
+            );
+            transactionFormLayout.setVerticalGroup(
+                transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(transactionFormLayout.createSequentialGroup()
+                    .addGap(40, 40, 40)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(newTransactionID)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGap(18, 18, 18)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(tt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(tt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(21, 21, 21)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tt3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5))
+                    .addGap(18, 18, 18)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(tt4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6))
+                    .addGap(67, 67, 67)
+                    .addComponent(addTransBtn)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(saveTransBtn)
+                    .addContainerGap(39, Short.MAX_VALUE))
+            );
+
+            form.add(transactionForm, "card2");
 
             supplierFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
             supplierFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -784,7 +851,7 @@ public class AdminPage extends javax.swing.JFrame {
                     .addComponent(addSupplierBtn)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(saveSupplierBtn)
-                    .addContainerGap(43, Short.MAX_VALUE))
+                    .addContainerGap(118, Short.MAX_VALUE))
             );
 
             form.add(supplierForm, "card3");
@@ -945,8 +1012,8 @@ public class AdminPage extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(longlines)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(form, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(23, Short.MAX_VALUE))
+                            .addComponent(form, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -965,7 +1032,7 @@ public class AdminPage extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
+                    .addGap(17, 17, 17))
             );
 
             pack();
@@ -990,11 +1057,13 @@ public class AdminPage extends javax.swing.JFrame {
         label.setText("HOSPITAL MENU");
         saveHospitalBtn.setVisible(false);
         addHospitalBtn.setVisible(true);
+        editBtn.setVisible(true);
         
         supplierScrollTable.setVisible(false);  
         hospitalScrollTable.setVisible(true); 
         userScrollTable.setVisible(false);      
         ppeItemScrollTable.setVisible(false);
+        transactionScrollTable.setVisible(false);
         
         DefaultTableModel model1 = new DefaultTableModel(){
             @Override
@@ -1036,11 +1105,13 @@ public class AdminPage extends javax.swing.JFrame {
         label.setText("SUPPLIER MENU");
         saveSupplierBtn.setVisible(false);
         addSupplierBtn.setVisible(true);
+        editBtn.setVisible(true);
         
         supplierScrollTable.setVisible(true);  
         hospitalScrollTable.setVisible(false); 
         userScrollTable.setVisible(false);      
         ppeItemScrollTable.setVisible(false);
+        transactionScrollTable.setVisible(false);
         
         DefaultTableModel model2 = new DefaultTableModel(){
             @Override
@@ -1072,7 +1143,7 @@ public class AdminPage extends javax.swing.JFrame {
         
         try {
         String newID = filefunction.generateNewID("users.txt");
-        newSupplierID.setText("Staff-"+newID);
+        newUserID.setText("Staff-"+newID);
         } catch (IOException ex) {
             Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Failed to generate new User ID.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1081,20 +1152,22 @@ public class AdminPage extends javax.swing.JFrame {
         label.setText("USER MENU");
         saveUserBtn.setVisible(false);
         addUserBtn.setVisible(true);
+        editBtn.setVisible(true);
         
-        supplierScrollTable.setVisible(false);
-        hospitalScrollTable.setVisible(false);
-        userScrollTable.setVisible(true);
+        supplierScrollTable.setVisible(false);  
+        hospitalScrollTable.setVisible(false); 
+        userScrollTable.setVisible(true);      
         ppeItemScrollTable.setVisible(false);
+        transactionScrollTable.setVisible(false);
         
         DefaultTableModel model3 = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
                //all cells false
-                return false;
+               return false;
             }
         };
-        String[] ColHeadings = {"User ID", "Name", "Password", "Type of user"};
+        String[] ColHeadings = {"User ID", "Username", "Password","Email","Gender", "Type of user"};
         model3.setColumnIdentifiers(ColHeadings);
         userTable.setModel(model3);
         model3.setRowCount(0);
@@ -1115,6 +1188,7 @@ public class AdminPage extends javax.swing.JFrame {
         ppeitemForm.setVisible(true);
         
         label.setText("PPE ITEM MENU");
+        editBtn.setVisible(true);
         savePPEBtn.setVisible(false);
         addPPEBtn.setVisible(true);
         
@@ -1122,6 +1196,7 @@ public class AdminPage extends javax.swing.JFrame {
         hospitalScrollTable.setVisible(false); 
         userScrollTable.setVisible(false);      
         ppeItemScrollTable.setVisible(true);
+        transactionScrollTable.setVisible(false);
         
         t3.removeAllItems();
         List<String> allSupplierIDs = filefunction.GET_ALL_ID("suppliers.txt");
@@ -1155,16 +1230,18 @@ public class AdminPage extends javax.swing.JFrame {
         transactionForm.setVisible(true);
         userForm.setVisible(false);
         ppeitemForm.setVisible(false);
+        
         label.setText("TRANSACTION MENU");
+        saveTransBtn.setVisible(false);
+        addTransBtn.setVisible(true);
+        editBtn.setVisible(false);
+        
+        supplierScrollTable.setVisible(false);  
+        hospitalScrollTable.setVisible(false); 
+        userScrollTable.setVisible(false);      
+        ppeItemScrollTable.setVisible(false);
+        transactionScrollTable.setVisible(true);
     }//GEN-LAST:event_transactionBtnActionPerformed
-
-    private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
-        int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
-        if (logout == JOptionPane.YES_OPTION) {
-            this.dispose();
-            new LoginSystem().setVisible(true);
-        }
-    }//GEN-LAST:event_logoutBtnMouseClicked
 
     //ADD NEW DATA
     private void addPPEBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPPEBtnActionPerformed
@@ -1211,9 +1288,11 @@ public class AdminPage extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) userTable.getModel();
         String input1 = ut1.getText();
         String input2 = ut2.getText();
-        String input3 = (String) ut3.getSelectedItem();
-        if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()) {
-            filefunction.ADD_DATA("users.txt",model, input1, input2, input3);
+        String input3 = ut3.getText();
+        String input4 = (String) ut4.getSelectedItem();
+        String input5 = (String) ut5.getSelectedItem();
+        if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()&& !input4.isEmpty()&& !input5.isEmpty()) {
+            filefunction.ADD_DATA("users.txt",model, input1, input2, input3,input4,input5);
             JOptionPane.showMessageDialog(this, "User data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
 
             // Clear all TextField contents
@@ -1247,6 +1326,10 @@ public class AdminPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addSupplierBtnActionPerformed
 
+    private void addTransBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTransBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addTransBtnActionPerformed
+
     //SAVE CHANGES
     private void saveUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveUserBtnActionPerformed
         addUserBtn.setVisible(true);
@@ -1257,14 +1340,14 @@ public class AdminPage extends javax.swing.JFrame {
         model.setValueAt(newUserID.getText(),sRow,0);
         model.setValueAt(ut1.getText(),sRow,1);
         model.setValueAt(ut2.getText(),sRow,2);
-        model.setValueAt(ut3.getSelectedItem(),sRow,3);
+        model.setValueAt(ut5.getSelectedItem(),sRow,3);
         
         // Prepare data for file update
         String[] newData = new String[4];
         newData[0] = newUserID.getText();
         newData[1] = ut1.getText();
         newData[2] = ut2.getText();
-        newData[3] = (String) ut3.getSelectedItem();
+        newData[3] = (String) ut5.getSelectedItem();
         
         // Call file update method
         boolean actionDone = filefunction.EDIT_DATA("users.txt", newData);
@@ -1282,7 +1365,7 @@ public class AdminPage extends javax.swing.JFrame {
             }
             ut1.setText("");
             ut2.setText("");
-            ut3.setSelectedItem(0);
+            ut5.setSelectedItem(0);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -1400,6 +1483,10 @@ public class AdminPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_savePPEBtnActionPerformed
 
+    private void saveTransBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveTransBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveTransBtnActionPerformed
+
     //EDIT, SEARCH AND DELETE
     private void delBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delBtnActionPerformed
         try {
@@ -1447,6 +1534,7 @@ public class AdminPage extends javax.swing.JFrame {
                 } else {
                     throw new IllegalStateException("Please select a row to delete.");
                 }
+            } else if (transactionScrollTable.isVisible()){
             }
         } catch (IllegalStateException ex) {
             // Handle the exception here
@@ -1507,6 +1595,7 @@ public class AdminPage extends javax.swing.JFrame {
                     }
                 }
             }
+        }else if (transactionScrollTable.isVisible()){
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
@@ -1551,12 +1640,11 @@ public class AdminPage extends javax.swing.JFrame {
                 newUserID.setText(model3.getValueAt(sRow, 0).toString());
                 ut1.setText(model3.getValueAt(sRow, 1).toString());
                 ut2.setText(model3.getValueAt(sRow, 2).toString());
-                ut3.setSelectedItem(model3.getValueAt(sRow, 3).toString());
+                ut5.setSelectedItem(model3.getValueAt(sRow, 3).toString());
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Please select a row");
             }
-        }
-        else if (ppeItemScrollTable.isVisible()) {
+        }else if (ppeItemScrollTable.isVisible()) {
             ppeItemFormTitle.setText("Edit PPE Item Form");
             savePPEBtn.setVisible(true); 
             addPPEBtn.setVisible(false);
@@ -1570,9 +1658,13 @@ public class AdminPage extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Please select a row");
             }
-        } else if ("TRANSACTION MENU".equals(label)) {
+        } else if (transactionScrollTable.isVisible()) {
         }
     }//GEN-LAST:event_editBtnActionPerformed
+
+    
+
+    
 
 
     /**
@@ -1617,6 +1709,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JButton addHospitalBtn;
     private javax.swing.JButton addPPEBtn;
     private javax.swing.JButton addSupplierBtn;
+    private javax.swing.JButton addTransBtn;
     private javax.swing.JButton addUserBtn;
     private javax.swing.JButton delBtn;
     private javax.swing.JButton editBtn;
@@ -1629,8 +1722,6 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JTextField ht1;
     private javax.swing.JTextArea ht2;
     private javax.swing.JTextField ht3;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1639,15 +1730,22 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -1659,6 +1757,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JLayeredPane mainPanel;
     private javax.swing.JLabel newHospitalID;
     private javax.swing.JLabel newSupplierID;
+    private javax.swing.JLabel newTransactionID;
     private javax.swing.JLabel newUserID;
     private javax.swing.JButton ppeBtn;
     private javax.swing.JLabel ppeItemFormTitle;
@@ -1668,6 +1767,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JButton saveHospitalBtn;
     private javax.swing.JButton savePPEBtn;
     private javax.swing.JButton saveSupplierBtn;
+    private javax.swing.JButton saveTransBtn;
     private javax.swing.JButton saveUserBtn;
     private javax.swing.JButton searchBtn;
     private javax.swing.JTextField searchbar;
@@ -1688,6 +1788,10 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JLayeredPane transactionForm;
     private javax.swing.JScrollPane transactionScrollTable;
     private javax.swing.JTable transactionTable;
+    private javax.swing.JComboBox<String> tt1;
+    private javax.swing.JComboBox<String> tt2;
+    private javax.swing.JComboBox<String> tt3;
+    private javax.swing.JTextField tt4;
     private javax.swing.JButton userBtn;
     private javax.swing.JLayeredPane userForm;
     private javax.swing.JLabel userFormTitle;
@@ -1695,6 +1799,8 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JTable userTable;
     private javax.swing.JTextField ut1;
     private javax.swing.JTextField ut2;
-    private javax.swing.JComboBox<String> ut3;
+    private javax.swing.JTextField ut3;
+    private javax.swing.JComboBox<String> ut4;
+    private javax.swing.JComboBox<String> ut5;
     // End of variables declaration//GEN-END:variables
 }
