@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -481,6 +482,7 @@ public class filefunction extends JFrame{
                 switch (filename) {
                     case "suppliers.txt" -> newID = "S-" + generateNewID(filename);
                     case "hospitals.txt" -> newID = "H-" + generateNewID(filename);
+                    case "transactions.txt" -> newID = "T-" + generateNewID(filename);
                 }
                 lines.add(newID);
                 lines.addAll(Arrays.asList(data));

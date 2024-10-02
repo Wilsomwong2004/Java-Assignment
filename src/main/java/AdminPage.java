@@ -1316,7 +1316,7 @@ public class AdminPage extends javax.swing.JFrame {
                return false;
             }
         };
-        String[] ColHeadings = {"Transaction ID", "Transaction Date", "Supplier ID", "Hospital ID", "Item ID", "Quantity", "Price"};
+        String[] ColHeadings = {"Transaction ID", "Date", "Supplier ID", "Hospital ID", "Item ID", "Quantity", "Price"};
         model5.setColumnIdentifiers(ColHeadings);
         transactionTable.setModel(model5);
         model5.setRowCount(0);
@@ -1332,8 +1332,8 @@ public class AdminPage extends javax.swing.JFrame {
     private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
         int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
         if (logout == JOptionPane.YES_OPTION) {
-            this.dispose();
             new LoginSystem().setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_logoutBtnMouseClicked
 
