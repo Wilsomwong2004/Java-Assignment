@@ -1,3 +1,3 @@
-Admin-00000|admin|0000|admin@example.com|Not Specified|Admin
-Admin-00001|Wilsomwong|1234|W@gmail.com|Male|Admin
+Admin-00000;admin;0000;admin@example.com;Not Specified;Admin
 
+Admin-00000;admin;0000;admin@example.com;Not Specified;Admin

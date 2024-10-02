@@ -1,1 +1,6 @@
-HC|Head Cover|S-00002|100
+HC;Head Cover;S-00001;100
+FS;Face Shield;S-00001;100
+MS;Mask;S-00001;100
+GL;Gloves;S-00001;100
+GW;Gown;S-00001;100
+SC;Shoe Covers;S-00001;100

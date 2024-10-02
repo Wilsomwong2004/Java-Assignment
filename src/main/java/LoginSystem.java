@@ -57,7 +57,7 @@ public class LoginSystem extends javax.swing.JFrame {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split("|");
+                    String[] parts = line.split(";");
                     if (parts.length >= 6) {
                         String userId = parts[0];
                         String username = parts[1];
@@ -351,7 +351,7 @@ public class LoginSystem extends javax.swing.JFrame {
             try (BufferedReader reader = new BufferedReader(new FileReader(USER_FILE))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split("|");
+                    String[] parts = line.split(";");
                     if (parts.length >= 6 && parts[1].equals(username)) {
                         userId = parts[0];
                         email = parts[3];
