@@ -1,5 +1,0 @@
-fre;vew;Distribute;qe;5;352;2024-01-01
-fre;vew;Receive;qe;345;453;2024-05-01
-fre;vew;Receive;qe;343;354;2024-04-01
-fre;vew;Distribute;qe;34;345;2024-05-01
-fre;vew;Distribute;qe;34;543;2024-04-01

@@ -1,6 +1,6 @@
-HC;Head Cover;S-00001;fcsaq;100
-FS;Face Shield;S-00001;fews;100
-MS;Mask;S-00001;efw;100
-GL;Gloves;S-00001;efw;100
-GW;Gown;S-00001;ewf;100
-SC;Shoe Covers;S-00001;efw;100
+HC;Head Cover;S-00001;100
+FS;Face Shield;S-00001;100;100
+MS;Mask;S-00001;100;100
+GL;Gloves;S-00001;100;100
+GW;Gown;S-00001;100;100
+SC;Shoe Covers;S-00001;100;100

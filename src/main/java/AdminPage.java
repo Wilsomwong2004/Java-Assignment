@@ -1,18 +1,15 @@
 import java.awt.event.ItemEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Date;
-import javax.swing.DefaultComboBoxModel;
+
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -1552,6 +1549,14 @@ public class AdminPage extends javax.swing.JFrame {
         userForm.setVisible(false);
         ppeitemForm.setVisible(false);
         ReportTransaction.setVisible(false);
+
+        try {
+            String newID = filefunction.generateNewID("transactions.txt");
+            newTransactionID.setText("T-"+newID);
+        } catch (IOException ex) {
+            Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Failed to generate new Supplier ID.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
         label.setText("TRANSACTION MENU");
         addTransBtn.setVisible(true);
@@ -1576,7 +1581,7 @@ public class AdminPage extends javax.swing.JFrame {
         tt2.addItem("Distribute");
         tt2.addItem("Receive");
         
-        if (tt2.getSelectedItem() == "Distribute") {
+        if (tt2.getSelectedItem() == "Receive") {
             jLabel5.setText("Supplier Code:");
             List<String> allSupplierIDs = filefunction.GET_ALL_ID("suppliers.txt");
             for (String id : allSupplierIDs) {
@@ -1584,7 +1589,7 @@ public class AdminPage extends javax.swing.JFrame {
             }
         }
 
-        if (tt2.getSelectedItem() == "Receive") {
+        if (tt2.getSelectedItem() == "Distribute") {
             jLabel5.setText("Hospital Code:");
             List<String> allHospitalIDs = filefunction.GET_ALL_ID("hospitals.txt");
             for (String id : allHospitalIDs) {
@@ -1598,13 +1603,13 @@ public class AdminPage extends javax.swing.JFrame {
                 tt3.removeAllItems(); 
                 
                 try {
-                    if (selectedItem.equalsIgnoreCase("Distribute")) {
+                    if (selectedItem.equalsIgnoreCase("Receive")) {
                         jLabel5.setText("Supplier Code:");
                         List<String> allSupplierIDs = filefunction.GET_ALL_ID("suppliers.txt");
                         for (String id : allSupplierIDs) {
                             tt3.addItem(id);
                         }
-                    } else if (selectedItem.equalsIgnoreCase("Receive")) {
+                    } else if (selectedItem.equalsIgnoreCase("Distribute")) {
                         jLabel5.setText("Hospital Code:");
                         List<String> allHospitalIDs = filefunction.GET_ALL_ID("hospitals.txt");
                         for (String id : allHospitalIDs) {
@@ -1682,11 +1687,11 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_reportBtnActionPerformed
 
     private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
-//        int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
-//        if (logout == JOptionPane.YES_OPTION) {
-//            new LoginSystem().setVisible(true);
-//            this.dispose();
-//        }
+        int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (logout == JOptionPane.YES_OPTION) {
+            new LoginSystem().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_logoutBtnMouseClicked
 
     //ADD NEW DATA
@@ -1708,10 +1713,19 @@ public class AdminPage extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Item name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            // quantity will give alert when less then 25, show the PPE name and quantity that less than 25
-            if (Integer.parseInt(input4) < 25) {
-                JOptionPane.showMessageDialog(this, "Quantity of "+input2+" is less than 25. Please add more stock.", "Warning", JOptionPane.WARNING_MESSAGE);
+            
+            // Price should be a valid number
+            try {
+                double price = Double.parseDouble(input4);
+                if (price <= 0) {
+                    JOptionPane.showMessageDialog(this, "Price should be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Price should be a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
             filefunction.ADD_DATA("ppe.txt",model, input1, input2, input3, input4);
             JOptionPane.showMessageDialog(this, "PPE item data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
 
@@ -1733,7 +1747,6 @@ public class AdminPage extends javax.swing.JFrame {
                 return;
             }
 
-            //phone number only numbers allowed without limited digits
             // phone number only numbers allowed, no limit on digits
             if (!input3.matches("\\d+")) {
                 JOptionPane.showMessageDialog(this, "Phone number should only contain digits.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1815,8 +1828,8 @@ public class AdminPage extends javax.swing.JFrame {
 
     private void addTransBtnActionPerformed(java.awt.event.ActionEvent evt) {
 
-        // Debug output
-        System.out.println("Add Transaction button clicked");
+        // // Debug output
+        // System.out.println("Add Transaction button clicked");
         
         // Check if components are properly initialized
         if (tt1 == null || tt2 == null || tt3 == null || tt4 == null) {
@@ -1830,30 +1843,6 @@ public class AdminPage extends javax.swing.JFrame {
         String hospitalSupplierCode = (String) tt3.getSelectedItem();
         String quantity = tt4.getText();
 
-        //show the item code for user when click the item in the combobox
-        if (itemCode.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please select an item code", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        //show the process for user when click the process in the combobox
-        if (process.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please select a process", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        //show the hospital or supplier code for user when click the hospital or supplier in the combobox
-        if (hospitalSupplierCode.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please select a hospital or supplier code", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        //show the quantity for user when click the quantity in the textfield
-        if (quantity.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a quantity", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         if (!itemCode.isEmpty() && !process.isEmpty() && !hospitalSupplierCode.isEmpty() && !quantity.isEmpty()) {
             try {
                 int quantityValue = Integer.parseInt(quantity);
@@ -1865,34 +1854,46 @@ public class AdminPage extends javax.swing.JFrame {
                     return;
                 }
                 String[] ppeFields = ppeData.split(";");
-                int currentStock = Integer.parseInt(ppeFields[3]);
+                int currentStock = Integer.parseInt(ppeFields[4]);
                 int newStock = process.equals("Distribute") ? currentStock - quantityValue : currentStock + quantityValue;
                 
+                // quantity will give alert when less then 25, show the PPE name and quantity that less than 25
+                if (newStock < 25) {
+                    JOptionPane.showMessageDialog(this, "Quantity of "+ ppeFields[1] +" is less than 25. Please add more stock.", "Warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
                 if (newStock < 0) {
                     JOptionPane.showMessageDialog(this, "Not enough stock available", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
+                // Debug test
+                // System.out.println("Current stock: " + currentStock);
+                // System.out.println("New stock after transaction: " + newStock);
+                // System.out.println("PPE data found: " + (ppeData != null));
                 
                 // Update PPE stock
-                ppeFields[3] = String.valueOf(newStock);
+                ppeFields[4] = String.valueOf(newStock);
                 filefunction.EDIT_DATA("ppe.txt", ppeFields);
 
                 // Calculate total price (assuming price is stored in PPE file)
-                double itemPrice = Double.parseDouble(ppeFields[4]); // Assuming price is the 5th field
+                double itemPrice = Double.parseDouble(ppeFields[3]);
                 double totalPrice = quantityValue * itemPrice;
 
                 // Get current date
-//                LocalDate currentDate = LocalDate.now();
-//                String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                Date currentDate = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = dateFormat.format(currentDate);
 
                 // Add new transaction
                 String[] transactionData = {
                     itemCode,
-                    "Distribute".equals(process) ? hospitalSupplierCode : "", // Hospital ID
-                    process.equals("Receive") ? hospitalSupplierCode : "",    // Supplier ID
+                    process,
+                    hospitalSupplierCode,
                     String.valueOf(quantityValue),
                     String.format("%.2f", totalPrice),
-//                    formattedDate
+                    formattedDate
                 };
                 
                 filefunction.ADD_DATA("transactions.txt", (DefaultTableModel) transactionTable.getModel(), transactionData);
@@ -1910,11 +1911,15 @@ public class AdminPage extends javax.swing.JFrame {
                 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid quantity", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                System.out.println("Unexpected error: " + e.getMessage());
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "An unexpected error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }                                           
+    }
 
     private void refreshTransactionTable() {
         DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
@@ -2190,6 +2195,16 @@ public class AdminPage extends javax.swing.JFrame {
                     throw new IllegalStateException("Please select a row to delete.");
                 }
             } else if (transactionScrollTable.isVisible()){
+                DefaultTableModel model5 = (DefaultTableModel) transactionTable.getModel();
+                int sRow = transactionTable.getSelectedRow();
+                if (sRow >= 0) {
+                    String transactionID = model5.getValueAt(sRow, 0).toString();
+                    filefunction.DELETE_DATA("transactions.txt", transactionID, this);  // Pass the parent component 'this'
+                    model5.removeRow(sRow);
+                    JOptionPane.showMessageDialog(this, "Transaction record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    throw new IllegalStateException("Please select a row to delete.");
+                }
             }
         } catch (IllegalStateException ex) {
             // Handle the exception here
