@@ -1,3 +1,1 @@
 Admin-00000;admin;0000;admin@example.com;Not Specified;Admin
-Staff-00002;uyth;nyut;nyht;Female;Admin
-Staff-00003;vesaqev;vesadveds;vedsw;Female;Admin
