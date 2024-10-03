@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1497,8 +1499,7 @@ public class AdminPage extends javax.swing.JFrame {
         DefaultTableModel model5 = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
-               //all cells false
-               return false;
+                return false;
             }
         };
         String[] ColHeadings = {"Transaction ID", "Item ID", "Supplier ID", "Hospital ID", "Quantity", "Total Price", "Date"};
@@ -1509,7 +1510,7 @@ public class AdminPage extends javax.swing.JFrame {
 
         try {
             if (filefunction.isFileExists("transactions.txt")) {
-                filefunction.loadDataFromFile("transactions.txt",model5);
+                filefunction.loadDataFromFile("transactions.txt", model5);
             } else {
                 filefunction.createFile("transactions.txt");
             }
@@ -1531,9 +1532,9 @@ public class AdminPage extends javax.swing.JFrame {
         delBtn.setVisible(false);
         searchpanel.setVisible(false);
         
-        supplierScrollTable.setVisible(false);  
-        hospitalScrollTable.setVisible(false); 
-        userScrollTable.setVisible(false);      
+        supplierScrollTable.setVisible(false);
+        hospitalScrollTable.setVisible(false);
+        userScrollTable.setVisible(false);
         ppeItemScrollTable.setVisible(false);
         transactionScrollTable.setVisible(true);
 
@@ -1693,22 +1694,118 @@ public class AdminPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addSupplierBtnActionPerformed
 
-    private void addTransBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTransBtnActionPerformed
+    private void addTransBtnActionPerformed(java.awt.event.ActionEvent evt) {
+
+        // Debug output
+        System.out.println("Add Transaction button clicked");
+        
+        // Check if components are properly initialized
+        if (tt1 == null || tt2 == null || tt3 == null || tt4 == null) {
+            JOptionPane.showMessageDialog(this, "UI components are not properly initialized", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
-        String input1 = (String) tt1.getSelectedItem();
-        //String input2 = tt2.getText();
-        //String input3 = (String) tt3.getSelectedItem();
-        String input4 = tt4.getText();
-        //if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()&& !input4.isEmpty()&& !input5.isEmpty()&& !input6.isEmpty()&& !input7.isEmpty()) {
-        //    filefunction.ADD_DATA("transactions.txt",model, input1, input2, input3,input4,input5,input6,input7);
-        //    JOptionPane.showMessageDialog(this, "Transaction data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
-        //
-        //    // Clear all TextField contents
-        //    tt1.setText("");
-        //    tt2.setText("");
-        //    tt7.setText("");
-        //}
+        String itemCode = (String) tt1.getSelectedItem();
+        String process = (String) tt2.getSelectedItem();
+        String hospitalSupplierCode = (String) tt3.getSelectedItem();
+        String quantity = tt4.getText();
+
+        //show the item code for user when click the item in the combobox
+        if (itemCode.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select an item code", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        //show the process for user when click the process in the combobox
+        if (process.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select a process", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        //show the hospital or supplier code for user when click the hospital or supplier in the combobox
+        if (hospitalSupplierCode.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select a hospital or supplier code", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        //show the quantity for user when click the quantity in the textfield
+        if (quantity.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a quantity", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!itemCode.isEmpty() && !process.isEmpty() && !hospitalSupplierCode.isEmpty() && !quantity.isEmpty()) {
+            try {
+                int quantityValue = Integer.parseInt(quantity);
+                
+                // Get current stock and update it
+                String ppeData = filefunction.SEARCH_DATA("ppe.txt", itemCode, this);
+                if (ppeData == null) {
+                    JOptionPane.showMessageDialog(this, "Item not found in PPE inventory.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                String[] ppeFields = ppeData.split(";");
+                int currentStock = Integer.parseInt(ppeFields[3]);
+                int newStock = process.equals("Distribute") ? currentStock - quantityValue : currentStock + quantityValue;
+                
+                if (newStock < 0) {
+                    JOptionPane.showMessageDialog(this, "Not enough stock available", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                // Update PPE stock
+                ppeFields[3] = String.valueOf(newStock);
+                filefunction.EDIT_DATA("ppe.txt", ppeFields);
+
+                // Calculate total price (assuming price is stored in PPE file)
+                double itemPrice = Double.parseDouble(ppeFields[4]); // Assuming price is the 5th field
+                double totalPrice = quantityValue * itemPrice;
+
+                // Get current date
+                LocalDate currentDate = LocalDate.now();
+                String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                // Add new transaction
+                String[] transactionData = {
+                    itemCode,
+                    process.equals("Distribute") ? hospitalSupplierCode : "", // Hospital ID
+                    process.equals("Receive") ? hospitalSupplierCode : "",    // Supplier ID
+                    String.valueOf(quantityValue),
+                    String.format("%.2f", totalPrice),
+                    formattedDate
+                };
+                
+                filefunction.ADD_DATA("transactions.txt", (DefaultTableModel) transactionTable.getModel(), transactionData);
+
+                JOptionPane.showMessageDialog(this, "Transaction data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+
+                // Clear input fields
+                tt1.setSelectedIndex(0);
+                tt2.setSelectedIndex(0);
+                tt3.setSelectedIndex(0);
+                tt4.setText("");
+                
+                // Refresh the transaction table
+                refreshTransactionTable();
+                
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid quantity", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_addTransBtnActionPerformed
+
+    private void refreshTransactionTable() {
+        DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
+        model.setRowCount(0);
+        try {
+            filefunction.loadDataFromFile("transactions.txt", model);
+        } catch (Exception ex) {
+            Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     //FILTER REPORT
     private void filterReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterReportBtnActionPerformed
