@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -1317,7 +1316,7 @@ public class AdminPage extends javax.swing.JFrame {
                return false;
             }
         };
-        String[] ColHeadings = {"Transaction ID", "Date", "Supplier ID", "Hospital ID", "Item ID", "Quantity", "Price"};
+        String[] ColHeadings = {"Transaction ID", "Item ID", "Supplier ID", "Hospital ID", "Quantity", "Total Price", "Date"};
         model5.setColumnIdentifiers(ColHeadings);
         transactionTable.setModel(model5);
         model5.setRowCount(0);
