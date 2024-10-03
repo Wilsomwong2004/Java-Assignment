@@ -1,8 +1,12 @@
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Date;
 
+import javax.management.modelmbean.ModelMBean;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -950,10 +954,10 @@ public class AdminPage extends javax.swing.JFrame {
             supplierFormTitle1.setText("Report Filter");
 
             jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel15.setText("Start Date:");
+            jLabel15.setText("Start Date (YYYY-MM-DD):");
 
             jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel8.setText("End Date:");
+            jLabel8.setText("End Date (YYYY-MM-DD):");
 
             jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
             jLabel32.setText("___________________________________________________________________________________");
@@ -967,7 +971,12 @@ public class AdminPage extends javax.swing.JFrame {
             filterReportBtn.setText("Generate Report");
             filterReportBtn.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    filterReportBtnActionPerformed(evt);
+                    try {
+                        filterReportBtnActionPerformed(evt);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -1018,7 +1027,7 @@ public class AdminPage extends javax.swing.JFrame {
                                     .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                                 .addGap(16, 16, 16)
                                 .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(startDateField, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                    .addComponent(startDateField, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                                     .addComponent(endDateField))
                                 .addGap(18, 18, 18)
                                 .addComponent(filterReportBtn))
@@ -1414,7 +1423,7 @@ public class AdminPage extends javax.swing.JFrame {
                return false;
             }
         };
-        String[] ColHeadings = {"User ID", "Name", "Password", "Type of user"};
+        String[] ColHeadings = {"User ID", "Name", "Password","Email Address","Gender", "Type of user"};
         model3.setColumnIdentifiers(ColHeadings);
         userTable.setModel(model3);
         model3.setRowCount(0);
@@ -1711,9 +1720,57 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_addTransBtnActionPerformed
 
     //FILTER REPORT
-    private void filterReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterReportBtnActionPerformed
-        // TODO add your handling code here:
+    private void filterReportBtnActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_filterReportBtnActionPerformed
+        String startDate = startDateField.getText();
+        String endDate = endDateField.getText();
+
+        DefaultTableModel transactionModel = (DefaultTableModel) transactionTable.getModel();
+
+        filterTransaction(startDate,endDate,transactionModel);
+
+        //show report
+        r1.setText(String.valueOf(transactionModel.getRowCount()));
+        int totalItemsDistributed;
+        int totalItemsReceived;
+        double totalRevenue;
+
+        for (int i = 0; i < transactionModel.getRowCount(); i++){
+            int quantity = Integer.parseInt(transactionModel.getValueAt(i,4).toString());
+            double price = Double.parseDouble(transactionModel.getValueAt(i, 5).toString());
+            if 
+        }
+        r2.setText
     }//GEN-LAST:event_filterReportBtnActionPerformed
+
+    public static void filterTransaction(String startDateStr, String endDateStr, DefaultTableModel model) throws Exception{
+        //check date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate;
+        Date endDate;
+        try {
+            startDate = dateFormat.parse(startDateStr);
+            endDate = dateFormat.parse(endDateStr);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid date in the format yyyy-MM-dd", "Invalid Date", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        List<String[]> transactions = filefunction.loadDataFromFile("transactions.txt", model);
+        
+        //add data to table
+        model.setRowCount(0);
+        for (String[] each: transactions){
+            try {
+                Date transactionDate = dateFormat.parse(each[6]);
+                String process= each[4];
+                if ((transactionDate.compareTo(startDate)>=0)&& (transactionDate.compareTo(endDate)<=0)) {
+                    model.addRow(each);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     //SAVE CHANGES
     private void saveUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveUserBtnActionPerformed
