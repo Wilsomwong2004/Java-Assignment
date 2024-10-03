@@ -407,6 +407,22 @@ public class filefunction extends JFrame{
         return false;
     }
 
+    public static boolean isDuplicateID(String string, String input1) {
+        //does item code got same id as input1
+        try (BufferedReader reader = new BufferedReader(new FileReader(string))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(";");
+                if (parts.length > 0 && parts[0].equals(input1)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private static void removeDuplicateEntries(String filename) {
         File inputFile = new File(filename);
         File tempFile = new File("temp_" + filename);
