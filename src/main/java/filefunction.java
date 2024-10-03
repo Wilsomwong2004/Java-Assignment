@@ -365,14 +365,6 @@ public class filefunction extends JFrame{
         br.close();
         return allrecords;
     }
-
-    public static boolean isFileExists(String string) {
-        if (string == null) {
-            return false;
-        }
-        File file = new File(string);
-        return file.exists();
-    }
     
     public static String generateNewID(String filename) throws IOException {
         String lastID = "00000";

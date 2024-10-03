@@ -1,8 +1,10 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Date;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -1527,15 +1529,16 @@ public class AdminPage extends javax.swing.JFrame {
         transactionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         try {
-            if (filefunction.isFileExists("transactions.txt")) {
-                filefunction.loadDataFromFile("transactions.txt", model5);
-            } else {
+            File transactionFile = new File("transactions.txt");
+            if (!transactionFile.exists()) {
+                // If the file doesn't exist, create it first
                 filefunction.createFile("transactions.txt");
             }
-            filefunction.loadDataFromFile("transactions.txt",model5);
+            filefunction.loadDataFromFile("transactions.txt", model5);
         } catch (Exception ex) {
             Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_transactionBtnActionPerformed
 
     private void reportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportBtnActionPerformed
