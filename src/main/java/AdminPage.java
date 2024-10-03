@@ -1,10 +1,10 @@
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Date;
 
+import javax.management.modelmbean.ModelMBean;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -117,12 +117,12 @@ public class AdminPage extends javax.swing.JFrame {
         report = new javax.swing.JLayeredPane();
         supplierFormTitle1 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        st4 = new javax.swing.JTextField();
+        endDateField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         filterReportBtn = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        startDateField = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
@@ -952,10 +952,10 @@ public class AdminPage extends javax.swing.JFrame {
             supplierFormTitle1.setText("Report Filter");
 
             jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel15.setText("Start Date:");
+            jLabel15.setText("Start Date (YYYY-MM-DD):");
 
             jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel8.setText("End Date:");
+            jLabel8.setText("End Date (YYYY-MM-DD):");
 
             jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
             jLabel32.setText("___________________________________________________________________________________");
@@ -969,7 +969,12 @@ public class AdminPage extends javax.swing.JFrame {
             filterReportBtn.setText("Generate Report");
             filterReportBtn.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    filterReportBtnActionPerformed(evt);
+                    try {
+                        filterReportBtnActionPerformed(evt);
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -992,12 +997,12 @@ public class AdminPage extends javax.swing.JFrame {
 
             report.setLayer(supplierFormTitle1, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel15, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(st4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            report.setLayer(endDateField, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel32, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel33, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(filterReportBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            report.setLayer(startDateField, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel34, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel35, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel36, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -1020,8 +1025,8 @@ public class AdminPage extends javax.swing.JFrame {
                                     .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                                 .addGap(16, 16, 16)
                                 .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                                    .addComponent(st4))
+                                    .addComponent(startDateField, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                    .addComponent(endDateField))
                                 .addGap(18, 18, 18)
                                 .addComponent(filterReportBtn))
                             .addComponent(supplierFormTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
@@ -1049,11 +1054,11 @@ public class AdminPage extends javax.swing.JFrame {
                             .addComponent(supplierFormTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(startDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(st4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(endDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(reportLayout.createSequentialGroup()
                             .addGap(64, 64, 64)
@@ -1416,7 +1421,7 @@ public class AdminPage extends javax.swing.JFrame {
                return false;
             }
         };
-        String[] ColHeadings = {"User ID", "Name", "Password", "Type of user"};
+        String[] ColHeadings = {"User ID", "Name", "Password","Email Address","Gender", "Type of user"};
         model3.setColumnIdentifiers(ColHeadings);
         userTable.setModel(model3);
         model3.setRowCount(0);
@@ -1808,9 +1813,57 @@ public class AdminPage extends javax.swing.JFrame {
     }
 
     //FILTER REPORT
-    private void filterReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterReportBtnActionPerformed
-        // TODO add your handling code here:
+    private void filterReportBtnActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_filterReportBtnActionPerformed
+        String startDate = startDateField.getText();
+        String endDate = endDateField.getText();
+
+        DefaultTableModel transactionModel = (DefaultTableModel) transactionTable.getModel();
+
+        filterTransaction(startDate,endDate,transactionModel);
+
+        //show report
+        r1.setText(String.valueOf(transactionModel.getRowCount()));
+        int totalItemsDistributed;
+        int totalItemsReceived;
+        double totalRevenue;
+
+        for (int i = 0; i < transactionModel.getRowCount(); i++){
+            int quantity = Integer.parseInt(transactionModel.getValueAt(i,4).toString());
+            double price = Double.parseDouble(transactionModel.getValueAt(i, 5).toString());
+            if 
+        }
+        r2.setText
     }//GEN-LAST:event_filterReportBtnActionPerformed
+
+    public static void filterTransaction(String startDateStr, String endDateStr, DefaultTableModel model) throws Exception{
+        //check date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate;
+        Date endDate;
+        try {
+            startDate = dateFormat.parse(startDateStr);
+            endDate = dateFormat.parse(endDateStr);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid date in the format yyyy-MM-dd", "Invalid Date", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        List<String[]> transactions = filefunction.loadDataFromFile("transactions.txt", model);
+        
+        //add data to table
+        model.setRowCount(0);
+        for (String[] each: transactions){
+            try {
+                Date transactionDate = dateFormat.parse(each[6]);
+                String process= each[4];
+                if ((transactionDate.compareTo(startDate)>=0)&& (transactionDate.compareTo(endDate)<=0)) {
+                    model.addRow(each);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     //SAVE CHANGES
     private void saveUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveUserBtnActionPerformed
@@ -2233,7 +2286,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField startDateField;
     private javax.swing.JLabel label;
     private javax.swing.JLabel logoutBtn;
     private javax.swing.JLabel longlines;
@@ -2263,7 +2316,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JTextField st1;
     private javax.swing.JTextArea st2;
     private javax.swing.JTextField st3;
-    private javax.swing.JTextField st4;
+    private javax.swing.JTextField endDateField;
     private javax.swing.JButton supplierBtn;
     private javax.swing.JLayeredPane supplierForm;
     private javax.swing.JLabel supplierFormTitle;

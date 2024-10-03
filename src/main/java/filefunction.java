@@ -255,21 +255,18 @@ public class filefunction extends JFrame{
             headerPanel.setLayout(new BorderLayout());
             headerPanel.add(label, BorderLayout.CENTER);
 
-            // Item Code label and value
             addLabel(panel, "Item Code:", 50, 100);
             JLabel codeLabel = new JLabel(itemCode[i]);
             codeLabel.setBounds(150, 100, 300, 30);
             codeLabel.setFont(new Font("Agency FB", Font.BOLD, 20));
             panel.add(codeLabel);
 
-            // Item Name label and value
             addLabel(panel, "Item Name:", 50, 150);
             JLabel nameLabel = new JLabel(itemName[i]);
             nameLabel.setBounds(150, 150, 300, 30);
             nameLabel.setFont(new Font("Agency FB", Font.BOLD, 20));
             panel.add(nameLabel);
 
-            // Supplier Code label and choice dropdown
             addLabel(panel, "Supplier Code:", 50, 200);
             Choice t3 = new Choice();
             List<String> allID = GET_ALL_ID("suppliers.txt");
@@ -279,10 +276,13 @@ public class filefunction extends JFrame{
             t3.setBounds(150, 200, 300, 30);
             panel.add(t3);
 
+            addLabel(panel, "Price:", 50, 250);
+            TextField t4 = addTextField(panel, 150, 250);
+
             // Quantity (fixed value)
-            addLabel(panel, "Quantity:", 50, 250);
+            addLabel(panel, "Quantity:", 50, 300);
             JLabel quantityLabel = new JLabel("100");
-            quantityLabel.setBounds(150, 250, 300, 30);
+            quantityLabel.setBounds(150, 300, 300, 30);
             quantityLabel.setFont(new Font("Agency FB", Font.BOLD, 20));
             panel.add(quantityLabel);
 
@@ -299,9 +299,10 @@ public class filefunction extends JFrame{
                 String input1 = itemCode[index];
                 String input2 = itemName[index];
                 String input3 = t3.getSelectedItem();
-                String input4 = "100";
-                if (!input3.isEmpty()) {
-                    ADD_DATA("ppe.txt",null, input1, input2, input3, input4);
+                String input4 = t4.getText();
+                String input5 = "100";
+                if (!input3.isEmpty()&& !input4.isEmpty()) {
+                    ADD_DATA("ppe.txt",null, input1, input2, input3, input4,input5);
                     t3.select(0);
                     submissionCount[0]++;
                     if (submissionCount[0] < 6) {
@@ -352,14 +353,17 @@ public class filefunction extends JFrame{
     }
 
     //FILES FUNCTION
-    public static void loadDataFromFile(String filename, DefaultTableModel tableModel)throws Exception {
+    public static List<String[]> loadDataFromFile(String filename, DefaultTableModel tableModel)throws Exception {
+        List<String[]> allrecords = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filename));
         String rec;
         while((rec= br.readLine()) != null){
             String [] record = rec.trim().split(";");
             tableModel.addRow(record);
+            allrecords.add(record);
         }
         br.close();
+        return allrecords;
     }
 
     public static boolean isFileExists(String string) {
@@ -506,6 +510,7 @@ public class filefunction extends JFrame{
                 switch (filename) {
                     case "suppliers.txt" -> newID = "S-" + generateNewID(filename);
                     case "hospitals.txt" -> newID = "H-" + generateNewID(filename);
+                    case "users.txt" -> newID = "Staff-" + generateNewID(filename);
                     case "transactions.txt" -> newID = "T-" + generateNewID(filename);
                 }
                 lines.add(newID);

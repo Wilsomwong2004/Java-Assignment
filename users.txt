@@ -1,1 +1,7 @@
 Admin-00000;admin;0000;admin@example.com;Not Specified;Admin
+<<<<<<< HEAD
+=======
+Staff-00001;effea;fae;Female;Admin
+Staff-00002;uyth;nyut;nyht;Female;Admin
+cea;ca;qe;Female;Admin
+>>>>>>> 1209f9aff285374115d482c4a484a15c6ce1f7a9
