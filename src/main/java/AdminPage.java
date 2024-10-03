@@ -1094,7 +1094,7 @@ public class AdminPage extends javax.swing.JFrame {
                 return false;
             }
         };
-        String[] ColHeadings = {"User ID", "Name", "Password", "Type of user"};
+        String[] ColHeadings = {"User ID", "Username", "Password","Email Address","Gender", "Type of user"};
         model3.setColumnIdentifiers(ColHeadings);
         userTable.setModel(model3);
         model3.setRowCount(0);
@@ -1527,7 +1527,6 @@ public class AdminPage extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Please select a row");
             }
         } else if (supplierScrollTable.isVisible()) {
-            System.out.println("hihi");
             supplierFormTitle.setText("Edit Supplier Form");
             saveSupplierBtn.setVisible(true);
             addSupplierBtn.setVisible(false);
