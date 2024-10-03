@@ -115,12 +115,12 @@ public class AdminPage extends javax.swing.JFrame {
         report = new javax.swing.JLayeredPane();
         supplierFormTitle1 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        st4 = new javax.swing.JTextField();
+        endDateField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         filterReportBtn = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        startDateField = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
@@ -990,12 +990,12 @@ public class AdminPage extends javax.swing.JFrame {
 
             report.setLayer(supplierFormTitle1, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel15, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(st4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            report.setLayer(endDateField, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel32, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel33, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(filterReportBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            report.setLayer(startDateField, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel34, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel35, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel36, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -1018,8 +1018,8 @@ public class AdminPage extends javax.swing.JFrame {
                                     .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                                 .addGap(16, 16, 16)
                                 .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                                    .addComponent(st4))
+                                    .addComponent(startDateField, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                    .addComponent(endDateField))
                                 .addGap(18, 18, 18)
                                 .addComponent(filterReportBtn))
                             .addComponent(supplierFormTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
@@ -1047,11 +1047,11 @@ public class AdminPage extends javax.swing.JFrame {
                             .addComponent(supplierFormTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(startDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(st4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(endDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(reportLayout.createSequentialGroup()
                             .addGap(64, 64, 64)
@@ -2113,7 +2113,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField startDateField;
     private javax.swing.JLabel label;
     private javax.swing.JLabel logoutBtn;
     private javax.swing.JLabel longlines;
@@ -2143,7 +2143,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JTextField st1;
     private javax.swing.JTextArea st2;
     private javax.swing.JTextField st3;
-    private javax.swing.JTextField st4;
+    private javax.swing.JTextField endDateField;
     private javax.swing.JButton supplierBtn;
     private javax.swing.JLayeredPane supplierForm;
     private javax.swing.JLabel supplierFormTitle;
