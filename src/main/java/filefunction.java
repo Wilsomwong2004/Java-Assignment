@@ -492,16 +492,7 @@ public class filefunction extends JFrame{
         try (BufferedWriter myWriter = new BufferedWriter(new FileWriter(filename, true))) {
             List<String> lines = new ArrayList<>();
 
-            if (filename.equals("users.txt")) {
-                // For users.txt, the ID is already provided as the first data element
-                if (entryExists(filename, data[0])) {
-                    System.out.println("User already exists. Skipping duplicate.");
-                    return;
-                }
-                lines.addAll(Arrays.asList(data));
-                myWriter.write(String.join(";", lines));
-                myWriter.newLine();
-            } else if(filename.equals("ppe.txt")){
+            if(filename.equals("ppe.txt")){
                 lines.addAll(Arrays.asList(data));
                 myWriter.write(String.join(";", lines));
                 myWriter.newLine();

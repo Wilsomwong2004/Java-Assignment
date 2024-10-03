@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Date;
-
-import javax.management.modelmbean.ModelMBean;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -128,10 +126,12 @@ public class AdminPage extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
         r1 = new javax.swing.JLabel();
         r2 = new javax.swing.JLabel();
         r3 = new javax.swing.JLabel();
         r4 = new javax.swing.JLabel();
+        r5 = new javax.swing.JLabel();
         table = new javax.swing.JLayeredPane();
         userScrollTable = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
@@ -603,7 +603,7 @@ public class AdminPage extends javax.swing.JFrame {
             jLabel4.setText("Process:");
 
             jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel5.setText("Hospital / Supplier Code:");
+            jLabel5.setText("Hospital Code:");
 
             jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
             jLabel6.setText("Quantity:");
@@ -987,7 +987,10 @@ public class AdminPage extends javax.swing.JFrame {
             jLabel35.setText("Total number of items received:");
 
             jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel36.setText("Total revenue:");
+            jLabel36.setText("Total Revenue:");
+
+            jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel37.setText("Total Net Income:");
 
             r1.setText("----");
 
@@ -996,6 +999,8 @@ public class AdminPage extends javax.swing.JFrame {
             r3.setText("----");
 
             r4.setText("----");
+
+            r5.setText("----");
 
             report.setLayer(supplierFormTitle1, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel15, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -1008,10 +1013,12 @@ public class AdminPage extends javax.swing.JFrame {
             report.setLayer(jLabel34, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel35, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(jLabel36, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            report.setLayer(jLabel37, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(r1, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(r2, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(r3, javax.swing.JLayeredPane.DEFAULT_LAYER);
             report.setLayer(r4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            report.setLayer(r5, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
             javax.swing.GroupLayout reportLayout = new javax.swing.GroupLayout(report);
             report.setLayout(reportLayout);
@@ -1036,16 +1043,18 @@ public class AdminPage extends javax.swing.JFrame {
                         .addGroup(reportLayout.createSequentialGroup()
                             .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel33, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(jLabel36))
+                                    .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel37))
                             .addGap(18, 18, 18)
                             .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(r1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                                 .addComponent(r2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(r3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(r4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(r4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(r5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addContainerGap(46, Short.MAX_VALUE))
             );
             reportLayout.setVerticalGroup(
@@ -1083,6 +1092,10 @@ public class AdminPage extends javax.swing.JFrame {
                     .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel36)
                         .addComponent(r4))
+                    .addGap(18, 18, 18)
+                    .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel37)
+                        .addComponent(r5))
                     .addContainerGap(157, Short.MAX_VALUE))
             );
 
@@ -1510,18 +1523,14 @@ public class AdminPage extends javax.swing.JFrame {
                return false;
             }
         };
-        String[] ColHeadings = {"Transaction ID", "Item ID", "Supplier ID", "Hospital ID", "Quantity", "Total Price", "Date"};
+        String[] ColHeadings = {"Transaction ID", "Item ID", "Process", "Supplier/Hospital ID", "Quantity", "Total Price", "Date"};
         model5.setColumnIdentifiers(ColHeadings);
         transactionTable.setModel(model5);
         model5.setRowCount(0);
         transactionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         try {
-            if (filefunction.isFileExists("transactions.txt")) {
-                filefunction.loadDataFromFile("transactions.txt",model5);
-            } else {
-                filefunction.createFile("transactions.txt");
-            }
+            filefunction.loadDataFromFile("transactions.txt",model5);
         } catch (Exception ex) {
             Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1553,7 +1562,7 @@ public class AdminPage extends javax.swing.JFrame {
                return false;
             }
         };
-        String[] ColHeadings = {"Transaction ID", "Item ID", "Supplier ID", "Hospital ID", "Quantity", "Total Price", "Date"};
+        String[] ColHeadings = {"Transaction ID", "Item ID", "Process", "Supplier/Hospital ID", "Quantity", "Total Price", "Date"};
         model5.setColumnIdentifiers(ColHeadings);
         transactionTable.setModel(model5);
         model5.setRowCount(0);
@@ -1730,16 +1739,27 @@ public class AdminPage extends javax.swing.JFrame {
 
         //show report
         r1.setText(String.valueOf(transactionModel.getRowCount()));
-        int totalItemsDistributed;
-        int totalItemsReceived;
-        double totalRevenue;
+        int totalItemsDistributed = 0;
+        int totalItemsReceived = 0;
+        double totalNetIncome = 0.0;
+        double totalRevenue = 0.0;
 
         for (int i = 0; i < transactionModel.getRowCount(); i++){
             int quantity = Integer.parseInt(transactionModel.getValueAt(i,4).toString());
             double price = Double.parseDouble(transactionModel.getValueAt(i, 5).toString());
-            if 
+            if ("Distribute".equals(transactionModel.getValueAt(i,2))){
+                totalItemsDistributed += quantity;
+                totalNetIncome+=price;
+                totalRevenue += price;
+            }else if("Receive".equals(transactionModel.getValueAt(i,2))){
+                totalItemsReceived += quantity;
+                totalNetIncome-=price;
+            }
         }
-        r2.setText
+        r2.setText(String.valueOf(totalItemsDistributed));
+        r3.setText(String.valueOf(totalItemsReceived));
+        r4.setText(String.format("%.2f", totalRevenue));
+        r5.setText(String.format("%.2f", totalNetIncome));
     }//GEN-LAST:event_filterReportBtnActionPerformed
 
     public static void filterTransaction(String startDateStr, String endDateStr, DefaultTableModel model) throws Exception{
@@ -1762,7 +1782,6 @@ public class AdminPage extends javax.swing.JFrame {
         for (String[] each: transactions){
             try {
                 Date transactionDate = dateFormat.parse(each[6]);
-                String process= each[4];
                 if ((transactionDate.compareTo(startDate)>=0)&& (transactionDate.compareTo(endDate)<=0)) {
                     model.addRow(each);
                 }
@@ -2184,6 +2203,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2211,6 +2231,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JLabel r2;
     private javax.swing.JLabel r3;
     private javax.swing.JLabel r4;
+    private javax.swing.JLabel r5;
     private javax.swing.JLayeredPane report;
     private javax.swing.JButton reportBtn;
     private javax.swing.JButton saveHospitalBtn;
