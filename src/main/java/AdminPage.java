@@ -1607,6 +1607,19 @@ public class AdminPage extends javax.swing.JFrame {
         String input2 = ht2.getText();
         String input3 = ht3.getText();
         if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()) {
+            // name words only allowed
+            if (!input1.trim().matches("[a-zA-Z ]+")) {
+                JOptionPane.showMessageDialog(this, "Name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            //phone number only numbers allowed without limited digits
+            // phone number only numbers allowed, no limit on digits
+            if (!input3.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Phone number should only contain digits.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             filefunction.ADD_DATA("hospitals.txt",model, input1, input2, input3);
             JOptionPane.showMessageDialog(this, "Hospital data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
 
@@ -1633,6 +1646,7 @@ public class AdminPage extends javax.swing.JFrame {
         String input4 = (String) ut4.getSelectedItem();
         String input5 = (String) ut5.getSelectedItem();
         if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()&& !input4.isEmpty()&& !input5.isEmpty()) {
+
             filefunction.ADD_DATA("users.txt",model, input1, input2, input3,input4,input5);
             JOptionPane.showMessageDialog(this, "User data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
 
@@ -1649,6 +1663,18 @@ public class AdminPage extends javax.swing.JFrame {
         String input2 = st2.getText();
         String input3 = st3.getText();
         if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()) {
+            // name words only allowed
+            if (!input1.trim().matches("[a-zA-Z ]+")) {
+                JOptionPane.showMessageDialog(this, "Name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            //phone number only numbers allowed without limited digits
+            if (!input3.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Phone number should only contain digits.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             filefunction.ADD_DATA("suppliers.txt",model, input1, input2, input3);
             JOptionPane.showMessageDialog(this, "Supplier data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
 
@@ -1668,14 +1694,11 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_addSupplierBtnActionPerformed
 
     private void addTransBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTransBtnActionPerformed
-        //DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
-        //String input1 = tt1.getText();
+        DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
+        String input1 = (String) tt1.getSelectedItem();
         //String input2 = tt2.getText();
         //String input3 = (String) tt3.getSelectedItem();
-        //String input4 = (String) tt4.getSelectedItem();
-        //String input5 = (String) tt5.getSelectedItem();
-        //String input6 = (String) tt6.getSelectedItem();
-        //String input7 = tt7.getText();
+        String input4 = tt4.getText();
         //if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()&& !input4.isEmpty()&& !input5.isEmpty()&& !input6.isEmpty()&& !input7.isEmpty()) {
         //    filefunction.ADD_DATA("transactions.txt",model, input1, input2, input3,input4,input5,input6,input7);
         //    JOptionPane.showMessageDialog(this, "Transaction data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
