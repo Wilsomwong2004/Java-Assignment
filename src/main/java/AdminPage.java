@@ -1,12 +1,18 @@
 import java.awt.event.ItemEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -21,9 +27,12 @@ import javax.swing.table.DefaultTableModel;
  * @author songj
  */
 public class AdminPage extends javax.swing.JFrame {
-
+    private DefaultListModel mod;
     public AdminPage() {
         initComponents();
+        menu.add(panel);
+        mod = new DefaultListModel();
+        list.setModel(mod);
     }
 
     /**
@@ -35,6 +44,10 @@ public class AdminPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        list = new javax.swing.JList<>();
+        menu = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         hospitalBtn = new javax.swing.JButton();
         supplierBtn = new javax.swing.JButton();
@@ -74,19 +87,6 @@ public class AdminPage extends javax.swing.JFrame {
         savePPEBtn = new javax.swing.JButton();
         jLabel31 = new javax.swing.JLabel();
         t4 = new javax.swing.JTextField();
-        transactionForm = new javax.swing.JLayeredPane();
-        jLabel30 = new javax.swing.JLabel();
-        addTransBtn = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        newTransactionID = new javax.swing.JLabel();
-        tt4 = new javax.swing.JTextField();
-        tt3 = new javax.swing.JComboBox<>();
-        tt1 = new javax.swing.JComboBox<>();
-        tt2 = new javax.swing.JComboBox<>();
         supplierForm = new javax.swing.JLayeredPane();
         supplierFormTitle = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -116,7 +116,20 @@ public class AdminPage extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         ut4 = new javax.swing.JComboBox<>();
         jLabel25 = new javax.swing.JLabel();
-        report = new javax.swing.JLayeredPane();
+        transactionForm = new javax.swing.JLayeredPane();
+        jLabel30 = new javax.swing.JLabel();
+        addTransBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        newTransactionID = new javax.swing.JLabel();
+        tt4 = new javax.swing.JTextField();
+        tt3 = new javax.swing.JComboBox<>();
+        tt1 = new javax.swing.JComboBox<>();
+        tt2 = new javax.swing.JComboBox<>();
+        ReportTransaction = new javax.swing.JLayeredPane();
         supplierFormTitle1 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         endDateField = new javax.swing.JTextField();
@@ -128,11 +141,11 @@ public class AdminPage extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
-        jLabel37 = new javax.swing.JLabel();
         r1 = new javax.swing.JLabel();
         r2 = new javax.swing.JLabel();
         r3 = new javax.swing.JLabel();
         r4 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
         r5 = new javax.swing.JLabel();
         table = new javax.swing.JLayeredPane();
         userScrollTable = new javax.swing.JScrollPane();
@@ -152,6 +165,28 @@ public class AdminPage extends javax.swing.JFrame {
         searchbar = new javax.swing.JTextField();
         searchBtn = new javax.swing.JButton();
         longlines = new javax.swing.JLabel();
+
+        list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(list);
+
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+        );
+
+        menu.setFocusable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -581,116 +616,6 @@ public class AdminPage extends javax.swing.JFrame {
 
             form.add(ppeitemForm, "card4");
 
-            jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-            jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            jLabel30.setText("New Transaction Form");
-
-            addTransBtn.setBackground(new java.awt.Color(51, 51, 51));
-            addTransBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            addTransBtn.setForeground(new java.awt.Color(255, 255, 255));
-            addTransBtn.setText("Add New");
-            addTransBtn.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    addTransBtnActionPerformed(evt);
-                }
-            });
-
-            jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel2.setText("Transaction ID:");
-
-            jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel3.setText("Item Code:");
-
-            jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel4.setText("Process:");
-
-            jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel5.setText("Hospital Code:");
-
-            jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel6.setText("Quantity:");
-
-            newTransactionID.setText("Code here");
-
-            tt2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Distribute", "Receive" }));
-
-            transactionForm.setLayer(jLabel30, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(addTransBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(newTransactionID, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(tt4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(tt3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(tt1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            transactionForm.setLayer(tt2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-            javax.swing.GroupLayout transactionFormLayout = new javax.swing.GroupLayout(transactionForm);
-            transactionForm.setLayout(transactionFormLayout);
-            transactionFormLayout.setHorizontalGroup(
-                transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(transactionFormLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(addTransBtn)
-                        .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(transactionFormLayout.createSequentialGroup()
-                                .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))
-                                .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(transactionFormLayout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(newTransactionID, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tt1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(tt2, 0, 136, Short.MAX_VALUE)))
-                                    .addGroup(transactionFormLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tt4))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, transactionFormLayout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(tt3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(45, Short.MAX_VALUE))
-            );
-            transactionFormLayout.setVerticalGroup(
-                transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(transactionFormLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(newTransactionID)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addGap(18, 18, 18)
-                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(tt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(tt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(21, 21, 21)
-                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tt3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5))
-                    .addGap(18, 18, 18)
-                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(tt4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6))
-                    .addGap(67, 67, 67)
-                    .addComponent(addTransBtn)
-                    .addContainerGap(102, Short.MAX_VALUE))
-            );
-
-            form.add(transactionForm, "card2");
-
             supplierFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
             supplierFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
             supplierFormTitle.setText("New Supplier Form");
@@ -951,15 +876,125 @@ public class AdminPage extends javax.swing.JFrame {
 
             form.add(userForm, "card2");
 
+            jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+            jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            jLabel30.setText("New Transaction Form");
+
+            addTransBtn.setBackground(new java.awt.Color(51, 51, 51));
+            addTransBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            addTransBtn.setForeground(new java.awt.Color(255, 255, 255));
+            addTransBtn.setText("Add New");
+            addTransBtn.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    addTransBtnActionPerformed(evt);
+                }
+            });
+
+            jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel2.setText("Transaction ID:");
+
+            jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel3.setText("Item Code:");
+
+            jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel4.setText("Process:");
+
+            jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel5.setText("Hospital / Supplier Code:");
+
+            jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel6.setText("Quantity:");
+
+            newTransactionID.setText("Code here");
+
+            tt2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Distribute", "Receive" }));
+
+            transactionForm.setLayer(jLabel30, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(addTransBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(newTransactionID, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(tt4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(tt3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(tt1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            transactionForm.setLayer(tt2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            javax.swing.GroupLayout transactionFormLayout = new javax.swing.GroupLayout(transactionForm);
+            transactionForm.setLayout(transactionFormLayout);
+            transactionFormLayout.setHorizontalGroup(
+                transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(transactionFormLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(addTransBtn)
+                        .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(transactionFormLayout.createSequentialGroup()
+                                .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(transactionFormLayout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(newTransactionID, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tt1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(tt2, 0, 136, Short.MAX_VALUE)))
+                                    .addGroup(transactionFormLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(tt4))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, transactionFormLayout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(tt3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(45, Short.MAX_VALUE))
+            );
+            transactionFormLayout.setVerticalGroup(
+                transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(transactionFormLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(newTransactionID)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGap(18, 18, 18)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(tt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(tt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(21, 21, 21)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tt3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5))
+                    .addGap(18, 18, 18)
+                    .addGroup(transactionFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(tt4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6))
+                    .addGap(67, 67, 67)
+                    .addComponent(addTransBtn)
+                    .addContainerGap(102, Short.MAX_VALUE))
+            );
+
+            form.add(transactionForm, "card2");
+
             supplierFormTitle1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
             supplierFormTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
             supplierFormTitle1.setText("Report Filter");
 
             jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel15.setText("Start Date (YYYY-MM-DD):");
+            jLabel15.setText("Start Date:");
 
             jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel8.setText("End Date (YYYY-MM-DD):");
+            jLabel8.setText("End Date:");
 
             jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
             jLabel32.setText("___________________________________________________________________________________");
@@ -975,9 +1010,7 @@ public class AdminPage extends javax.swing.JFrame {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     try {
                         filterReportBtnActionPerformed(evt);
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    } catch (Exception ex) {
                     }
                 }
             });
@@ -989,10 +1022,7 @@ public class AdminPage extends javax.swing.JFrame {
             jLabel35.setText("Total number of items received:");
 
             jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel36.setText("Total Revenue:");
-
-            jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-            jLabel37.setText("Total Net Income:");
+            jLabel36.setText("Total revenue:");
 
             r1.setText("----");
 
@@ -1002,106 +1032,113 @@ public class AdminPage extends javax.swing.JFrame {
 
             r4.setText("----");
 
+            jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+            jLabel37.setText("Total revenue:");
+
             r5.setText("----");
 
-            report.setLayer(supplierFormTitle1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jLabel15, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(endDateField, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jLabel32, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jLabel33, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(filterReportBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(startDateField, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jLabel34, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jLabel35, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jLabel36, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(jLabel37, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(r1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(r2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(r3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(r4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-            report.setLayer(r5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(supplierFormTitle1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(jLabel15, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(endDateField, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(jLabel32, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(jLabel33, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(filterReportBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(startDateField, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(jLabel34, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(jLabel35, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(jLabel36, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(r1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(r2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(r3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(r4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(jLabel37, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            ReportTransaction.setLayer(r5, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-            javax.swing.GroupLayout reportLayout = new javax.swing.GroupLayout(report);
-            report.setLayout(reportLayout);
-            reportLayout.setHorizontalGroup(
-                reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(reportLayout.createSequentialGroup()
+            javax.swing.GroupLayout ReportTransactionLayout = new javax.swing.GroupLayout(ReportTransaction);
+            ReportTransaction.setLayout(ReportTransactionLayout);
+            ReportTransactionLayout.setHorizontalGroup(
+                ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ReportTransactionLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(reportLayout.createSequentialGroup()
-                                .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(ReportTransactionLayout.createSequentialGroup()
+                                .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                                 .addGap(16, 16, 16)
-                                .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(startDateField, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(startDateField, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                                     .addComponent(endDateField))
                                 .addGap(18, 18, 18)
-                                .addComponent(filterReportBtn))
+                                .addComponent(filterReportBtn)
+                                .addGap(3, 3, 3))
                             .addComponent(supplierFormTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
                             .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(reportLayout.createSequentialGroup()
-                            .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel33, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(jLabel37))
-                            .addGap(18, 18, 18)
-                            .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(r1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                                .addComponent(r2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(r3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(r4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(r5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ReportTransactionLayout.createSequentialGroup()
+                                .addComponent(jLabel37)
+                                .addGap(132, 132, 132)
+                                .addComponent(r5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ReportTransactionLayout.createSequentialGroup()
+                                .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel33, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel36))
+                                .addGap(18, 18, 18)
+                                .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(r1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                                    .addComponent(r2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(r3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(r4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addContainerGap(46, Short.MAX_VALUE))
             );
-            reportLayout.setVerticalGroup(
-                reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(reportLayout.createSequentialGroup()
-                    .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(reportLayout.createSequentialGroup()
+            ReportTransactionLayout.setVerticalGroup(
+                ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ReportTransactionLayout.createSequentialGroup()
+                    .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ReportTransactionLayout.createSequentialGroup()
                             .addComponent(supplierFormTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(startDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(endDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(reportLayout.createSequentialGroup()
+                        .addGroup(ReportTransactionLayout.createSequentialGroup()
                             .addGap(64, 64, 64)
                             .addComponent(filterReportBtn)))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGap(22, 22, 22)
                     .addComponent(jLabel32)
                     .addGap(24, 24, 24)
-                    .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel33)
                         .addComponent(r1))
                     .addGap(18, 18, 18)
-                    .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel34)
                         .addComponent(r2))
                     .addGap(18, 18, 18)
-                    .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel35)
                         .addComponent(r3))
                     .addGap(18, 18, 18)
-                    .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel36)
                         .addComponent(r4))
                     .addGap(18, 18, 18)
-                    .addGroup(reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(ReportTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel37)
                         .addComponent(r5))
-                    .addContainerGap(157, Short.MAX_VALUE))
+                    .addContainerGap(113, Short.MAX_VALUE))
             );
 
-            form.add(report, "card3");
+            form.add(ReportTransaction, "card3");
 
             table.setLayout(new java.awt.CardLayout());
 
@@ -1187,6 +1224,12 @@ public class AdminPage extends javax.swing.JFrame {
 
             jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
             jLabel9.setText("Enter the ID here:");
+
+            searchbar.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyReleased(java.awt.event.KeyEvent evt) {
+                    searchbarKeyReleased(evt);
+                }
+            });
 
             searchBtn.setBackground(new java.awt.Color(51, 51, 51));
             searchBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1293,7 +1336,7 @@ public class AdminPage extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 535, Short.MAX_VALUE)
+                    .addComponent(mainPanel)
                     .addContainerGap())
             );
 
@@ -1307,7 +1350,7 @@ public class AdminPage extends javax.swing.JFrame {
         transactionForm.setVisible(false);
         userForm.setVisible(false);
         ppeitemForm.setVisible(false);
-        report.setVisible(false);
+        ReportTransaction.setVisible(false);
         
         try {
             String newID = filefunction.generateNewID("hospitals.txt");
@@ -1323,6 +1366,7 @@ public class AdminPage extends javax.swing.JFrame {
         editBtn.setVisible(true);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(false);  
         hospitalScrollTable.setVisible(true); 
@@ -1358,7 +1402,7 @@ public class AdminPage extends javax.swing.JFrame {
         transactionForm.setVisible(false);
         userForm.setVisible(false);
         ppeitemForm.setVisible(false);
-        report.setVisible(false);
+        ReportTransaction.setVisible(false);
         
         try {
             String newID = filefunction.generateNewID("suppliers.txt");
@@ -1374,6 +1418,7 @@ public class AdminPage extends javax.swing.JFrame {
         editBtn.setVisible(true);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(true);  
         hospitalScrollTable.setVisible(false); 
@@ -1408,7 +1453,7 @@ public class AdminPage extends javax.swing.JFrame {
         transactionForm.setVisible(false);
         userForm.setVisible(true);
         ppeitemForm.setVisible(false);
-        report.setVisible(false);
+        ReportTransaction.setVisible(false);
         
         try {
         String newID = filefunction.generateNewID("users.txt");
@@ -1424,6 +1469,7 @@ public class AdminPage extends javax.swing.JFrame {
         editBtn.setVisible(true);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(false);  
         hospitalScrollTable.setVisible(false); 
@@ -1457,7 +1503,7 @@ public class AdminPage extends javax.swing.JFrame {
         transactionForm.setVisible(false);
         userForm.setVisible(false);
         ppeitemForm.setVisible(true);
-        report.setVisible(false);
+        ReportTransaction.setVisible(false);
         
         label.setText("PPE ITEM MENU");
         editBtn.setVisible(true);
@@ -1465,6 +1511,7 @@ public class AdminPage extends javax.swing.JFrame {
         addPPEBtn.setVisible(true);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(false);  
         hospitalScrollTable.setVisible(false); 
@@ -1504,13 +1551,14 @@ public class AdminPage extends javax.swing.JFrame {
         transactionForm.setVisible(true);
         userForm.setVisible(false);
         ppeitemForm.setVisible(false);
-        report.setVisible(false);
+        ReportTransaction.setVisible(false);
         
         label.setText("TRANSACTION MENU");
         addTransBtn.setVisible(true);
         editBtn.setVisible(false);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(false);  
         hospitalScrollTable.setVisible(false); 
@@ -1600,7 +1648,7 @@ public class AdminPage extends javax.swing.JFrame {
         transactionForm.setVisible(false);
         userForm.setVisible(false);
         ppeitemForm.setVisible(false);
-        report.setVisible(true);
+        ReportTransaction.setVisible(true);
         
         label.setText("REPORT MENU");
         editBtn.setVisible(false);
@@ -1634,11 +1682,11 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_reportBtnActionPerformed
 
     private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
-        int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
-        if (logout == JOptionPane.YES_OPTION) {
-            new LoginSystem().setVisible(true);
-            this.dispose();
-        }
+//        int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
+//        if (logout == JOptionPane.YES_OPTION) {
+//            new LoginSystem().setVisible(true);
+//            this.dispose();
+//        }
     }//GEN-LAST:event_logoutBtnMouseClicked
 
     //ADD NEW DATA
@@ -1651,10 +1699,10 @@ public class AdminPage extends javax.swing.JFrame {
         String input5 = "100";
         if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()) {
             // no duplicate ID allowed
-            if (filefunction.isDuplicateID("ppe.txt", input1)) {
-                JOptionPane.showMessageDialog(this, "Duplicate ID found. Please enter a unique ID.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+//            if (filefunction.isDuplicateID("ppe.txt", input1)) {
+//                JOptionPane.showMessageDialog(this, "Duplicate ID found. Please enter a unique ID.", "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
             // item name only words allowed
             if (!input2.matches("[a-zA-Z ]+")) {
                 JOptionPane.showMessageDialog(this, "Item name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1833,6 +1881,10 @@ public class AdminPage extends javax.swing.JFrame {
                 double itemPrice = Double.parseDouble(ppeFields[4]); // Assuming price is the 5th field
                 double totalPrice = quantityValue * itemPrice;
 
+                // Get current date
+//                LocalDate currentDate = LocalDate.now();
+//                String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
                 // Add new transaction
                 String[] transactionData = {
                     itemCode,
@@ -1840,6 +1892,7 @@ public class AdminPage extends javax.swing.JFrame {
                     process.equals("Receive") ? hospitalSupplierCode : "",    // Supplier ID
                     String.valueOf(quantityValue),
                     String.format("%.2f", totalPrice),
+//                    formattedDate
                 };
                 
                 filefunction.ADD_DATA("transactions.txt", (DefaultTableModel) transactionTable.getModel(), transactionData);
@@ -1861,7 +1914,7 @@ public class AdminPage extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_addTransBtnActionPerformed
+    }                                           
 
     private void refreshTransactionTable() {
         DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
@@ -2262,8 +2315,38 @@ public class AdminPage extends javax.swing.JFrame {
         } else if (transactionScrollTable.isVisible()) {
         }
     }//GEN-LAST:event_editBtnActionPerformed
+    
+    private void searchbarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchbarKeyReleased
+        String input = searchbar.getText().trim().toUpperCase();
+        if (!input.equals("")){
+            List<String> allID = null;
+            if (supplierScrollTable.isVisible()){
+                allID = filefunction.GET_ALL_ID("suppliers.txt");
+            } else if (hospitalScrollTable.isVisible()){
+                allID = filefunction.GET_ALL_ID("hospitals.txt");
+            }else if (userScrollTable.isVisible()) {
+                allID = filefunction.GET_ALL_ID("users.txt");
+            } else if (ppeItemScrollTable.isVisible()) {
+                allID = filefunction.GET_ALL_ID("ppe.txt");
+            } else if (transactionScrollTable.isVisible()) {
+                allID = filefunction.GET_ALL_ID("transactions.txt");
+            }
+            mod.removeAllElements();
+            for (String id:allID){
+                if (id.startsWith(input)){
+                    mod.addElement(id.toString());
+                }
+            }
+            menu.show(searchbar,0,searchbar.getHeight());
+        }
+    }//GEN-LAST:event_searchbarKeyReleased
 
-
+    private void listMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listMouseClicked
+        searchbar.setText((String)list.getSelectedValue());
+    }//GEN-LAST:event_listMouseClicked
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -2290,6 +2373,7 @@ public class AdminPage extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AdminPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -2303,6 +2387,7 @@ public class AdminPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLayeredPane ReportTransaction;
     private javax.swing.JButton addHospitalBtn;
     private javax.swing.JButton addPPEBtn;
     private javax.swing.JButton addSupplierBtn;
@@ -2310,6 +2395,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JButton addUserBtn;
     private javax.swing.JButton delBtn;
     private javax.swing.JButton editBtn;
+    private javax.swing.JTextField endDateField;
     private javax.swing.JButton filterReportBtn;
     private javax.swing.JLayeredPane form;
     private javax.swing.JButton hospitalBtn;
@@ -2356,17 +2442,20 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTextField startDateField;
     private javax.swing.JLabel label;
+    private javax.swing.JList<String> list;
     private javax.swing.JLabel logoutBtn;
     private javax.swing.JLabel longlines;
     private javax.swing.JLayeredPane mainPanel;
+    private javax.swing.JPopupMenu menu;
     private javax.swing.JLabel newHospitalID;
     private javax.swing.JLabel newSupplierID;
     private javax.swing.JLabel newTransactionID;
     private javax.swing.JLabel newUserID;
+    private javax.swing.JPanel panel;
     private javax.swing.JButton ppeBtn;
     private javax.swing.JLabel ppeItemFormTitle;
     private javax.swing.JScrollPane ppeItemScrollTable;
@@ -2377,7 +2466,6 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JLabel r3;
     private javax.swing.JLabel r4;
     private javax.swing.JLabel r5;
-    private javax.swing.JLayeredPane report;
     private javax.swing.JButton reportBtn;
     private javax.swing.JButton saveHospitalBtn;
     private javax.swing.JButton savePPEBtn;
@@ -2389,7 +2477,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JTextField st1;
     private javax.swing.JTextArea st2;
     private javax.swing.JTextField st3;
-    private javax.swing.JTextField endDateField;
+    private javax.swing.JTextField startDateField;
     private javax.swing.JButton supplierBtn;
     private javax.swing.JLayeredPane supplierForm;
     private javax.swing.JLabel supplierFormTitle;
