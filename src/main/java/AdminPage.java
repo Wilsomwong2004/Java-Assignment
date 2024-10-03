@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -1349,6 +1350,20 @@ public class AdminPage extends javax.swing.JFrame {
         String input3 = (String) t3.getSelectedItem();
         String input4 = "100";
         if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()) {
+            // no duplicate ID allowed
+            if (filefunction.isDuplicateID("ppe.txt", input1)) {
+                JOptionPane.showMessageDialog(this, "Duplicate ID found. Please enter a unique ID.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // item name only words allowed
+            if (!input2.matches("[a-zA-Z ]+")) {
+                JOptionPane.showMessageDialog(this, "Item name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // quantity will give alert when less then 25, show the PPE name and quantity that less than 25
+            if (Integer.parseInt(input4) < 25) {
+                JOptionPane.showMessageDialog(this, "Quantity of "+input2+" is less than 25. Please add more stock.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
             filefunction.ADD_DATA("ppe.txt",model, input1, input2, input3, input4);
             JOptionPane.showMessageDialog(this, "PPE item data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
 
