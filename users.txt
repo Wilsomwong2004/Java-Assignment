@@ -1,6 +1,0 @@
-<<<<<<< HEAD
-Admin-00000;yh5egr;0000;Admin
-
-=======
-Admin-00000;admin;0000;admin@example.com;Not Specified;Admin
->>>>>>> c2454b5db567d50965f33ec58463a98d42d1233c
