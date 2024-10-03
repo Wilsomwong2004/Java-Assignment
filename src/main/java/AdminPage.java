@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Date;
-
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -24,9 +25,12 @@ import javax.swing.table.DefaultTableModel;
  * @author songj
  */
 public class AdminPage extends javax.swing.JFrame {
-
+    private DefaultListModel mod;
     public AdminPage() {
         initComponents();
+        menu.add(panel);
+        mod = new DefaultListModel();
+        list.setModel(mod);
     }
 
     /**
@@ -37,6 +41,11 @@ public class AdminPage extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        panel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        list = new javax.swing.JList<>();
+        menu = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         hospitalBtn = new javax.swing.JButton();
         supplierBtn = new javax.swing.JButton();
@@ -154,6 +163,28 @@ public class AdminPage extends javax.swing.JFrame {
         searchbar = new javax.swing.JTextField();
         searchBtn = new javax.swing.JButton();
         longlines = new javax.swing.JLabel();
+
+        list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(list);
+
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+        );
+
+        menu.setFocusable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -479,8 +510,6 @@ public class AdminPage extends javax.swing.JFrame {
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel29.setText("Quantity In Stock:");
-
-
 
             t5.setText("100");
 
@@ -980,7 +1009,6 @@ public class AdminPage extends javax.swing.JFrame {
                     try {
                         filterReportBtnActionPerformed(evt);
                     } catch (Exception ex) {
-                        ex.printStackTrace();
                     }
                 }
             });
@@ -1336,6 +1364,7 @@ public class AdminPage extends javax.swing.JFrame {
         editBtn.setVisible(true);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(false);  
         hospitalScrollTable.setVisible(true); 
@@ -1387,6 +1416,7 @@ public class AdminPage extends javax.swing.JFrame {
         editBtn.setVisible(true);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(true);  
         hospitalScrollTable.setVisible(false); 
@@ -1437,6 +1467,7 @@ public class AdminPage extends javax.swing.JFrame {
         editBtn.setVisible(true);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(false);  
         hospitalScrollTable.setVisible(false); 
@@ -1478,6 +1509,7 @@ public class AdminPage extends javax.swing.JFrame {
         addPPEBtn.setVisible(true);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(false);  
         hospitalScrollTable.setVisible(false); 
@@ -1524,6 +1556,7 @@ public class AdminPage extends javax.swing.JFrame {
         editBtn.setVisible(false);
         delBtn.setVisible(true);
         searchpanel.setVisible(true);
+        searchbar.setText("");
         
         supplierScrollTable.setVisible(false);  
         hospitalScrollTable.setVisible(false); 
@@ -2229,7 +2262,37 @@ public class AdminPage extends javax.swing.JFrame {
         } else if (transactionScrollTable.isVisible()) {
         }
     }//GEN-LAST:event_editBtnActionPerformed
+    
+    private void searchbarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchbarKeyReleased
+        String input = searchbar.getText().trim().toUpperCase();
+        if (!input.equals("")){
+            List<String> allID = null;
+            if (supplierScrollTable.isVisible()){
+                allID = filefunction.GET_ALL_ID("suppliers.txt");
+            } else if (hospitalScrollTable.isVisible()){
+                allID = filefunction.GET_ALL_ID("hospitals.txt");
+            }else if (userScrollTable.isVisible()) {
+                allID = filefunction.GET_ALL_ID("users.txt");
+            } else if (ppeItemScrollTable.isVisible()) {
+                allID = filefunction.GET_ALL_ID("ppe.txt");
+            } else if (transactionScrollTable.isVisible()) {
+                allID = filefunction.GET_ALL_ID("transactions.txt");
+            }
+            mod.removeAllElements();
+            for (String id:allID){
+                if (id.startsWith(input)){
+                    mod.addElement(id.toString());
+                }
+            }
+            menu.show(searchbar,0,searchbar.getHeight());
+        }
+    }//GEN-LAST:event_searchbarKeyReleased
 
+    private void listMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listMouseClicked
+        searchbar.setText((String)list.getSelectedValue());
+    }//GEN-LAST:event_listMouseClicked
+    
+    
     
     /**
      * @param args the command line arguments
@@ -2326,16 +2389,20 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel label;
+    private javax.swing.JList<String> list;
     private javax.swing.JLabel logoutBtn;
     private javax.swing.JLabel longlines;
     private javax.swing.JLayeredPane mainPanel;
+    private javax.swing.JPopupMenu menu;
     private javax.swing.JLabel newHospitalID;
     private javax.swing.JLabel newSupplierID;
     private javax.swing.JLabel newTransactionID;
     private javax.swing.JLabel newUserID;
+    private javax.swing.JPanel panel;
     private javax.swing.JButton ppeBtn;
     private javax.swing.JLabel ppeItemFormTitle;
     private javax.swing.JScrollPane ppeItemScrollTable;

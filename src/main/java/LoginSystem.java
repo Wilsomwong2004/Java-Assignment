@@ -352,7 +352,7 @@ public class LoginSystem extends javax.swing.JFrame {
 
         if (users.containsKey(currentUsername) && users.get(currentUsername).equals(currentPassword)) {
             JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            AdminPageOutdated page = new AdminPageOutdated();
+            OutdatedAdminPage page = new OutdatedAdminPage();
             page.setVisible(true);
             this.dispose();
         } else {
