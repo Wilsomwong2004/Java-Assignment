@@ -1,3 +1,4 @@
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -9,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -1516,6 +1518,57 @@ public class AdminPage extends javax.swing.JFrame {
         ppeItemScrollTable.setVisible(false);
         transactionScrollTable.setVisible(true);
 
+        tt1.removeAllItems();
+        List<String> allppeIDs = filefunction.GET_ALL_ID("ppe.txt");
+        for (String id : allppeIDs) {
+            tt1.addItem(id);
+        }
+        
+        tt2.removeAllItems();
+        tt2.addItem("Distribute");
+        tt2.addItem("Receive");
+        
+        if (tt2.getSelectedItem() == "Distribute") {
+            jLabel5.setText("Supplier Code:");
+            List<String> allSupplierIDs = filefunction.GET_ALL_ID("suppliers.txt");
+            for (String id : allSupplierIDs) {
+                tt3.addItem(id);
+            }
+        }
+
+        if (tt2.getSelectedItem() == "Receive") {
+            jLabel5.setText("Hospital Code:");
+            List<String> allHospitalIDs = filefunction.GET_ALL_ID("hospitals.txt");
+            for (String id : allHospitalIDs) {
+                tt3.addItem(id);
+            }
+        }
+        
+        tt2.addItemListener((ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                String selectedItem = tt2.getSelectedItem().toString();
+                tt3.removeAllItems(); 
+                
+                try {
+                    if (selectedItem.equalsIgnoreCase("Distribute")) {
+                        jLabel5.setText("Supplier Code:");
+                        List<String> allSupplierIDs = filefunction.GET_ALL_ID("suppliers.txt");
+                        for (String id : allSupplierIDs) {
+                            tt3.addItem(id);
+                        }
+                    } else if (selectedItem.equalsIgnoreCase("Receive")) {
+                        jLabel5.setText("Hospital Code:");
+                        List<String> allHospitalIDs = filefunction.GET_ALL_ID("hospitals.txt");
+                        for (String id : allHospitalIDs) {
+                            tt3.addItem(id);
+                        }
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });        
+
         DefaultTableModel model5 = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -1780,18 +1833,13 @@ public class AdminPage extends javax.swing.JFrame {
                 double itemPrice = Double.parseDouble(ppeFields[4]); // Assuming price is the 5th field
                 double totalPrice = quantityValue * itemPrice;
 
-                // Get current date
-                LocalDate currentDate = LocalDate.now();
-                String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
                 // Add new transaction
                 String[] transactionData = {
                     itemCode,
-                    process.equals("Distribute") ? hospitalSupplierCode : "", // Hospital ID
+                    "Distribute".equals(process) ? hospitalSupplierCode : "", // Hospital ID
                     process.equals("Receive") ? hospitalSupplierCode : "",    // Supplier ID
                     String.valueOf(quantityValue),
                     String.format("%.2f", totalPrice),
-                    formattedDate
                 };
                 
                 filefunction.ADD_DATA("transactions.txt", (DefaultTableModel) transactionTable.getModel(), transactionData);
