@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Date;
-import javax.swing.DefaultComboBoxModel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
