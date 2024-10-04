@@ -365,14 +365,8 @@ public class LoginSystem extends javax.swing.JFrame {
                 String name = userNames.get(currentUserID);
                 JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + name, "Success", JOptionPane.INFORMATION_MESSAGE);
                 
-                if ("Admin".equals(role)) {
-                    AdminPage adminPage = new AdminPage();
-                    adminPage.setVisible(true);
-                } else {
-                    // Assume a StaffPage exists or use AdminPage for now
-                    AdminPage staffPage = new AdminPage(); // Replace with StaffPage when available
-                    staffPage.setVisible(true);
-                }
+                AdminPage adminPage = new AdminPage(role);
+                adminPage.setVisible(true);
                 
                 this.dispose();
             } else {

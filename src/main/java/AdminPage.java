@@ -24,12 +24,22 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdminPage extends javax.swing.JFrame {
     private DefaultListModel mod;
+    private String userRole;
+
     public AdminPage() {
-        initComponents();
+        this("Admin");
         menu.add(panel);
         mod = new DefaultListModel();
         list.setModel(mod);
+        
     }
+
+    public AdminPage(String userRole) {
+        this.userRole = userRole;
+        initComponents();
+        adjustUIBasedOnRole();
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1340,6 +1350,14 @@ public class AdminPage extends javax.swing.JFrame {
             pack();
         }// </editor-fold>//GEN-END:initComponents
     
+    private void adjustUIBasedOnRole() {
+        if ("Staff".equals(userRole)) {
+            userBtn.setVisible(false);
+            reportBtn.setVisible(false);
+        }
+        // If it's Admin, buttons will remain visible by default
+    }
+
     //MAIN PANELS BUTTON
     private void hospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitalBtnActionPerformed
         supplierForm.setVisible(false);
