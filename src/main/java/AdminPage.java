@@ -1753,8 +1753,14 @@ public class AdminPage extends javax.swing.JFrame {
                 return;
             }
 
-            filefunction.ADD_DATA("hospitals.txt",model, input1, input2, input3);
-            JOptionPane.showMessageDialog(this, "Hospital data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+            int count = filefunction.countLines("hospitals.txt");
+            if (count >= 4){
+                JOptionPane.showMessageDialog(this, "You have reached the maximum number of hospitals allowed. Please delete a hospital to add a new one.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                filefunction.ADD_DATA("hospitals.txt",model, input1, input2, input3);
+                JOptionPane.showMessageDialog(this, "Hospital data submitted", "Message", JOptionPane.INFORMATION_MESSAGE) ;
+            }
 
             // Clear all TextField contents
             ht1.setText("");
@@ -1767,7 +1773,7 @@ public class AdminPage extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, "Failed to generate new Hospital ID.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            }
         }
     }//GEN-LAST:event_addHospitalBtnActionPerformed
 
@@ -1808,8 +1814,14 @@ public class AdminPage extends javax.swing.JFrame {
                 return;
             }
 
-            filefunction.ADD_DATA("suppliers.txt",model, input1, input2, input3);
-            JOptionPane.showMessageDialog(this, "Supplier data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+            int count = filefunction.countLines("suppliers.txt");
+            if (count >= 4){
+                JOptionPane.showMessageDialog(this, "You have reached the maximum number of suppliers allowed. Please delete a hospital to add a new one.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                filefunction.ADD_DATA("suppliers.txt",model, input1, input2, input3);
+                JOptionPane.showMessageDialog(this, "Supplier data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+            }
 
             // Clear all TextField contents
             st1.setText("");
