@@ -26,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -422,19 +421,6 @@ public class filefunction extends JFrame{
         int newIDNum = Integer.parseInt(lastID) + 1;
         return String.format("%05d", newIDNum);
     }
-
-    //private static boolean entryExists(String filename, String id) throws IOException {
-    //    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-    //        String line;
-    //        while ((line = reader.readLine()) != null) {
-    //            String[] parts = line.split(";");
-    //            if (parts.length > 0 && parts[0].equals(id)) {
-    //                return true;
-    //            }
-    //        }
-    //    }
-    //    return false;
-    //}
 
     public static boolean isDuplicateID(String string, String input1) {
         //does item code got same id as input1

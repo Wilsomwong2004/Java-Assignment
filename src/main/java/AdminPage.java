@@ -1354,8 +1354,8 @@ public class AdminPage extends javax.swing.JFrame {
         if ("Staff".equals(userRole)) {
             userBtn.setVisible(false);
             reportBtn.setVisible(false);
+            jLabel1.setText("STAFF PAGE");
         }
-        // If it's Admin, buttons will remain visible by default
     }
 
     //MAIN PANELS BUTTON
