@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -1753,7 +1752,7 @@ public class AdminPage extends javax.swing.JFrame {
                 return;
             }
 
-            int count = filefunction.countLines("hospitals.txt");
+            int count = model.getRowCount();
             if (count >= 4){
                 JOptionPane.showMessageDialog(this, "You have reached the maximum number of hospitals allowed. Please delete a hospital to add a new one.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1814,7 +1813,7 @@ public class AdminPage extends javax.swing.JFrame {
                 return;
             }
 
-            int count = filefunction.countLines("suppliers.txt");
+            int count = model.getRowCount();
             if (count >= 4){
                 JOptionPane.showMessageDialog(this, "You have reached the maximum number of suppliers allowed. Please delete a hospital to add a new one.", "Error", JOptionPane.ERROR_MESSAGE);
             }

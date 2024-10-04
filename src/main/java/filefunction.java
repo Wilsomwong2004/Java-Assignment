@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -364,20 +365,6 @@ public class filefunction extends JFrame{
         }
         br.close();
         return allrecords;
-    }
-
-    public static int countLines(String filename) {
-        int count = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                count++;
-            }
-        } catch (IOException e) {
-            System.err.println("An error occurred while counting lines.");
-            e.printStackTrace();
-        }
-        return count;
     }
     
     public static String generateNewID(String filename) throws IOException {
