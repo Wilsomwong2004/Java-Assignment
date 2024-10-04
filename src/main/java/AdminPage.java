@@ -7,11 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-<<<<<<< HEAD
-=======
-import java.util.Date;
-import javax.swing.DefaultComboBoxModel;
->>>>>>> e6d7ffb9f8db42e584d3fc5e377e5249cc621c21
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
