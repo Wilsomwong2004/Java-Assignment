@@ -26,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,6 +36,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class filefunction extends JFrame{
+
     private final CardLayout cardLayout;
     private final JPanel contentPane;
     public filefunction(Runnable onCompletion) {
@@ -365,6 +365,20 @@ public class filefunction extends JFrame{
         br.close();
         return allrecords;
     }
+
+    public static int countLines(String filename) {
+        int count = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                count++;
+            }
+        } catch (IOException e) {
+            System.err.println("An error occurred while counting lines.");
+            e.printStackTrace();
+        }
+        return count;
+    }
     
     public static String generateNewID(String filename) throws IOException {
         String lastID = "00000";
@@ -390,18 +404,18 @@ public class filefunction extends JFrame{
         return String.format("%05d", newIDNum);
     }
 
-    private static boolean entryExists(String filename, String id) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(";");
-                if (parts.length > 0 && parts[0].equals(id)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    //private static boolean entryExists(String filename, String id) throws IOException {
+    //    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+    //        String line;
+    //        while ((line = reader.readLine()) != null) {
+    //            String[] parts = line.split(";");
+    //            if (parts.length > 0 && parts[0].equals(id)) {
+    //                return true;
+    //            }
+    //        }
+    //    }
+    //    return false;
+    //}
 
     public static boolean isDuplicateID(String string, String input1) {
         //does item code got same id as input1
