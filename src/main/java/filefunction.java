@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -331,7 +332,7 @@ public class filefunction extends JFrame{
             String line;
             while ((line = reader.readLine()) != null){
                 String[] data = line.split(";");
-                if (data.length > 0 && data[0].equals("Staff-00001")){
+                if (data.length > 0 && data[5].equals("Staff")){
                     isStaff = true;
                     break;
                 }
@@ -342,16 +343,31 @@ public class filefunction extends JFrame{
         }
 
 
-        JButton proceedButton = new JButton("WELCOME TO ADMIN PAGE! Click to proceed");
-        proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
-        proceedButton.addActionListener(e -> {
-            if (onCompletion != null) {
-                onCompletion.run();  // Open AdminPage
-                ((JFrame) SwingUtilities.getWindowAncestor(contentPane)).dispose();  // Close filefunction window
-            }
-        });
-        proceedPanel.add(proceedButton, BorderLayout.CENTER);
-
+        if (isStaff){
+            JButton proceedButton = new JButton("WELCOME TO STAFF PAGE! Click to proceed");
+            proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
+            proceedButton.addActionListener(e -> {
+                if (onCompletion != null) {
+                    onCompletion.run();  // Open StaffPage
+                    ((JFrame) SwingUtilities.getWindowAncestor(contentPane)).dispose();  // Close filefunction window
+                }
+            });
+            proceedPanel.add(proceedButton, BorderLayout.CENTER);
+            
+        }
+        
+        if (!isStaff){
+            JButton proceedButton = new JButton("WELCOME TO ADMIN PAGE! Click to proceed");
+            proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
+            proceedButton.addActionListener(e -> {
+                if (onCompletion != null) {
+                    onCompletion.run();  // Open AdminPage
+                    ((JFrame) SwingUtilities.getWindowAncestor(contentPane)).dispose();  // Close filefunction window
+                }
+            });
+            proceedPanel.add(proceedButton, BorderLayout.CENTER);
+        }
+        
         contentPane.add(proceedPanel, "ProceedPanel");
         cardLayout.show(contentPane, "ProceedPanel");
     }
@@ -510,7 +526,13 @@ public class filefunction extends JFrame{
                 switch (filename) {
                     case "suppliers.txt" -> newID = "S-" + generateNewID(filename);
                     case "hospitals.txt" -> newID = "H-" + generateNewID(filename);
-                    case "users.txt" -> newID = "Staff-" + generateNewID(filename);
+                    case "users.txt" -> {
+                        if (data.length > 0 && data[0].equals("Admin")) {
+                            newID = "Staff-00000";
+                        } else {
+                            newID = "Staff-" + generateNewID(filename);
+                        }
+                    }
                     case "transactions.txt" -> newID = "T-" + generateNewID(filename);
                 }
                 lines.add(newID);

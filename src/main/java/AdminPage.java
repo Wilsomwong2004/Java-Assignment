@@ -2066,6 +2066,20 @@ public class AdminPage extends javax.swing.JFrame {
         newData[2] = ut2.getText();
         newData[3] = (String) ut5.getSelectedItem();
         
+        if(newData[0].equals("Staff-00000")){
+            JOptionPane.showMessageDialog(this, "Admin cannot be edit.", "Error", JOptionPane.ERROR_MESSAGE);
+            try {
+                String newID = filefunction.generateNewID("users.txt");
+                newUserID.setText("Staff-"+newID);
+            } catch (IOException ex) {
+                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Failed to generate new user ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            ut1.setText("");
+            ut2.setText("");
+            ut5.setSelectedItem(0);
+            return;
+        }
         // Call file update method
         boolean actionDone = filefunction.EDIT_DATA("users.txt", newData);
         
@@ -2233,6 +2247,10 @@ public class AdminPage extends javax.swing.JFrame {
                 int sRow = userTable.getSelectedRow();
                 if (sRow >= 0) {
                     String userID = model3.getValueAt(sRow, 0).toString();
+                    if(userID.equals("Staff-00000")){
+                        JOptionPane.showMessageDialog(this, "Admin cannot be deleted.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     filefunction.DELETE_DATA("users.txt", userID, this);  // Pass the parent component 'this'
                     model3.removeRow(sRow);
                     JOptionPane.showMessageDialog(this, "User record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -2248,7 +2266,7 @@ public class AdminPage extends javax.swing.JFrame {
                     model4.removeRow(sRow);
                     JOptionPane.showMessageDialog(this, "PPE Item record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    throw new IllegalStateException("Please select a row to delete.");
+                throw new IllegalStateException("Please select a row to delete.");
                 }
             } else if (transactionScrollTable.isVisible()){
                 DefaultTableModel model5 = (DefaultTableModel) transactionTable.getModel();

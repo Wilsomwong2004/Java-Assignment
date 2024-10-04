@@ -2,12 +2,14 @@ import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -19,10 +21,13 @@ public class LoginSystem extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     private static final String USER_FILE = "users.txt";
-    private Map<String, String> users = new HashMap<>();
-    private Map<String, String> userEmails = new HashMap<>();
+    private Map<String, String> users = new HashMap<>(); // userID -> password
+    private Map<String, String> userEmails = new HashMap<>(); // userID -> email
+    private Map<String, String> userNames = new HashMap<>(); // userID -> username
+    private Map<String, String> userRoles = new HashMap<>(); // userID -> role
+    private Map<String, String> userGenders = new HashMap<>(); // userID -> gender
     private javax.swing.JButton jButton3;
-    private String currentUsername = "";
+    private String currentUserID = "";
     private String currentPassword = "";
     
     public LoginSystem() {
@@ -46,13 +51,23 @@ public class LoginSystem extends javax.swing.JFrame {
         });
     }
 
+    private void addDefaultAdminAccount() {
+        String adminId = "Staff-00000";
+        users.put(adminId, "0000");
+        userNames.put(adminId, "Admin");
+        userEmails.put(adminId, "admin@example.com");
+        userGenders.put(adminId, "Male");
+        userRoles.put(adminId, "Admin");
+        
+        // Use filefunction to add the admin account
+        filefunction.REMOVE_DATA(USER_FILE, adminId); // Remove any existing admin entry
+        filefunction.ADD_DATA(USER_FILE, null, "Admin", "0000", "admin@example.com", "Male", "Admin");
+    }
+
     private void loadUsers() {
         File file = new File(USER_FILE);
         if (!file.exists() || file.length() == 0) {
-            // Add default admin account if file doesn't exist or is empty
-            users.put("admin", "0000");
-            userEmails.put("admin", "admin@example.com");
-            filefunction.ADD_DATA(USER_FILE, null, "Admin-00000", "admin", "0000", "admin@example.com", "Not Specified", "Admin");
+            addDefaultAdminAccount();
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
@@ -60,11 +75,19 @@ public class LoginSystem extends javax.swing.JFrame {
                     String[] parts = line.split(";");
                     if (parts.length >= 6) {
                         String userId = parts[0];
-                        String username = parts[1];
+                        String name = parts[1];
                         String password = parts[2];
                         String email = parts[3];
-                        users.put(username, password);
-                        userEmails.put(username, email);
+                        String gender = parts[4];
+                        String role = parts[5];
+                        
+                        users.put(userId, password);
+                        userNames.put(userId, name);
+                        userEmails.put(userId, email);
+                        userGenders.put(userId, gender);
+                        userRoles.put(userId, role);
+                        
+                        //System.out.println("Loaded user: " + userId + ", Password: " + password); // Debug print
                     }
                 }
             } catch (IOException e) {
@@ -72,34 +95,15 @@ public class LoginSystem extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error reading user file", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-
-        // Always ensure the default admin account exists
-        if (!users.containsKey("admin")) {
-            users.put("admin", "0000");
-            userEmails.put("admin", "admin@example.com");
-            filefunction.ADD_DATA(USER_FILE, null, "Admin-00000", "admin", "0000", "admin@example.com", "Not Specified", "Admin");
-        }
-    }
-    
-    private void saveUsers() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(USER_FILE))) {
-            for (Map.Entry<String, String> entry : users.entrySet()) {
-                String email = userEmails.getOrDefault(entry.getKey(), "unknown@example.com");
-                writer.println("Admin-00000," + entry.getKey() + "," + entry.getValue() + "," + email + ",Not Specified,Admin");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error saving user file", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private void setupPlaceholders() {
-        jTextField2.setText("Username");
+        jTextField2.setText("Ex.Admin");
         jTextField2.setForeground(Color.GRAY);
         jTextField2.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (jTextField2.getText().equals("Username")) {
+                if (jTextField2.getText().equals("Ex.Admin")) {
                     jTextField2.setText("");
                     jTextField2.setForeground(Color.BLACK);
                 }
@@ -109,18 +113,19 @@ public class LoginSystem extends javax.swing.JFrame {
             public void focusLost(FocusEvent e) {
                 if (jTextField2.getText().isEmpty()) {
                     jTextField2.setForeground(Color.GRAY);
-                    jTextField2.setText("Username");
+                    jTextField2.setText("Ex.Admin");
                 }
             }
         });
 
-        jPasswordField1.setText("Password");
+
+        jPasswordField1.setText("Ex.0000");
         jPasswordField1.setForeground(Color.GRAY);
         jPasswordField1.setEchoChar((char) 0);
         jPasswordField1.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (String.valueOf(jPasswordField1.getPassword()).equals("Password")) {
+                if (String.valueOf(jPasswordField1.getPassword()).equals("Ex.0000")) {
                     jPasswordField1.setText("");
                     jPasswordField1.setForeground(Color.BLACK);
                     jPasswordField1.setEchoChar('*');
@@ -132,7 +137,7 @@ public class LoginSystem extends javax.swing.JFrame {
                 if (String.valueOf(jPasswordField1.getPassword()).isEmpty()) {
                     jPasswordField1.setEchoChar((char) 0);
                     jPasswordField1.setForeground(Color.GRAY);
-                    jPasswordField1.setText("Password");
+                    jPasswordField1.setText("Ex.0000");
                 }
             }
         });
@@ -144,7 +149,7 @@ public class LoginSystem extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-        private void initComponents() {
+    private void initComponents() {
 
         popupMenu1 = new java.awt.PopupMenu();
         jButton1 = new javax.swing.JButton();
@@ -187,7 +192,7 @@ public class LoginSystem extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setText("Username :");
+        jLabel5.setText("UserID :");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Password :");
@@ -308,30 +313,29 @@ public class LoginSystem extends javax.swing.JFrame {
     }
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
-        currentUsername = jTextField2.getText();
+        currentUserID = jTextField2.getText();
         
     }
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {
         currentPassword = new String(jPasswordField1.getPassword());
-        
         attemptLogin();
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-        String username = JOptionPane.showInputDialog(this, "Enter your username:");
-        if (username != null && !username.isEmpty()) {
-            if (users.containsKey(username)) {
-                String email = userEmails.get(username);
+        String userID = JOptionPane.showInputDialog(this, "Enter your UserID:");
+        if (userID != null && !userID.isEmpty()) {
+            if (users.containsKey(userID)) {
+                String email = userEmails.get(userID);
                 if (email != null) {
-                    ForgetPasswordForm forgetPasswordForm = new ForgetPasswordForm(this, username, email);
+                    ForgetPasswordForm forgetPasswordForm = new ForgetPasswordForm(this, userID, email);
                     forgetPasswordForm.setVisible(true);
                     this.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "No email associated with this account.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Username not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "UserID not found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -347,48 +351,68 @@ public class LoginSystem extends javax.swing.JFrame {
     }
     
     private void attemptLogin() {
-        currentUsername = jTextField2.getText();
+        currentUserID = jTextField2.getText().trim();
         currentPassword = new String(jPasswordField1.getPassword());
 
-        if (users.containsKey(currentUsername) && users.get(currentUsername).equals(currentPassword)) {
-            JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            AdminPage page = new AdminPage();
-            page.setVisible(true);
-            this.dispose();
+        System.out.println("Attempting login for: " + currentUserID); // Debug print
+
+        if (users.containsKey(currentUserID)) {
+            //System.out.println("User found. Stored password: " + users.get(currentUserID)); // Debug print
+            //System.out.println("Entered password: " + currentPassword); // Debug print
+
+            if (users.get(currentUserID).equals(currentPassword)) {
+                String role = userRoles.get(currentUserID);
+                String name = userNames.get(currentUserID);
+                JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + name, "Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                if ("Admin".equals(role)) {
+                    AdminPage adminPage = new AdminPage();
+                    adminPage.setVisible(true);
+                } else {
+                    // Assume a StaffPage exists or use AdminPage for now
+                    AdminPage staffPage = new AdminPage(); // Replace with StaffPage when available
+                    staffPage.setVisible(true);
+                }
+                
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid password", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "UserID not found", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void updateUserPassword(String username, String newPassword) {
-        if (users.containsKey(username)) {
-            users.put(username, newPassword);
+    public void updateUserPassword(String userID, String newPassword) {
+        if (users.containsKey(userID)) {
+            users.put(userID, newPassword);
 
             // Update the file
-            String userId = null;
-            String email = null;
-            String gender = null;
-            String role = null;
-
+            List<String> updatedLines = new ArrayList<>();
             try (BufferedReader reader = new BufferedReader(new FileReader(USER_FILE))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(";");
-                    if (parts.length >= 6 && parts[1].equals(username)) {
-                        userId = parts[0];
-                        email = parts[3];
-                        gender = parts[4];
-                        role = parts[5];
-                        break;
+                    if (parts[0].equals(userID)) {
+                        // Update the password for this user
+                        parts[2] = newPassword;
+                        line = String.join(";", parts);
                     }
+                    updatedLines.add(line);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
             }
 
-            if (userId != null) {
-                filefunction.REMOVE_DATA(USER_FILE, userId);
-                filefunction.ADD_DATA(USER_FILE, null, userId, username, newPassword, email, gender, role);
+            // Write the updated content back to the file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(USER_FILE))) {
+                for (String line : updatedLines) {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
             // Reload users to ensure consistency

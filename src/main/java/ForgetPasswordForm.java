@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 public class ForgetPasswordForm extends JFrame {
     private LoginSystem loginSystem;
-    private String username;
+    private String userID;
     private String email;
     private JTextField verificationCodeField;
     private JPasswordField newPasswordField;
@@ -23,9 +23,9 @@ public class ForgetPasswordForm extends JFrame {
     private boolean codeVerified = false;
     private JPanel panel;
 
-    public ForgetPasswordForm(LoginSystem loginSystem, String username, String email) {
+    public ForgetPasswordForm(LoginSystem loginSystem, String userID, String email) {
         this.loginSystem = loginSystem;
-        this.username = username;
+        this.userID = userID;
         this.email = email;
         initComponents();
         sendVerificationCode();
@@ -93,7 +93,7 @@ public class ForgetPasswordForm extends JFrame {
         String confirmPassword = new String(confirmPasswordField.getPassword());
         if (newPassword.equals(confirmPassword)) {
             try {
-                loginSystem.updateUserPassword(username, newPassword);
+                loginSystem.updateUserPassword(userID, newPassword);
                 JOptionPane.showMessageDialog(this, "Password reset successfully");
                 this.dispose();
                 loginSystem.showLoginSystem();
