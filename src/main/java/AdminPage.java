@@ -376,7 +376,7 @@ public class AdminPage extends javax.swing.JFrame {
 
         label.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label.setText("HOSPITAL");
+        label.setText("PLEASE CLICK ANY BUTTON ABOVE TO PROCEED TO THEIR PAGE");
 
         form.setLayout(new java.awt.CardLayout());
 
@@ -508,6 +508,7 @@ public class AdminPage extends javax.swing.JFrame {
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel29.setText("Quantity In Stock:");
+
 
             t5.setText("100");
 
@@ -1579,13 +1580,18 @@ public class AdminPage extends javax.swing.JFrame {
         tt2.removeAllItems();
         tt2.addItem("Distribute");
         tt2.addItem("Receive");
+        String suppliersCode = (String) tt2.getSelectedItem();
         
         if (tt2.getSelectedItem() == "Receive") {
             jLabel5.setText("Supplier Code:");
-            List<String> allSupplierIDs = filefunction.GET_ALL_ID("suppliers.txt");
-            for (String id : allSupplierIDs) {
-                tt3.addItem(id);
+            String supplierppeData = filefunction.SEARCH_DATA("ppe.txt", suppliersCode, this);
+            if (supplierppeData == null) {
+                JOptionPane.showMessageDialog(this, "Can't find the selected PPE supplier ID. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+            String[] supplierppeDataFields = supplierppeData.split(";");
+            tt3.removeAllItems();
+            tt3.addItem(supplierppeDataFields[2]);
         }
 
         if (tt2.getSelectedItem() == "Distribute") {
@@ -1595,6 +1601,15 @@ public class AdminPage extends javax.swing.JFrame {
                 tt3.addItem(id);
             }
         }
+
+        // Add an item listener to tt1 (Item Code combo box)
+        tt1.addItemListener((ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED && tt2.getSelectedItem().toString().equalsIgnoreCase("Receive")) {
+                // When item code changes and process is "Receive", update the supplier code
+                String selectedItemCode = tt1.getSelectedItem().toString();
+                updateSupplierCode(selectedItemCode);
+            }
+        });
         
         tt2.addItemListener((ItemEvent e) -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -1604,12 +1619,16 @@ public class AdminPage extends javax.swing.JFrame {
                 try {
                     if (selectedItem.equalsIgnoreCase("Receive")) {
                         jLabel5.setText("Supplier Code:");
-                        List<String> allSupplierIDs = filefunction.GET_ALL_ID("suppliers.txt");
-                        for (String id : allSupplierIDs) {
-                            tt3.addItem(id);
-                        }
+                        tt3.setEnabled(false); // Disable user selection for Receive process
+                        
+                        // Get the selected item code
+                        String selectedItemCode = tt1.getSelectedItem().toString();
+                        
+                        // Fetch the latest data from ppe.txt
+                        updateSupplierCode(selectedItemCode);
                     } else if (selectedItem.equalsIgnoreCase("Distribute")) {
                         jLabel5.setText("Hospital Code:");
+                        tt3.setEnabled(true);
                         List<String> allHospitalIDs = filefunction.GET_ALL_ID("hospitals.txt");
                         for (String id : allHospitalIDs) {
                             tt3.addItem(id);
@@ -1619,7 +1638,7 @@ public class AdminPage extends javax.swing.JFrame {
                     Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });        
+        });
 
         DefaultTableModel model5 = new DefaultTableModel(){
             @Override
@@ -1627,7 +1646,7 @@ public class AdminPage extends javax.swing.JFrame {
                 return false;
             }
         };
-        String[] ColHeadings = {"Transaction ID", "Item ID", "Process", "Supplier/Hospital ID", "Quantity", "Total Price", "Date"};
+        String[] ColHeadings = {"Transaction ID", "Item ID", "Process", "Supplier/Hospital ID", "Quantity", "Total Price", "Date", "Time"};
         model5.setColumnIdentifiers(ColHeadings);
         transactionTable.setModel(model5);
         model5.setRowCount(0);
@@ -1645,6 +1664,24 @@ public class AdminPage extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_transactionBtnActionPerformed
+
+    private void updateSupplierCode(String itemCode) {
+        try {
+            String ppeData = filefunction.SEARCH_DATA("ppe.txt", itemCode, this);
+            if (ppeData != null) {
+                String[] ppeDataFields = ppeData.split(";");
+                String supplierCode = ppeDataFields[2]; // Assuming supplier code is the third field
+                tt3.removeAllItems();
+                tt3.addItem(supplierCode);
+                tt3.setSelectedItem(supplierCode);
+            } else {
+                JOptionPane.showMessageDialog(this, "Can't find the selected PPE item. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error fetching PPE data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void reportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportBtnActionPerformed
         supplierForm.setVisible(false);
@@ -1687,10 +1724,10 @@ public class AdminPage extends javax.swing.JFrame {
 
     private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
         int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
-        if (logout == JOptionPane.YES_OPTION) {
-            new LoginSystem().setVisible(true);
-            this.dispose();
-        }
+//        if (logout == JOptionPane.YES_OPTION) {
+//            new LoginSystem().setVisible(true);
+//            this.dispose();
+//        }
     }//GEN-LAST:event_logoutBtnMouseClicked
 
     //ADD NEW DATA
@@ -1702,11 +1739,10 @@ public class AdminPage extends javax.swing.JFrame {
         String input4 = t4.getText();
         String input5 = "100";
         if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()) {
-            // no duplicate ID allowed
-//            if (filefunction.isDuplicateID("ppe.txt", input1)) {
-//                JOptionPane.showMessageDialog(this, "Duplicate ID found. Please enter a unique ID.", "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
+            if (filefunction.isDuplicateID("ppe.txt", input1)) {
+                JOptionPane.showMessageDialog(this, "Duplicate ID found. Please enter a unique ID.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             // item name only words allowed
             if (!input2.matches("[a-zA-Z ]+")) {
                 JOptionPane.showMessageDialog(this, "Item name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1725,12 +1761,13 @@ public class AdminPage extends javax.swing.JFrame {
                 return;
             }
 
-            filefunction.ADD_DATA("ppe.txt",model, input1, input2, input3, input4);
+            filefunction.ADD_DATA("ppe.txt",model, input1, input2, input3, input4, input5);
             JOptionPane.showMessageDialog(this, "PPE item data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
 
             //Clear all TextField contents
             t1.setText("");
             t2.setText("");
+            t4.setText("");
         }
     }//GEN-LAST:event_addPPEBtnActionPerformed
 
@@ -1897,6 +1934,10 @@ public class AdminPage extends javax.swing.JFrame {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String formattedDate = dateFormat.format(currentDate);
 
+                // Get current time
+                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+                String formattedTime = timeFormat.format(currentDate);
+
                 // Add new transaction
                 String[] transactionData = {
                     itemCode,
@@ -1904,7 +1945,8 @@ public class AdminPage extends javax.swing.JFrame {
                     hospitalSupplierCode,
                     String.valueOf(quantityValue),
                     String.format("%.2f", totalPrice),
-                    formattedDate
+                    formattedDate,
+                    formattedTime
                 };
                 
                 filefunction.ADD_DATA("transactions.txt", (DefaultTableModel) transactionTable.getModel(), transactionData);
@@ -2134,14 +2176,16 @@ public class AdminPage extends javax.swing.JFrame {
         model.setValueAt(t1.getText(),sRow,0);
         model.setValueAt(t2.getText(),sRow,1);
         model.setValueAt(t3.getSelectedItem(),sRow,2);
-        model.setValueAt(t5.getText(),sRow,3);
+        model.setValueAt(t4.getText(),sRow,3);
+        model.setValueAt(t5.getText(),sRow,4);
         
         // Prepare data for file update
-        String[] newData = new String[4];
+        String[] newData = new String[5];
         newData[0] = t1.getText();
         newData[1] = t2.getText();
         newData[2] = (String)t3.getSelectedItem();
-        newData[3] = t5.getText();
+        newData[3] = t4.getText();
+        newData[4] = t5.getText();
         
         // Call file update method
         boolean actionDone = filefunction.EDIT_DATA("ppe.txt", newData);
@@ -2152,6 +2196,7 @@ public class AdminPage extends javax.swing.JFrame {
             t1.setText("");
             t2.setText("");
             t3.setSelectedItem(0);
+            t4.setText("");
             t5.setText("100");
         } else {
             JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
@@ -2334,7 +2379,8 @@ public class AdminPage extends javax.swing.JFrame {
                 t1.setText(model4.getValueAt(sRow, 0).toString());
                 t2.setText(model4.getValueAt(sRow, 1).toString());
                 t3.setSelectedItem(model4.getValueAt(sRow, 2).toString());
-                t5.setText(model4.getValueAt(sRow, 3).toString());
+                t4.setText(model4.getValueAt(sRow, 3).toString());
+                t5.setText(model4.getValueAt(sRow, 4).toString());
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Please select a row");
             }

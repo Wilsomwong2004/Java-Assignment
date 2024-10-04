@@ -26,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -325,6 +324,23 @@ public class filefunction extends JFrame{
     public static void showProceedToAdminPanel(CardLayout cardLayout, JPanel contentPane, Runnable onCompletion) {
         JPanel proceedPanel = new JPanel();
         proceedPanel.setLayout(new BorderLayout());
+
+        //Detect staff or admin in users.txt
+        boolean isStaff = false;
+        try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))){
+            String line;
+            while ((line = reader.readLine()) != null){
+                String[] data = line.split(";");
+                if (data.length > 0 && data[0].equals("Staff-00001")){
+                    isStaff = true;
+                    break;
+                }
+            }
+        } catch (IOException e){
+            System.err.println("An error occurred while searching.");
+            e.printStackTrace();
+        }
+
 
         JButton proceedButton = new JButton("WELCOME TO ADMIN PAGE! Click to proceed");
         proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
