@@ -476,3 +476,8 @@ public class LoginSystem extends javax.swing.JFrame {
     private java.awt.PopupMenu popupMenu1;
     // End of variables declaration
 }
+
+/**
+ *
+ * @author songj and weisheng
+ */
