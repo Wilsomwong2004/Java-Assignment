@@ -24,7 +24,7 @@ public class LoginSystem extends javax.swing.JFrame {
     private Map<String, String> users = new HashMap<>(); // userID -> password
     private Map<String, String> userEmails = new HashMap<>(); // userID -> email
     private Map<String, String> userNames = new HashMap<>(); // userID -> username
-    private Map<String, String> userRoles = new HashMap<>(); // userID -> role
+    private Map<String, String> userRoles = new HashMap<>(); // userID -> rolesT
     private Map<String, String> userGenders = new HashMap<>(); // userID -> gender
     private javax.swing.JButton jButton3;
     private String currentUserID = "";
