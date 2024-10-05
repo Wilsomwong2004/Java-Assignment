@@ -27,13 +27,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class filefunction extends JFrame{
@@ -42,7 +42,7 @@ public class filefunction extends JFrame{
     private final JPanel contentPane;
     public filefunction(Runnable onCompletion) {
         cardLayout = new CardLayout();
-        contentPane = new JPanel(cardLayout);  
+        contentPane = new JPanel(cardLayout);
 
         setTitle("File Management System");
         setSize(600, 440);
@@ -83,7 +83,36 @@ public class filefunction extends JFrame{
     //CHECK ALL MISSING FILES
     public static void checkMissingFiles(JPanel contentPane, CardLayout cardLayout, Runnable onCompletion) {
         String[] allfiles = {"suppliers.txt", "hospitals.txt", "ppe.txt"};
+        
+        boolean setupNeeded = Arrays.stream(allfiles).anyMatch(file -> !new File(file).exists());
+        
+        if (setupNeeded) {
+            showSetupNeededPanel(contentPane, cardLayout, () -> {
+                performSetup(contentPane, cardLayout, allfiles, onCompletion);
+            });
+        } else {
+            showProceedToAdminPanel(cardLayout, contentPane, onCompletion);
+        }
+    }
     
+    private static void showSetupNeededPanel(JPanel contentPane, CardLayout cardLayout, Runnable onSetupStart) {
+        JPanel setupPanel = new JPanel();
+        setupPanel.setLayout(new BorderLayout());
+    
+        JButton setupButton = new JButton("System setup required. Click to begin initialization");
+        setupButton.setFont(new Font("Agency FB", Font.BOLD, 30));
+        setupButton.addActionListener(e -> {
+            if (onSetupStart != null) {
+                onSetupStart.run();
+            }
+        });
+        setupPanel.add(setupButton, BorderLayout.CENTER);
+        
+        contentPane.add(setupPanel, "SetupPanel");
+        cardLayout.show(contentPane, "SetupPanel");
+    }
+
+    private static void performSetup(JPanel contentPane, CardLayout cardLayout, String[] allfiles, Runnable onCompletion) {
         // Define the actions to take based on missing files
         Runnable checkPPE = () -> {
             if (!new File(allfiles[2]).exists()) {
@@ -326,12 +355,11 @@ public class filefunction extends JFrame{
         JPanel proceedPanel = new JPanel();
         proceedPanel.setLayout(new BorderLayout());
 
-        JButton proceedButton = new JButton("Initialization complete. Click to proceed");
+        JButton proceedButton = new JButton("Setup complete. Press to continue to main system");
         proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
         proceedButton.addActionListener(e -> {
             if (onCompletion != null) {
                 onCompletion.run();
-                ((JFrame) SwingUtilities.getWindowAncestor(contentPane)).dispose();
             }
         });
         proceedPanel.add(proceedButton, BorderLayout.CENTER);

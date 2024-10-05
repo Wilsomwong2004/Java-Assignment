@@ -8,6 +8,7 @@
  * @author songj and weisheng
  */
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -21,9 +22,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class LoginSystem extends javax.swing.JFrame {
 
@@ -41,6 +45,7 @@ public class LoginSystem extends javax.swing.JFrame {
     private String currentPassword = "";
     
     public LoginSystem() {
+        setTitle("PPE Item Inventory System");
         initComponents();
         getContentPane().setBackground(Color.white);
         loadUsers();
@@ -363,20 +368,15 @@ public class LoginSystem extends javax.swing.JFrame {
     private void attemptLogin() {
         currentUserID = jTextField2.getText().trim();
         currentPassword = new String(jPasswordField1.getPassword());
-
-        // System.out.println("Attempting login for: " + currentUserID); // Debug print
-
+    
         if (users.containsKey(currentUserID)) {
-            //System.out.println("User found. Stored password: " + users.get(currentUserID)); // Debug print
-            //System.out.println("Entered password: " + currentPassword); // Debug print
-
             if (users.get(currentUserID).equals(currentPassword)) {
                 String role = userRoles.get(currentUserID);
                 String name = userNames.get(currentUserID);
                 JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + name, "Success", JOptionPane.INFORMATION_MESSAGE);
                 
-                AdminPage adminPage = new AdminPage(role);
-                adminPage.setVisible(true);
+                // Instead of creating AdminPage directly, call a new method
+                transitionToAdminPage(role);
                 
                 this.dispose();
             } else {
@@ -385,6 +385,26 @@ public class LoginSystem extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "UserID not found", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    private void transitionToAdminPage(String role) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("File Check");
+            JPanel contentPane = new JPanel();
+            CardLayout cardLayout = new CardLayout();
+            contentPane.setLayout(cardLayout);
+            frame.setContentPane(contentPane);
+            frame.setSize(600, 400);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+            filefunction.checkMissingFiles(contentPane, cardLayout, () -> {
+                frame.dispose();
+                AdminPage adminPage = new AdminPage(role);
+                adminPage.setVisible(true);
+            });
+    
+            frame.setVisible(true);
+        });
     }
 
     public void updateUserPassword(String userID, String newPassword) {

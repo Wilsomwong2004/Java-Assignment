@@ -34,7 +34,7 @@ public class AdminPage extends javax.swing.JFrame {
     public AdminPage() {
         this("Admin");
         initComponents();
-        setTitle("Item Inventory System");
+        setTitle("PPE Item Inventory System");
         menu.add(panel);
         mod = new DefaultListModel();
         list.setModel(mod);
@@ -43,6 +43,10 @@ public class AdminPage extends javax.swing.JFrame {
     public AdminPage(String userRole) {
         this.userRole = userRole;
         initComponents();
+        setTitle("PPE Item Inventory System");
+        menu.add(panel);
+        mod = new DefaultListModel();
+        list.setModel(mod);
         adjustUIBasedOnRole();
     }
 
