@@ -1,3 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+/**
+ *
+ * @author songj and weisheng
+ */
+
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -354,7 +364,7 @@ public class LoginSystem extends javax.swing.JFrame {
         currentUserID = jTextField2.getText().trim();
         currentPassword = new String(jPasswordField1.getPassword());
 
-        System.out.println("Attempting login for: " + currentUserID); // Debug print
+        // System.out.println("Attempting login for: " + currentUserID); // Debug print
 
         if (users.containsKey(currentUserID)) {
             //System.out.println("User found. Stored password: " + users.get(currentUserID)); // Debug print

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LoginSystem",
+            "request": "launch",
+            "mainClass": "LoginSystem",
+            "projectName": "Java-Assignment_9b6b3625"
+        },
+        {
+            "type": "java",
             "name": "AdminPage",
             "request": "launch",
             "mainClass": "com.example.admin.AdminPage",
