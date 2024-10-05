@@ -8,10 +8,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -29,13 +28,23 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdminPage extends javax.swing.JFrame {
     private DefaultListModel mod;
+    private String userRole;
+
     public AdminPage() {
+        this("Admin");
         initComponents();
         setTitle("Item Inventory System");
         menu.add(panel);
         mod = new DefaultListModel();
         list.setModel(mod);
     }
+
+    public AdminPage(String userRole) {
+        this.userRole = userRole;
+        initComponents();
+        adjustUIBasedOnRole();
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,20 +97,6 @@ public class AdminPage extends javax.swing.JFrame {
         newHospitalID = new javax.swing.JLabel();
         addHospitalBtn = new javax.swing.JButton();
         saveHospitalBtn = new javax.swing.JButton();
-        ppeitemForm = new javax.swing.JLayeredPane();
-        ppeItemFormTitle = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        t2 = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        t1 = new javax.swing.JTextField();
-        t3 = new javax.swing.JComboBox<>();
-        t5 = new javax.swing.JLabel();
-        addPPEBtn = new javax.swing.JButton();
-        savePPEBtn = new javax.swing.JButton();
-        jLabel31 = new javax.swing.JLabel();
-        t4 = new javax.swing.JTextField();
         supplierForm = new javax.swing.JLayeredPane();
         supplierFormTitle = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -195,6 +190,20 @@ public class AdminPage extends javax.swing.JFrame {
         staff = new javax.swing.JLabel();
         male = new javax.swing.JLabel();
         admin = new javax.swing.JLabel();
+        ppeitemForm = new javax.swing.JLayeredPane();
+        ppeItemFormTitle = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        t2 = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        t1 = new javax.swing.JTextField();
+        t3 = new javax.swing.JComboBox<>();
+        t5 = new javax.swing.JLabel();
+        addPPEBtn = new javax.swing.JButton();
+        savePPEBtn = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
+        t4 = new javax.swing.JTextField();
         searchpanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         searchbar = new javax.swing.JTextField();
@@ -614,125 +623,6 @@ public class AdminPage extends javax.swing.JFrame {
         );
 
         form.add(hospitalForm, "card4");
-
-        ppeItemFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        ppeItemFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ppeItemFormTitle.setText("New PPE Item Form");
-
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel26.setText("Item ID:");
-
-        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel27.setText("Item Name:");
-
-        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel28.setText("Supplier ID:");
-
-        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel29.setText("Quantity In Stock:");
-
-        t5.setText("100");
-
-        addPPEBtn.setBackground(new java.awt.Color(51, 51, 51));
-        addPPEBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        addPPEBtn.setForeground(new java.awt.Color(255, 255, 255));
-        addPPEBtn.setText("Add New");
-        addPPEBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addPPEBtnActionPerformed(evt);
-            }
-        });
-
-        savePPEBtn.setBackground(new java.awt.Color(51, 51, 51));
-        savePPEBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        savePPEBtn.setForeground(new java.awt.Color(255, 255, 255));
-        savePPEBtn.setText("Save Changes");
-        savePPEBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                savePPEBtnActionPerformed(evt);
-            }
-        });
-
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel31.setText("Price:");
-
-        ppeitemForm.setLayer(ppeItemFormTitle, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(jLabel26, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(t2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(jLabel27, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(jLabel28, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(jLabel29, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(t1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(t3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(t5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(addPPEBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(savePPEBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(jLabel31, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        ppeitemForm.setLayer(t4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout ppeitemFormLayout = new javax.swing.GroupLayout(ppeitemForm);
-        ppeitemForm.setLayout(ppeitemFormLayout);
-        ppeitemFormLayout.setHorizontalGroup(
-            ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ppeitemFormLayout.createSequentialGroup()
-                .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(savePPEBtn)
-                    .addComponent(addPPEBtn)
-                    .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(ppeitemFormLayout.createSequentialGroup()
-                            .addComponent(jLabel29)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(t5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(ppeitemFormLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(ppeItemFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(ppeitemFormLayout.createSequentialGroup()
-                            .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                                .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(42, 42, 42)
-                            .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(t1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(t2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(t3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(t4, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(48, Short.MAX_VALUE))
-        );
-        ppeitemFormLayout.setVerticalGroup(
-            ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ppeitemFormLayout.createSequentialGroup()
-                .addComponent(ppeItemFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ppeitemFormLayout.createSequentialGroup()
-                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel27)
-                            .addComponent(t2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel28)
-                            .addComponent(t3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(t1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(t4)
-                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-                .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(t5)
-                    .addComponent(jLabel29))
-                .addGap(42, 42, 42)
-                .addComponent(addPPEBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(savePPEBtn)
-                .addGap(126, 126, 126))
-        );
-
-        form.add(ppeitemForm, "card4");
 
         supplierFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         supplierFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1558,6 +1448,125 @@ public class AdminPage extends javax.swing.JFrame {
 
         form.add(ReportS, "card3");
 
+        ppeItemFormTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ppeItemFormTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ppeItemFormTitle.setText("New PPE Item Form");
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel26.setText("Item ID:");
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel27.setText("Item Name:");
+
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel28.setText("Supplier ID:");
+
+        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel29.setText("Quantity In Stock:");
+
+        t5.setText("100");
+
+        addPPEBtn.setBackground(new java.awt.Color(51, 51, 51));
+        addPPEBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        addPPEBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addPPEBtn.setText("Add New");
+        addPPEBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPPEBtnActionPerformed(evt);
+            }
+        });
+
+        savePPEBtn.setBackground(new java.awt.Color(51, 51, 51));
+        savePPEBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        savePPEBtn.setForeground(new java.awt.Color(255, 255, 255));
+        savePPEBtn.setText("Save Changes");
+        savePPEBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savePPEBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel31.setText("Price:");
+
+        ppeitemForm.setLayer(ppeItemFormTitle, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(jLabel26, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(t2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(jLabel27, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(jLabel28, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(jLabel29, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(t1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(t3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(t5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(addPPEBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(savePPEBtn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(jLabel31, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        ppeitemForm.setLayer(t4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout ppeitemFormLayout = new javax.swing.GroupLayout(ppeitemForm);
+        ppeitemForm.setLayout(ppeitemFormLayout);
+        ppeitemFormLayout.setHorizontalGroup(
+            ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ppeitemFormLayout.createSequentialGroup()
+                .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(savePPEBtn)
+                    .addComponent(addPPEBtn)
+                    .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ppeitemFormLayout.createSequentialGroup()
+                            .addComponent(jLabel29)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(t5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(ppeitemFormLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(ppeItemFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(ppeitemFormLayout.createSequentialGroup()
+                            .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(42, 42, 42)
+                            .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(t1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(t2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(t3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(t4, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+        ppeitemFormLayout.setVerticalGroup(
+            ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ppeitemFormLayout.createSequentialGroup()
+                .addComponent(ppeItemFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ppeitemFormLayout.createSequentialGroup()
+                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel27)
+                            .addComponent(t2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel28)
+                            .addComponent(t3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(t1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(t4)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addGroup(ppeitemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(t5)
+                    .addComponent(jLabel29))
+                .addGap(42, 42, 42)
+                .addComponent(addPPEBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(savePPEBtn)
+                .addGap(126, 126, 126))
+        );
+
+        form.add(ppeitemForm, "card4");
+
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Enter the ID here:");
 
@@ -1678,6 +1687,14 @@ public class AdminPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    private void adjustUIBasedOnRole() {
+        if ("Staff".equals(userRole)) {
+            userBtn.setVisible(false);
+            reportBtn.setVisible(false);
+            jLabel1.setText("STAFF PAGE");
+        }
+    }
+
     //MAIN PANELS BUTTON
     private void hospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospitalBtnActionPerformed
         supplierForm.setVisible(false);
@@ -2308,6 +2325,20 @@ public class AdminPage extends javax.swing.JFrame {
         newData[2] = ut2.getText();
         newData[3] = (String) ut5.getSelectedItem();
         
+        if(newData[0].equals("Staff-00000")){
+            JOptionPane.showMessageDialog(this, "Admin cannot be edit.", "Error", JOptionPane.ERROR_MESSAGE);
+            try {
+                String newID = filefunction.generateNewID("users.txt");
+                newUserID.setText("Staff-"+newID);
+            } catch (IOException ex) {
+                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Failed to generate new user ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            ut1.setText("");
+            ut2.setText("");
+            ut5.setSelectedItem(0);
+            return;
+        }
         // Call file update method
         boolean actionDone = filefunction.EDIT_DATA("users.txt", newData);
         
@@ -2472,6 +2503,10 @@ public class AdminPage extends javax.swing.JFrame {
                 int sRow = userTable.getSelectedRow();
                 if (sRow >= 0) {
                     String userID = model3.getValueAt(sRow, 0).toString();
+                    if(userID.equals("Staff-00000")){
+                        JOptionPane.showMessageDialog(this, "Admin cannot be deleted.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     filefunction.DELETE_DATA("users.txt", userID, this);  // Pass the parent component 'this'
                     model3.removeRow(sRow);
                     JOptionPane.showMessageDialog(this, "User record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
