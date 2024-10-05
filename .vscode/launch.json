@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "AdminPage",
+            "request": "launch",
+            "mainClass": "com.example.admin.AdminPage",
+            "projectName": "Java-Assignment_6bcdc9a0"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "AdminPage",
+            "request": "launch",
+            "mainClass": "AdminPage",
+            "projectName": "Java-Assignment_6bcdc9a0"
+        },
+        {
+            "type": "java",
+            "name": "LoginSystem",
+            "request": "launch",
+            "mainClass": "LoginSystem",
+            "projectName": "Java-Assignment_6bcdc9a0"
+        },
+        {
+            "type": "java",
+            "name": "SignupSystem",
+            "request": "launch",
+            "mainClass": "SignupSystem",
+            "projectName": "Java-Assignment_6bcdc9a0"
+        }
+    ]
+}

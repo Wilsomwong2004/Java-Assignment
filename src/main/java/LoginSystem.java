@@ -365,7 +365,7 @@ public class LoginSystem extends javax.swing.JFrame {
                 String name = userNames.get(currentUserID);
                 JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + name, "Success", JOptionPane.INFORMATION_MESSAGE);
                 
-                AdminPage adminPage = new AdminPage(role);
+                AdminPageOutdated adminPage = new AdminPageOutdated(role);
                 adminPage.setVisible(true);
                 
                 this.dispose();
