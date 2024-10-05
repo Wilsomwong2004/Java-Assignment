@@ -326,47 +326,15 @@ public class filefunction extends JFrame{
         JPanel proceedPanel = new JPanel();
         proceedPanel.setLayout(new BorderLayout());
 
-        //Detect staff or admin in users.txt
-        boolean isStaff = false;
-        try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))){
-            String line;
-            while ((line = reader.readLine()) != null){
-                String[] data = line.split(";");
-                if (data.length > 0 && data[5].equals("Staff")){
-                    isStaff = true;
-                    break;
-                }
+        JButton proceedButton = new JButton("Initialization complete. Click to proceed");
+        proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
+        proceedButton.addActionListener(e -> {
+            if (onCompletion != null) {
+                onCompletion.run();
+                ((JFrame) SwingUtilities.getWindowAncestor(contentPane)).dispose();
             }
-        } catch (IOException e){
-            System.err.println("An error occurred while searching.");
-            e.printStackTrace();
-        }
-
-
-        if (isStaff){
-            JButton proceedButton = new JButton("WELCOME TO STAFF PAGE! Click to proceed");
-            proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
-            proceedButton.addActionListener(e -> {
-                if (onCompletion != null) {
-                    onCompletion.run();  // Open StaffPage
-                    ((JFrame) SwingUtilities.getWindowAncestor(contentPane)).dispose();  // Close filefunction window
-                }
-            });
-            proceedPanel.add(proceedButton, BorderLayout.CENTER);
-            
-        }
-        
-        if (!isStaff){
-            JButton proceedButton = new JButton("WELCOME TO ADMIN PAGE! Click to proceed");
-            proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
-            proceedButton.addActionListener(e -> {
-                if (onCompletion != null) {
-                    onCompletion.run();  // Open AdminPage
-                    ((JFrame) SwingUtilities.getWindowAncestor(contentPane)).dispose();  // Close filefunction window
-                }
-            });
-            proceedPanel.add(proceedButton, BorderLayout.CENTER);
-        }
+        });
+        proceedPanel.add(proceedButton, BorderLayout.CENTER);
         
         contentPane.add(proceedPanel, "ProceedPanel");
         cardLayout.show(contentPane, "ProceedPanel");
