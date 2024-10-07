@@ -38,25 +38,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class filefunction extends JFrame{
 
-    private final CardLayout cardLayout;
-    private final JPanel contentPane;
-    public filefunction(Runnable onCompletion) {
-        cardLayout = new CardLayout();
-        contentPane = new JPanel(cardLayout);
-
-        setTitle("File Management System");
-        setSize(600, 440);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-
-        // Add content pane which contains different panels
-        add(contentPane, BorderLayout.CENTER);
-
-        // Initialize panels
-        checkMissingFiles(contentPane, cardLayout,onCompletion);
-
-        setVisible(true);
-    }
 
     //reusable code
     public static JLabel addLabel(JPanel panel, String text, int x, int y) {
@@ -80,45 +61,14 @@ public class filefunction extends JFrame{
         }
     } 
 
-    //CHECK ALL MISSING FILES
-    public static void checkMissingFiles(JPanel contentPane, CardLayout cardLayout, Runnable onCompletion) {
-        String[] allfiles = {"suppliers.txt", "hospitals.txt", "ppe.txt"};
-        
-        boolean setupNeeded = Arrays.stream(allfiles).anyMatch(file -> !new File(file).exists());
-        
-        if (setupNeeded) {
-            showSetupNeededPanel(contentPane, cardLayout, () -> {
-                performSetup(contentPane, cardLayout, allfiles, onCompletion);
-            });
-        } else {
-            showProceedToAdminPanel(cardLayout, contentPane, onCompletion);
-        }
-    }
-    
-    private static void showSetupNeededPanel(JPanel contentPane, CardLayout cardLayout, Runnable onSetupStart) {
-        JPanel setupPanel = new JPanel();
-        setupPanel.setLayout(new BorderLayout());
-    
-        JButton setupButton = new JButton("System setup required. Click to begin initialization");
-        setupButton.setFont(new Font("Agency FB", Font.BOLD, 30));
-        setupButton.addActionListener(e -> {
-            if (onSetupStart != null) {
-                onSetupStart.run();
-            }
-        });
-        setupPanel.add(setupButton, BorderLayout.CENTER);
-        
-        contentPane.add(setupPanel, "SetupPanel");
-        cardLayout.show(contentPane, "SetupPanel");
-    }
 
-    private static void performSetup(JPanel contentPane, CardLayout cardLayout, String[] allfiles, Runnable onCompletion) {
+    public static void performSetup(JPanel contentPane, CardLayout cardLayout, String[] allfiles, Runnable onCompletion) {
         // Define the actions to take based on missing files
         Runnable checkPPE = () -> {
             if (!new File(allfiles[2]).exists()) {
-                initialiseppePanel(cardLayout, contentPane, allfiles[2], () -> showProceedToAdminPanel(cardLayout, contentPane, onCompletion));
+                initialiseppePanel(cardLayout, contentPane, allfiles[2], () -> onCompletion.run());
             } else {
-                showProceedToAdminPanel(cardLayout, contentPane, onCompletion);
+                  onCompletion.run();
             }
         };
     
@@ -182,7 +132,18 @@ public class filefunction extends JFrame{
             
             int index = i;
             button.addActionListener(e -> {
-                if (!t1.getText().isEmpty() && !t2.getText().isEmpty() && !t3.getText().isEmpty()) {
+                String input1 = t1.getText();
+                String input2 = t2.getText();
+                String input3 = t3.getText();
+                if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()) {
+                    if (!input1.trim().matches("[a-zA-Z ]+")) {
+                        JOptionPane.showMessageDialog(null, "Name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (!input3.matches("\\d+")) {
+                        JOptionPane.showMessageDialog(null, "Phone number should only contain digits.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     filefunction.ADD_DATA("suppliers.txt",null, t1.getText(), t2.getText(), t3.getText());
                     clearTextFields(t1, t2, t3);
                     submissionCount[0]++;
@@ -243,7 +204,18 @@ public class filefunction extends JFrame{
     
             int index = i;
             button.addActionListener(e -> {
-                if (!t1.getText().isEmpty() && !t2.getText().isEmpty() && !t3.getText().isEmpty()) {
+                String input1 = t1.getText();
+                String input2 = t2.getText();
+                String input3 = t3.getText();
+                if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()) {    
+                    if (!input1.trim().matches("[a-zA-Z ]+")) {
+                        JOptionPane.showMessageDialog(null, "Name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (!input3.matches("\\d+")) {
+                        JOptionPane.showMessageDialog(null, "Phone number should only contain digits.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     ADD_DATA("hospitals.txt",null, t1.getText(), t2.getText(), t3.getText());
                     clearTextFields(t1, t2, t3);
                     submissionCount[0]++;
@@ -332,6 +304,16 @@ public class filefunction extends JFrame{
                 String input4 = t4.getText();
                 String input5 = "100";
                 if (!input3.isEmpty()&& !input4.isEmpty()) {
+                    try {
+                        double price = Double.parseDouble(input4);
+                        if (price <= 0) {
+                            JOptionPane.showMessageDialog(null, "Price should be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Price should be a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     ADD_DATA("ppe.txt",null, input1, input2, input3, input4,input5);
                     t3.select(0);
                     submissionCount[0]++;
@@ -351,22 +333,22 @@ public class filefunction extends JFrame{
         cardLayout.show(contentPane, "Initialise Item0");
     }
     
-    public static void showProceedToAdminPanel(CardLayout cardLayout, JPanel contentPane, Runnable onCompletion) {
-        JPanel proceedPanel = new JPanel();
-        proceedPanel.setLayout(new BorderLayout());
-
-        JButton proceedButton = new JButton("Setup complete. Press to continue to main system");
-        proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
-        proceedButton.addActionListener(e -> {
-            if (onCompletion != null) {
-                onCompletion.run();
-            }
-        });
-        proceedPanel.add(proceedButton, BorderLayout.CENTER);
-        
-        contentPane.add(proceedPanel, "ProceedPanel");
-        cardLayout.show(contentPane, "ProceedPanel");
-    }
+//    public static void welcomeToPage(CardLayout cardLayout, JPanel contentPane, Runnable onCompletion) {
+//        JPanel proceedPanel = new JPanel();
+//        proceedPanel.setLayout(new BorderLayout());
+//
+//        JButton proceedButton = new JButton("Setup complete. Press to continue to main system");
+//        proceedButton.setFont(new Font("Agency FB", Font.BOLD, 30));
+//        proceedButton.addActionListener(e -> {
+//            if (onCompletion != null) {
+//                onCompletion.run();
+//            }
+//        });
+//        proceedPanel.add(proceedButton, BorderLayout.CENTER);
+//        
+//        contentPane.add(proceedPanel, "ProceedPanel");
+//        cardLayout.show(contentPane, "ProceedPanel");
+//    }
     
     public static String createFile(String filename){
         try {
@@ -585,7 +567,7 @@ public class filefunction extends JFrame{
         return done;
     }
 
-    public static void DELETE_DATA(String filename, String search,Component parentComponent){
+    public static void DELETE_DATA(String filename, String search,Component parentComponent,DefaultTableModel model,int sRow){
         File inputFile = new File(filename);
         File tempFile = new File("temp.txt");
 
@@ -600,9 +582,12 @@ public class filefunction extends JFrame{
                     int response = JOptionPane.showConfirmDialog(parentComponent, "Are you sure you want to delete this?", "Confirmation Message", JOptionPane.YES_NO_OPTION);
                     if (response == JOptionPane.YES_OPTION){
                         deleted = true;
-                        continue;
+                        model.removeRow(sRow);
+                        JOptionPane.showMessageDialog(parentComponent, "Record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        continue;// Skip writing this line to the temp file
                     } else{
                         JOptionPane.showConfirmDialog(parentComponent, "Cancellation of deletion completed.", "Cancellation Message", JOptionPane.PLAIN_MESSAGE);
+                        deleted = false;
                     }
                 }
                 // line is rewritten if no results or if user doesn't confirm deletion

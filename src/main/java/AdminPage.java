@@ -20,7 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -28,17 +27,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 public class AdminPage extends javax.swing.JFrame {
-    private DefaultListModel mod;
-    private String userRole;
+    private final DefaultListModel mod;
+    private final String userRole;
 
-    public AdminPage() {
-        this("Admin");
-        initComponents();
-        setTitle("PPE Item Inventory System");
-        menu.add(panel);
-        mod = new DefaultListModel();
-        list.setModel(mod);
-    }
 
     public AdminPage(String userRole) {
         this.userRole = userRole;
@@ -750,7 +741,7 @@ public class AdminPage extends javax.swing.JFrame {
         jLabel16.setText("User ID:");
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel17.setText("Username:");
+        jLabel17.setText("Employee Name:");
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel18.setText("Password:");
@@ -823,25 +814,25 @@ public class AdminPage extends javax.swing.JFrame {
                             .addGroup(userFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(ut2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(ut1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(newUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(newUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ut3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ut4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ut5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(userFormLayout.createSequentialGroup()
                             .addGap(19, 19, 19)
                             .addComponent(userFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(userFormLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ut3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                         .addGroup(userFormLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ut4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                         .addGroup(userFormLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ut5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                     .addGroup(userFormLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(saveUserBtn)))
@@ -1907,6 +1898,7 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_ppeBtnActionPerformed
 
     private void transactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionBtnActionPerformed
+        filefunction.createFile("transactions.txt");
         supplierForm.setVisible(false);
         hospitalForm.setVisible(false);
         transactionForm.setVisible(true);
@@ -2049,6 +2041,7 @@ public class AdminPage extends javax.swing.JFrame {
     }
 
     private void reportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportBtnActionPerformed
+        filefunction.createFile("transactions.txt");
         supplierForm.setVisible(false);
         hospitalForm.setVisible(false);
         transactionForm.setVisible(false);
@@ -2084,17 +2077,18 @@ public class AdminPage extends javax.swing.JFrame {
         try {
             filefunction.loadDataFromFile("transactions.txt",model5);
         } catch (Exception ex) {
-            Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("transactions.txt doesn't exist. Please create a transaction in the transaction menu");
         }
         transactionReportData(model5);
     }//GEN-LAST:event_reportBtnActionPerformed
 
     private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
+        System.out.println("Logout button clicked!");
         int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
-//        if (logout == JOptionPane.YES_OPTION) {
-//            new LoginSystem().setVisible(true);
-//            this.dispose();
-//        }
+        if (logout == JOptionPane.YES_OPTION) {
+            new LoginSystem().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_logoutBtnMouseClicked
 
     //ADD NEW DATA
@@ -2188,7 +2182,14 @@ public class AdminPage extends javax.swing.JFrame {
         String input4 = (String) ut4.getSelectedItem();
         String input5 = (String) ut5.getSelectedItem();
         if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()&& !input4.isEmpty()&& !input5.isEmpty()) {
-
+            if (!input1.trim().matches("[a-zA-Z ]+")) {
+                JOptionPane.showMessageDialog(this, "Name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!input3.trim().contains("@gmail.com")) {
+                JOptionPane.showMessageDialog(this, "Email Address should only contain @gmail.com.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             filefunction.ADD_DATA("users.txt",model, input1, input2, input3,input4,input5);
             JOptionPane.showMessageDialog(this, "User data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
 
@@ -2242,16 +2243,6 @@ public class AdminPage extends javax.swing.JFrame {
     }//GEN-LAST:event_addSupplierBtnActionPerformed
 
     private void addTransBtnActionPerformed(java.awt.event.ActionEvent evt) {
-
-        // // Debug output
-        // System.out.println("Add Transaction button clicked");
-        
-        // Check if components are properly initialized
-        if (tt1 == null || tt2 == null || tt3 == null || tt4 == null) {
-            JOptionPane.showMessageDialog(this, "UI components are not properly initialized", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
         String itemCode = (String) tt1.getSelectedItem();
         String process = (String) tt2.getSelectedItem();
@@ -2261,22 +2252,16 @@ public class AdminPage extends javax.swing.JFrame {
         if (!itemCode.isEmpty() && !process.isEmpty() && !hospitalSupplierCode.isEmpty() && !quantity.isEmpty()) {
             try {
                 int quantityValue = Integer.parseInt(quantity);
+                if (quantityValue < 0) {
+                    JOptionPane.showMessageDialog(this, "Quantity should be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 
                 // Get current stock and update it
                 String ppeData = filefunction.SEARCH_DATA("ppe.txt", itemCode, this);
-                if (ppeData == null) {
-                    JOptionPane.showMessageDialog(this, "Item not found in PPE inventory.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
                 String[] ppeFields = ppeData.split(";");
                 int currentStock = Integer.parseInt(ppeFields[4]);
                 int newStock = process.equals("Distribute") ? currentStock - quantityValue : currentStock + quantityValue;
-                
-                // quantity will give alert when less then 25, show the PPE name and quantity that less than 25
-                if (newStock < 25) {
-                    JOptionPane.showMessageDialog(this, "Quantity of "+ ppeFields[1] +" is less than 25. Please add more stock.", "Warning", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
 
                 if (newStock < 0) {
                     JOptionPane.showMessageDialog(this, "Not enough stock available", "Error", JOptionPane.ERROR_MESSAGE);
@@ -2318,22 +2303,30 @@ public class AdminPage extends javax.swing.JFrame {
                 
                 filefunction.ADD_DATA("transactions.txt", (DefaultTableModel) transactionTable.getModel(), transactionData);
 
+                // quantity will give alert when less then 25, show the PPE name and quantity that less than 25
+                if (newStock < 25) {
+                    JOptionPane.showMessageDialog(this, "Quantity of "+ ppeFields[1] +" is less than 25. Please add more stock.", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+
                 JOptionPane.showMessageDialog(this, "Transaction data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
 
                 // Clear input fields
                 tt1.setSelectedIndex(0);
                 tt2.setSelectedIndex(0);
                 tt3.setSelectedIndex(0);
-                tt4.setText("");
-                
-                // Refresh the transaction table
-                refreshTransactionTable();
-                
+                tt4.setText("");  
+
+                try {
+                    String newID = filefunction.generateNewID("transactions.txt");
+                    newTransactionID.setText("S-"+newID);
+                } catch (IOException ex) {
+                    Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Failed to generate new Transaction ID.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid quantity", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (Exception e) {
-                System.out.println("Unexpected error: " + e.getMessage());
-                e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "An unexpected error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
@@ -2341,81 +2334,63 @@ public class AdminPage extends javax.swing.JFrame {
         }
     }
 
-    private void refreshTransactionTable() {
-        DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
-        model.setRowCount(0);
-        try {
-            filefunction.loadDataFromFile("transactions.txt", model);
-        } catch (Exception ex) {
-            Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     //SAVE CHANGES
     private void saveUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveUserBtnActionPerformed
-        addUserBtn.setVisible(true);
-        saveUserBtn.setVisible(false);
-        
         DefaultTableModel model = (DefaultTableModel)userTable.getModel();
         int sRow = userTable.getSelectedRow();
-        model.setValueAt(newUserID.getText(),sRow,0);
-        model.setValueAt(ut1.getText(),sRow,1);
-        model.setValueAt(ut2.getText(),sRow,2);
-        model.setValueAt(ut5.getSelectedItem(),sRow,3);
         
         // Prepare data for file update
-        String[] newData = new String[4];
+        String[] newData = new String[6];
         newData[0] = newUserID.getText();
         newData[1] = ut1.getText();
         newData[2] = ut2.getText();
-        newData[3] = (String) ut5.getSelectedItem();
+        newData[3] = ut3.getText();
+        newData[4] = (String) ut4.getSelectedItem();
+        newData[5] = (String) ut5.getSelectedItem();
         
-        if(newData[0].equals("Staff-00000")){
-            JOptionPane.showMessageDialog(this, "Admin cannot be edit.", "Error", JOptionPane.ERROR_MESSAGE);
-            try {
-                String newID = filefunction.generateNewID("users.txt");
-                newUserID.setText("Staff-"+newID);
-            } catch (IOException ex) {
-                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Failed to generate new user ID.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            ut1.setText("");
-            ut2.setText("");
-            ut5.setSelectedItem(0);
-            return;
-        }
         // Call file update method
-        boolean actionDone = filefunction.EDIT_DATA("users.txt", newData);
-        
-        if (actionDone) {
-            JOptionPane.showMessageDialog(rootPane, "User Data updated successfully", "Update Result", JOptionPane.INFORMATION_MESSAGE);
-            
-            // Clear all TextFields
-            try {
-                String newID = filefunction.generateNewID("users.txt");
-                newHospitalID.setText("Staff-"+newID);
-            } catch (IOException ex) {
-                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Failed to generate new user ID.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!newData[1].isEmpty() && !newData[2].isEmpty() && !newData[3].isEmpty()) {
+            if (!newData[1].trim().matches("[a-zA-Z ]+")) {
+                JOptionPane.showMessageDialog(this, "Name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-            ut1.setText("");
-            ut2.setText("");
-            ut5.setSelectedItem(0);
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            if (!newData[3].trim().contains("@gmail.com")) {
+                JOptionPane.showMessageDialog(this, "Email Address should only contain @gmail.com.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            boolean actionDone = filefunction.EDIT_DATA("users.txt", newData);
+            if (actionDone) {
+                JOptionPane.showMessageDialog(rootPane, "User Data updated successfully", "Update Result", JOptionPane.INFORMATION_MESSAGE);
+                addUserBtn.setVisible(true);
+                saveUserBtn.setVisible(false);
+                
+                model.setValueAt(newUserID.getText(),sRow,0);
+                model.setValueAt(ut1.getText(),sRow,1);
+                model.setValueAt(ut2.getText(),sRow,2);
+                model.setValueAt(ut3.getText(),sRow,3);
+                model.setValueAt(ut4.getSelectedItem(),sRow,4);
+                model.setValueAt(ut5.getSelectedItem(),sRow,5);
+                try {
+                    String newID = filefunction.generateNewID("users.txt");
+                    newUserID.setText("Staff-"+newID);
+                } catch (IOException ex) {
+                    Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Failed to generate new user ID.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                ut1.setText("");
+                ut2.setText("");
+                ut3.setText("");
+                ut4.setSelectedItem(0);
+                ut5.setSelectedItem(0);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }   
     }//GEN-LAST:event_saveUserBtnActionPerformed
 
     private void saveSupplierBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSupplierBtnActionPerformed
-        addSupplierBtn.setVisible(true);
-        saveSupplierBtn.setVisible(false);
-        
         DefaultTableModel model = (DefaultTableModel)supplierTable.getModel();
         int sRow = supplierTable.getSelectedRow();
-        model.setValueAt(newSupplierID.getText(),sRow,0);
-        model.setValueAt(st1.getText(),sRow,1);
-        model.setValueAt(st2.getText(),sRow,2);
-        model.setValueAt(st3.getText(),sRow,3);
         
         // Prepare data for file update
         String[] newData = new String[4];
@@ -2425,36 +2400,46 @@ public class AdminPage extends javax.swing.JFrame {
         newData[3] = st3.getText();
         
         // Call file update method
-        boolean actionDone = filefunction.EDIT_DATA("suppliers.txt", newData);
-        
-        if (actionDone) {
-            JOptionPane.showMessageDialog(rootPane, "Supplier Data updated successfully", "Update Result", JOptionPane.INFORMATION_MESSAGE);
-            
-            try {
-                String newID = filefunction.generateNewID("suppliers.txt");
-                newSupplierID.setText("S-"+newID);
-            } catch (IOException ex) {
-                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Failed to generate new Supplier ID.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!newData[1].isEmpty() && !newData[2].isEmpty() && !newData[3].isEmpty()) {
+            // name words only allowed
+            if (!newData[1].trim().matches("[a-zA-Z ]+")) {
+                JOptionPane.showMessageDialog(this, "Name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-            st1.setText("");
-            st2.setText("");
-            st3.setText("");
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
+
+            //phone number only numbers allowed without limited digits
+            if (!newData[3].matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Phone number should only contain digits.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            boolean actionDone = filefunction.EDIT_DATA("suppliers.txt", newData);
+            if (actionDone) {
+                JOptionPane.showMessageDialog(rootPane, "Supplier Data updated successfully", "Update Result", JOptionPane.INFORMATION_MESSAGE);
+                addSupplierBtn.setVisible(true);
+                saveSupplierBtn.setVisible(false);
+                model.setValueAt(newSupplierID.getText(),sRow,0);
+                model.setValueAt(st1.getText(),sRow,1);
+                model.setValueAt(st2.getText(),sRow,2);
+                model.setValueAt(st3.getText(),sRow,3);
+                try {
+                    String newID = filefunction.generateNewID("suppliers.txt");
+                    newSupplierID.setText("S-"+newID);
+                } catch (IOException ex) {
+                    Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Failed to generate new Supplier ID.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                st1.setText("");
+                st2.setText("");
+                st3.setText("");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_saveSupplierBtnActionPerformed
 
     private void saveHospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveHospitalBtnActionPerformed
-        addHospitalBtn.setVisible(true);
-        saveHospitalBtn.setVisible(false);
-        
         DefaultTableModel model = (DefaultTableModel)hospitalTable.getModel();
         int sRow = hospitalTable.getSelectedRow();
-        model.setValueAt(newHospitalID.getText(),sRow,0);
-        model.setValueAt(ht1.getText(),sRow,1);
-        model.setValueAt(ht2.getText(),sRow,2);
-        model.setValueAt(ht3.getText(),sRow,3);
         
         // Prepare data for file update
         String[] newData = new String[4];
@@ -2464,57 +2449,97 @@ public class AdminPage extends javax.swing.JFrame {
         newData[3] = ht3.getText();
         
         // Call file update method
-        boolean actionDone = filefunction.EDIT_DATA("hospitals.txt", newData);
-        
-        if (actionDone) {
-            JOptionPane.showMessageDialog(rootPane, "Hospital Data updated successfully", "Update Result", JOptionPane.INFORMATION_MESSAGE);
-            
-            // Clear all TextFields
-            try {
-                String newID = filefunction.generateNewID("hospitals.txt");
-                newHospitalID.setText("H-"+newID);
-            } catch (IOException ex) {
-                Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Failed to generate new Hospital ID.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!newData[1].isEmpty() && !newData[2].isEmpty() && !newData[3].isEmpty()) {
+            // name words only allowed
+            if (!newData[1].trim().matches("[a-zA-Z ]+")) {
+                JOptionPane.showMessageDialog(this, "Name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-            ht1.setText("");
-            ht2.setText("");
-            ht3.setText("");
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
+
+            //phone number only numbers allowed without limited digits
+            if (!newData[3].matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Phone number should only contain digits.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            boolean actionDone = filefunction.EDIT_DATA("hospitals.txt", newData);
+            
+            if (actionDone) {
+                JOptionPane.showMessageDialog(rootPane, "Hospital Data updated successfully", "Update Result", JOptionPane.INFORMATION_MESSAGE);
+                addHospitalBtn.setVisible(true);
+                saveHospitalBtn.setVisible(false);
+                // Clear all TextFields
+                
+                model.setValueAt(newHospitalID.getText(),sRow,0);
+                model.setValueAt(ht1.getText(),sRow,1);
+                model.setValueAt(ht2.getText(),sRow,2);
+                model.setValueAt(ht3.getText(),sRow,3);
+                try {
+                    String newID = filefunction.generateNewID("hospitals.txt");
+                    newHospitalID.setText("H-"+newID);
+                } catch (IOException ex) {
+                    Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Failed to generate new Hospital ID.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                ht1.setText("");
+                ht2.setText("");
+                ht3.setText("");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_saveHospitalBtnActionPerformed
 
     private void savePPEBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePPEBtnActionPerformed
-        addPPEBtn.setVisible(true);
-        savePPEBtn.setVisible(false);
-        
         DefaultTableModel model = (DefaultTableModel)ppeItemTable.getModel();
         int sRow = ppeItemTable.getSelectedRow();
-        model.setValueAt(t1.getText(),sRow,0);
-        model.setValueAt(t2.getText(),sRow,1);
-        model.setValueAt(t3.getSelectedItem(),sRow,2);
-        model.setValueAt(t5.getText(),sRow,3);
         
         // Prepare data for file update
-        String[] newData = new String[4];
+        String[] newData = new String[5];
         newData[0] = t1.getText();
         newData[1] = t2.getText();
         newData[2] = (String)t3.getSelectedItem();
-        newData[3] = t5.getText();
+        newData[3] = t4.getText();
+        newData[4] = t5.getText();
         
         // Call file update method
-        boolean actionDone = filefunction.EDIT_DATA("ppe.txt", newData);
-        
-        if (actionDone) {
-            JOptionPane.showMessageDialog(rootPane, "PPE Item Data updated successfully", "Update Result", JOptionPane.INFORMATION_MESSAGE);
+        if (!newData[0].isEmpty() && !newData[1].isEmpty() && !newData[3].isEmpty()&& !newData[4].isEmpty()) {
+            // item name only words allowed
+            if (!newData[1].matches("[a-zA-Z ]+")) {
+                JOptionPane.showMessageDialog(this, "Item name should only contain letters and spaces.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             
-            t1.setText("");
-            t2.setText("");
-            t3.setSelectedItem(0);
-            t5.setText("100");
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
+            // Price should be a valid number
+            try {
+                double price = Double.parseDouble(newData[3]);
+                if (price <= 0) {
+                    JOptionPane.showMessageDialog(this, "Price should be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Price should be a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            boolean actionDone = filefunction.EDIT_DATA("ppe.txt", newData);
+            
+            if (actionDone) {
+                JOptionPane.showMessageDialog(rootPane, "PPE Item Data updated successfully", "Update Result", JOptionPane.INFORMATION_MESSAGE);
+                addPPEBtn.setVisible(true);
+                savePPEBtn.setVisible(false);
+                model.setValueAt(t1.getText(),sRow,0);
+                model.setValueAt(t2.getText(),sRow,1);
+                model.setValueAt(t3.getSelectedItem(),sRow,2);
+                model.setValueAt(t4.getText(),sRow,3);
+                model.setValueAt(t5.getText(),sRow,4);
+                t1.setText("");
+                t1.setEditable(true);
+                t2.setText("");
+                t3.setSelectedItem(0);
+                t4.setText("");
+                t5.setText("100");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Failed to update data", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_savePPEBtnActionPerformed
 
@@ -2526,9 +2551,7 @@ public class AdminPage extends javax.swing.JFrame {
                 int sRow = hospitalTable.getSelectedRow();
                 if (sRow >= 0) {
                     String hospitalID = model1.getValueAt(sRow, 0).toString();
-                    filefunction.DELETE_DATA("hospitals.txt", hospitalID, this);  // Pass the parent component 'this'
-                    model1.removeRow(sRow);  // Remove the row from the table
-                    JOptionPane.showMessageDialog(this, "Hospital record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    filefunction.DELETE_DATA("hospitals.txt", hospitalID, this, model1,sRow); 
                 } else {
                     throw new IllegalStateException("Please select a row to delete.");
                 }
@@ -2537,9 +2560,7 @@ public class AdminPage extends javax.swing.JFrame {
                 int sRow = supplierTable.getSelectedRow();
                 if (sRow >= 0) {
                     String supplierID = model2.getValueAt(sRow, 0).toString();
-                    filefunction.DELETE_DATA("suppliers.txt", supplierID, this);  // Pass the parent component 'this'
-                    model2.removeRow(sRow);
-                    JOptionPane.showMessageDialog(this, "Supplier record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    filefunction.DELETE_DATA("suppliers.txt", supplierID, this,model2,sRow);
                 } else {
                     throw new IllegalStateException("Please select a row to delete.");
                 }
@@ -2552,9 +2573,7 @@ public class AdminPage extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Admin cannot be deleted.", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    filefunction.DELETE_DATA("users.txt", userID, this);  // Pass the parent component 'this'
-                    model3.removeRow(sRow);
-                    JOptionPane.showMessageDialog(this, "User record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    filefunction.DELETE_DATA("users.txt", userID, this,model3,sRow);
                 } else {
                     throw new IllegalStateException("Please select a row to delete.");
                 }
@@ -2563,9 +2582,7 @@ public class AdminPage extends javax.swing.JFrame {
                 int sRow = ppeItemTable.getSelectedRow();
                 if (sRow >= 0) {
                     String itemID = model4.getValueAt(sRow, 0).toString();
-                    filefunction.DELETE_DATA("ppe.txt", itemID, this);  // Pass the parent component 'this'
-                    model4.removeRow(sRow);
-                    JOptionPane.showMessageDialog(this, "PPE Item record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    filefunction.DELETE_DATA("ppe.txt", itemID, this, model4,sRow);
                 } else {
                     throw new IllegalStateException("Please select a row to delete.");
                 }
@@ -2574,9 +2591,7 @@ public class AdminPage extends javax.swing.JFrame {
                 int sRow = transactionTable.getSelectedRow();
                 if (sRow >= 0) {
                     String transactionID = model5.getValueAt(sRow, 0).toString();
-                    filefunction.DELETE_DATA("transactions.txt", transactionID, this);  // Pass the parent component 'this'
-                    model5.removeRow(sRow);
-                    JOptionPane.showMessageDialog(this, "Transaction record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    filefunction.DELETE_DATA("transactions.txt", transactionID, this, model5,sRow);
                 } else {
                     throw new IllegalStateException("Please select a row to delete.");
                 }
@@ -2618,16 +2633,26 @@ public class AdminPage extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Please select a row");
             }
         } else if (userScrollTable.isVisible()) {
+            
             userFormTitle.setText("Edit User Form");
-            saveUserBtn.setVisible(true);
-            addUserBtn.setVisible(false);
+            
             DefaultTableModel model3 = (DefaultTableModel) userTable.getModel();
             int sRow = userTable.getSelectedRow();
             if (sRow >= 0) {
-                newUserID.setText(model3.getValueAt(sRow, 0).toString());
+                String selectedUserID = model3.getValueAt(sRow, 0).toString(); 
+                if (selectedUserID.equals("Staff-00000")) {
+                    JOptionPane.showMessageDialog(this, "Admin cannot be edited.", "Error", JOptionPane.ERROR_MESSAGE);
+                    System.out.println("Admin edit attempt blocked.");
+                    return; 
+                }
+                saveUserBtn.setVisible(true);
+                addUserBtn.setVisible(false);
+                newUserID.setText(selectedUserID);
                 ut1.setText(model3.getValueAt(sRow, 1).toString());
                 ut2.setText(model3.getValueAt(sRow, 2).toString());
-                ut5.setSelectedItem(model3.getValueAt(sRow, 3).toString());
+                ut3.setText(model3.getValueAt(sRow, 3).toString());
+                ut4.setSelectedItem(model3.getValueAt(sRow, 4).toString());
+                ut5.setSelectedItem(model3.getValueAt(sRow, 5).toString());
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Please select a row");
             }
@@ -2639,6 +2664,7 @@ public class AdminPage extends javax.swing.JFrame {
             int sRow = ppeItemTable.getSelectedRow();
             if (sRow >= 0) {
                 t1.setText(model4.getValueAt(sRow, 0).toString());
+                t1.setEditable(false);
                 t2.setText(model4.getValueAt(sRow, 1).toString());
                 t3.setSelectedItem(model4.getValueAt(sRow, 2).toString());
                 t4.setText(model4.getValueAt(sRow, 3).toString());
@@ -2733,6 +2759,18 @@ public class AdminPage extends javax.swing.JFrame {
                 }
             }
         }else if (transactionScrollTable.isVisible()){
+            DefaultTableModel model5 = (DefaultTableModel) transactionTable.getModel();
+            String search = searchbar.getText();
+            String ID = filefunction.SEARCH_DATA("transactions.txt", search,this);
+            if (ID != null) {
+                for (int i = 0; i < model5.getRowCount(); i++) {
+                    if (model5.getValueAt(i, 0).toString().equals(search)) {
+                        transactionTable.setRowSelectionInterval(i, i);
+                        transactionTable.scrollRectToVisible(transactionTable.getCellRect(i, 0, true));
+                        break;
+                    }
+                }
+            }
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
@@ -2954,46 +2992,6 @@ public class AdminPage extends javax.swing.JFrame {
         sr8.setValue((int) Math.round(staffPercentage));
     }//GEN-LAST:event_systemReportTBtnActionPerformed
     
-    
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new filefunction(() ->{
-                    new AdminPage().setVisible(true);
-                });
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane ReportS;

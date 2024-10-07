@@ -12,6 +12,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -35,11 +36,10 @@ public class LoginSystem extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     private static final String USER_FILE = "users.txt";
-    private Map<String, String> users = new HashMap<>(); // userID -> password
-    private Map<String, String> userEmails = new HashMap<>(); // userID -> email
-    private Map<String, String> userNames = new HashMap<>(); // userID -> username
-    private Map<String, String> userRoles = new HashMap<>(); // userID -> role
-    private Map<String, String> userGenders = new HashMap<>(); // userID -> gender
+    private Map<String, String> users = new HashMap<>();
+    private Map<String, String> userEmails = new HashMap<>();
+    private Map<String, String> userNames = new HashMap<>();
+    private Map<String, String> userRoles = new HashMap<>();
     private javax.swing.JButton jButton3;
     private String currentUserID = "";
     private String currentPassword = "";
@@ -51,38 +51,16 @@ public class LoginSystem extends javax.swing.JFrame {
         loadUsers();
         setupPlaceholders();
     }
-    
-    public void myInitComponents() {
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
-            }
-        });
-    }
-
-    private void addDefaultAdminAccount() {
-        String adminId = "Staff-00000";
-        users.put(adminId, "0000");
-        userNames.put(adminId, "Admin");
-        userEmails.put(adminId, "admin@example.com");
-        userGenders.put(adminId, "Male");
-        userRoles.put(adminId, "Admin");
-        
-        // Use filefunction to add the admin account
-        filefunction.REMOVE_DATA(USER_FILE, adminId); // Remove any existing admin entry
-        filefunction.ADD_DATA(USER_FILE, null, "Admin", "0000", "admin@example.com", "Male", "Admin");
-    }
 
     private void loadUsers() {
         File file = new File(USER_FILE);
         if (!file.exists() || file.length() == 0) {
-            addDefaultAdminAccount();
+            String newStaffID = "Staff-00000";
+            filefunction.REMOVE_DATA(USER_FILE, newStaffID);
+            filefunction.ADD_DATA(USER_FILE, null, "Admin", "0000", "admin@gmail.com", "Male", "Admin");
+            JOptionPane.showMessageDialog(rootPane, 
+            "Welcome to the PPE Item Inventory System! \nSince it's your new time here, this is your default ID and password. You can change it later on. \nStaff ID: Staff-00000 \nPassword: 0000",
+            "First User Data", JOptionPane.INFORMATION_MESSAGE);
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String line;
@@ -93,13 +71,11 @@ public class LoginSystem extends javax.swing.JFrame {
                         String name = parts[1];
                         String password = parts[2];
                         String email = parts[3];
-                        String gender = parts[4];
                         String role = parts[5];
                         
                         users.put(userId, password);
                         userNames.put(userId, name);
                         userEmails.put(userId, email);
-                        userGenders.put(userId, gender);
                         userRoles.put(userId, role);
                         
                         //System.out.println("Loaded user: " + userId + ", Password: " + password); // Debug print
@@ -113,12 +89,12 @@ public class LoginSystem extends javax.swing.JFrame {
     }
 
     private void setupPlaceholders() {
-        jTextField2.setText("Ex.Admin");
+        jTextField2.setText("Ex.Staff-00000");
         jTextField2.setForeground(Color.GRAY);
         jTextField2.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (jTextField2.getText().equals("Ex.Admin")) {
+                if (jTextField2.getText().equals("Ex.Staff-00000")) {
                     jTextField2.setText("");
                     jTextField2.setForeground(Color.BLACK);
                 }
@@ -128,7 +104,7 @@ public class LoginSystem extends javax.swing.JFrame {
             public void focusLost(FocusEvent e) {
                 if (jTextField2.getText().isEmpty()) {
                     jTextField2.setForeground(Color.GRAY);
-                    jTextField2.setText("Ex.Admin");
+                    jTextField2.setText("Ex.Staff-00000");
                 }
             }
         });
@@ -191,18 +167,6 @@ public class LoginSystem extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
             }
         });
 
@@ -327,19 +291,13 @@ public class LoginSystem extends javax.swing.JFrame {
         attemptLogin();
     }
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
-        currentUserID = jTextField2.getText();
-        
-    }
-
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {
-        currentPassword = new String(jPasswordField1.getPassword());
-        attemptLogin();
-    }
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         String userID = JOptionPane.showInputDialog(this, "Enter your UserID:");
         if (userID != null && !userID.isEmpty()) {
+            if ("Staff-00000".equals(userID)){
+                JOptionPane.showMessageDialog(this, "Admin cannot change the password.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (users.containsKey(userID)) {
                 String email = userEmails.get(userID);
                 if (email != null) {
@@ -388,23 +346,53 @@ public class LoginSystem extends javax.swing.JFrame {
     }
     
     private void transitionToAdminPage(String role) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("File Check");
-            JPanel contentPane = new JPanel();
-            CardLayout cardLayout = new CardLayout();
-            contentPane.setLayout(cardLayout);
-            frame.setContentPane(contentPane);
-            frame.setSize(600, 400);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-            filefunction.checkMissingFiles(contentPane, cardLayout, () -> {
-                frame.dispose();
-                AdminPage adminPage = new AdminPage(role);
-                adminPage.setVisible(true);
+        String[] allfiles = {"suppliers.txt", "hospitals.txt", "ppe.txt"};
+        
+        boolean setupNeeded = false;
+        for (String file : allfiles) {
+            if (!new File(file).exists()) {
+                setupNeeded = true;
+                break;
+            }
+        }
+        
+        if (!setupNeeded) {
+            AdminPage adminPage = new AdminPage(role);
+            adminPage.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "System setup required. Click OK to begin initialization", "Message", 
+            JOptionPane.INFORMATION_MESSAGE);
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JFrame frame = new JFrame("File Check");
+                    JPanel contentPane = new JPanel();
+                    CardLayout cardLayout = new CardLayout();
+                    contentPane.setLayout(cardLayout);
+                    frame.setContentPane(contentPane);
+                    frame.setSize(600, 500);
+                    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    // Add a WindowListener to show a warning dialog when the user attempts to close the window
+                    frame.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            JOptionPane.showMessageDialog(null,
+                                    "You cannot close this panel until the process is completed.",
+                                    "Warning",
+                                    JOptionPane.WARNING_MESSAGE);
+                        }
+                    });
+                    
+                    filefunction.performSetup(contentPane, cardLayout, allfiles, () -> {
+                        frame.dispose();
+                        AdminPage adminPage = new AdminPage(role);
+                        adminPage.setVisible(true);
+                    });
+                    
+                    frame.setVisible(true);
+                }
             });
-    
-            frame.setVisible(true);
-        });
+        }
     }
 
     public void updateUserPassword(String userID, String newPassword) {

@@ -66,7 +66,6 @@ public class ForgetPasswordForm extends JFrame {
 
     private void sendVerificationCode() {
         verificationCode = generateVerificationCode();
-        // In a real application, you would send this code via email
         System.out.println("Verification code for " + email + ": " + verificationCode);
         JOptionPane.showMessageDialog(this, "Verification code sent to " + email);
     }
@@ -91,19 +90,26 @@ public class ForgetPasswordForm extends JFrame {
     private void resetPassword() {
         String newPassword = new String(newPasswordField.getPassword());
         String confirmPassword = new String(confirmPasswordField.getPassword());
-        if (newPassword.equals(confirmPassword)) {
-            try {
-                loginSystem.updateUserPassword(userID, newPassword);
-                JOptionPane.showMessageDialog(this, "Password reset successfully");
-                this.dispose();
-                loginSystem.showLoginSystem();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error resetting password: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
+
+        if (!newPassword.isEmpty() && !confirmPassword.isEmpty()){
+            if (newPassword.equals(confirmPassword)) {
+                try {
+                    loginSystem.updateUserPassword(userID, newPassword);
+                    JOptionPane.showMessageDialog(this, "Password reset successfully");
+                    this.dispose();
+                    loginSystem.showLoginSystem();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Error resetting password: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        else {
+            JOptionPane.showMessageDialog(this, "Please make sure password field is not blank", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }
 
     private String generateVerificationCode() {
