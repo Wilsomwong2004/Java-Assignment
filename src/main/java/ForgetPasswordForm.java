@@ -68,6 +68,7 @@ public class ForgetPasswordForm extends JFrame {
         verificationCode = generateVerificationCode();
         System.out.println("Verification code for " + email + ": " + verificationCode);
         JOptionPane.showMessageDialog(this, "Verification code sent to " + email);
+        JOptionPane.showMessageDialog(this, "The vertification code is" +    verificationCode);
     }
 
     private void verifyCode() {

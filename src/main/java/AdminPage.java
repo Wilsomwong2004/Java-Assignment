@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,11 +21,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class AdminPage extends javax.swing.JFrame {
     private final DefaultListModel mod;
@@ -234,6 +239,75 @@ public class AdminPage extends javax.swing.JFrame {
         jPanel1.setAlignmentX(0);
         jPanel1.setAlignmentY(0);
 
+        // hospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        // hospitalBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pic/hospital.png"))); // NOI18N
+        // hospitalBtn.setText("Hospital");
+        // hospitalBtn.addActionListener(new java.awt.event.ActionListener() {
+        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //         hospitalBtnActionPerformed(evt);
+        //     }
+        // });
+
+        // supplierBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        // supplierBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pic/supplier.png"))); // NOI18N
+        // supplierBtn.setText("Supplier");
+        // supplierBtn.addActionListener(new java.awt.event.ActionListener() {
+        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //         supplierBtnActionPerformed(evt);
+        //     }
+        // });
+
+        // userBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        // userBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pic/user.png"))); // NOI18N
+        // userBtn.setText("User");
+        // userBtn.addActionListener(new java.awt.event.ActionListener() {
+        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //         userBtnActionPerformed(evt);
+        //     }
+        // });
+
+        // ppeBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        // ppeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pic/ppe item.png"))); // NOI18N
+        // ppeBtn.setText("PPE item");
+        // ppeBtn.addActionListener(new java.awt.event.ActionListener() {
+        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //         ppeBtnActionPerformed(evt);
+        //     }
+        // });
+
+        // transactionBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        // transactionBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pic/transaction.png"))); // NOI18N
+        // transactionBtn.setText("Transaction");
+        // transactionBtn.addActionListener(new java.awt.event.ActionListener() {
+        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //         transactionBtnActionPerformed(evt);
+        //     }
+        // });
+
+        // jLabel1.setFont(new java.awt.Font("Ravie", 1, 36)); // NOI18N
+        // jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        // jLabel1.setText("ADMIN PAGE");
+
+        // logoutBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        // logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        // logoutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pic/log out.png"))); // NOI18N
+        // logoutBtn.setText("Log Out");
+        // logoutBtn.setFocusable(true);
+        // logoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        //     public void mouseClicked(java.awt.event.MouseEvent evt) {
+        //         logoutBtnMouseClicked(evt);
+        //     }
+        // });
+
+        // reportBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        // reportBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pic/report.png"))); // NOI18N
+        // reportBtn.setText("     Report");
+        // reportBtn.addActionListener(new java.awt.event.ActionListener() {
+        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //         reportBtnActionPerformed(evt);
+        //     }
+        // });
+
         hospitalBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         //hospitalBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("./pic/hospital.png"))); // NOI18N
         //URL hospitalImageURL = getClass().getResource("./resources/pic/hospital.png");
@@ -373,6 +447,7 @@ public class AdminPage extends javax.swing.JFrame {
                 reportBtnActionPerformed(evt);
             }
         });
+
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1889,12 +1964,24 @@ public class AdminPage extends javax.swing.JFrame {
         ppeItemTable.setModel(model4);
         model4.setRowCount(0);
         ppeItemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+    
+        // Create a TableRowSorter for the table
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model4);
+        ppeItemTable.setRowSorter(sorter);
+    
+        // Set the initial sorting column (Item ID is assumed to be the first column)
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+    
         try {
-            filefunction.loadDataFromFile("ppe.txt",model4);
+            filefunction.loadDataFromFile("ppe.txt", model4);
         } catch (Exception ex) {
             Logger.getLogger(AdminPage.class.getName()).log(Level.SEVERE, null, ex);
         }
+    
+        // Apply the sort
+        sorter.sort();
     }//GEN-LAST:event_ppeBtnActionPerformed
 
     private void transactionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionBtnActionPerformed
@@ -2086,6 +2173,7 @@ public class AdminPage extends javax.swing.JFrame {
         System.out.println("Logout button clicked!");
         int logout = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION);
         if (logout == JOptionPane.YES_OPTION) {
+            // new LoginPage().setVisible(true);
             new LoginSystem().setVisible(true);
             this.dispose();
         }
@@ -2264,14 +2352,9 @@ public class AdminPage extends javax.swing.JFrame {
                 int newStock = process.equals("Distribute") ? currentStock - quantityValue : currentStock + quantityValue;
 
                 if (newStock < 0) {
-                    JOptionPane.showMessageDialog(this, "Not enough stock available", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Not enough stock available, current quantity of "+ ppeFields[1] + " only have "+ currentStock , "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
-                // Debug test
-                // System.out.println("Current stock: " + currentStock);
-                // System.out.println("New stock after transaction: " + newStock);
-                // System.out.println("PPE data found: " + (ppeData != null));
                 
                 // Update PPE stock
                 ppeFields[4] = String.valueOf(newStock);
@@ -2309,6 +2392,7 @@ public class AdminPage extends javax.swing.JFrame {
                 }
 
                 JOptionPane.showMessageDialog(this, "Transaction data submitted", "Message", JOptionPane.INFORMATION_MESSAGE);
+
 
                 // Clear input fields
                 tt1.setSelectedIndex(0);
